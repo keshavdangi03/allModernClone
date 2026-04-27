@@ -1,20 +1,25 @@
 import { Search, User, ShoppingCart, Menu, ChevronDown } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
+import DepartmentNavigation from "./DepartmentNavigation";
 
 export default function Header() {
   return (
     <div className="relative z-50 bg-white border-b border-gray-300">
       {/* Top Utility Bar */}
-      <div className="bg-gray-900 text-white text-[11px] py-1.5 px-4 hidden sm:block">
+      <div className="bg-black text-white text-[11px] py-2 px-4 hidden sm:block">
         <div className="max-w-7xl mx-auto flex justify-between items-center tracking-wider">
           <div className="flex space-x-6">
-            <Link href="#" className="hover:underline">App</Link>
-            <Link href="#" className="hover:underline">Financing</Link>
-            <Link href="#" className="hover:underline">Professional</Link>
+            <Link href="#" >App</Link>
+            <Link href="#" >Financing</Link>
+            <Link href="#" >Professional</Link>
+            <Link href="#" >Professional</Link>
+            <Link href="#" >Professional</Link>
           </div>
           <div>
-            <span className="font-bold">FREE SHIPPING OVER $35*</span>
+            <Link href="#"><span className="font-bold hover:underline">Join the trade program</span></Link>
+            <span className="mx-2">|</span>
+            <Link href="#"><span className="font-bold hover:underline">Everything shipped FREE*</span></Link>
           </div>
         </div>
       </div>
@@ -30,10 +35,10 @@ export default function Header() {
           <div className="hidden sm:flex items-center w-full max-w-md relative group">
             <input
               type="text"
-              placeholder="Find anything home..."
-              className="w-full bg-white border-b-2 border-gray-900 py-2 pl-2 pr-10 text-sm focus:outline-none placeholder-gray-500 rounded-none transition-colors"
+              placeholder="Search"
+              className="w-80 bg-white border-b-1 border-gray-200 py-2 pl-9 pr-10 pb-3 text-sm focus:outline-none hover:border-gray-700 placeholder-gray-500 rounded-none transition-colors text-mx-2"
             />
-            <Search className="absolute right-2 top-2 h-5 w-5 text-gray-900" />
+            <Search className="absolute left-2 top-2 h-5 w-5 text-gray-700" />
           </div>
         </div>
 
@@ -58,17 +63,17 @@ export default function Header() {
         </div>
       </div>
 
-      {/* Promo Banner */}
-      <div className="bg-[#FF4500] text-white text-xs font-bold text-center py-2 px-4 tracking-widest uppercase cursor-pointer hover:bg-orange-700 transition-colors">
-        3 DAYS ONLY. BIG SALE OF THE YEAR. UP TO 70% OFF. <span className="underline ml-2">SHOP NOW</span>
-      </div>
+      <DepartmentNavigation />
+
+      
 
       {/* Navigation & Mega Menu */}
-      <div className="hidden sm:block border-t border-gray-200 relative group/nav">
+      <div className="hidden sm:block  relative group/nav">
         <div className="max-w-[1400px] mx-auto px-4 flex justify-center space-x-8">
           {['Furniture', 'Outdoor', 'Rugs', 'Decor', 'Lighting', 'Bed & Bath'].map((item) => (
             <div key={item} className="group/item">
-              <Link href="#" className="flex items-center text-sm font-bold text-gray-900 py-4 uppercase tracking-widest hover:text-primary border-b-2 border-transparent hover:border-primary transition-all">
+              <Link href="#" className="flex items-center text-sm font-bold text-gray-900 py-2
+               uppercase tracking-widest hover:text-primary border-b-2 border-transparent hover:border-primary transition-all">
                 {item}
               </Link>
               
@@ -112,6 +117,11 @@ export default function Header() {
             Sale
           </Link>
         </div>
+      </div>
+
+      {/* Promo Banner */}
+      <div className="bg-[#FF4500] text-white text-xs font-bold text-center py-2 px-4 tracking-widest uppercase cursor-pointer hover:bg-orange-700 transition-colors">
+        <span className="hover:underline ml-2">Ends Tonight | Up to 70% off Best Sellers + More</span>
       </div>
     </div>
   );
