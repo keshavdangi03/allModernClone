@@ -2,39 +2,44 @@ import Image from "next/image";
 import Link from "next/link";
 
 const departments = [
-  { name: "Sofas", image: "/images/cat_living_room.png" },
-  { name: "Chairs", image: "/images/cat_dining.png" },
-  { name: "Beds", image: "/images/cat_bedroom.png" },
-  { name: "Outdoor", image: "/images/cat_outdoor.png" },
+  { name: "Living Room", image: "/images/cat_living_room.png" },
+  { name: "Bedroom", image: "/images/cat_bedroom.png" },
+  { name: "Dining Room", image: "/images/cat_dining.png" },
   { name: "Rugs", image: "/images/hero.png" },
-  { name: "Lighting", image: "/images/cat_living_room.png" },
+  { name: "Decor", image: "/images/cat_living_room.png" },
+  { name: "Lighting", image: "/images/cat_dining.png" },
+  { name: "Outdoor", image: "/images/cat_outdoor.png" },
+  { name: "New Arrivals", image: "/images/hero.png" },
 ];
 
 export default function ShopByDepartment() {
   return (
-    <div className="max-w-[1400px] mx-auto px-4 sm:px-6 py-12 border-t border-gray-200">
-      <div className="flex justify-between items-end mb-8">
-        <h2 className="text-3xl font-black text-gray-900 tracking-tighter uppercase">
+    <div className="max-w-[1400px] mx-auto px-4 sm:px-6 py-12">
+      {/* Title */}
+      <div className="mb-6">
+        <h2 className="text-2xl sm:text-3xl font-black text-gray-900 tracking-tighter uppercase">
           Shop by Department
         </h2>
       </div>
 
-      <div className="flex overflow-x-auto pb-8 space-x-6 sm:space-x-8 scrollbar-hide">
+      {/* 4-Column Grid */}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-x-4 gap-y-8 sm:gap-x-6 sm:gap-y-10">
         {departments.map((dept, index) => (
           <Link
             key={index}
             href="#"
-            className="flex flex-col items-center group min-w-[140px] sm:min-w-[180px]"
+            className="flex flex-col group cursor-pointer"
           >
-            <div className="relative w-32 h-32 sm:w-40 sm:h-40 rounded-full overflow-hidden mb-4 bg-gray-100">
+            <div className="relative w-full aspect-square overflow-hidden mb-3 bg-gray-100">
               <Image
                 src={dept.image}
                 alt={dept.name}
                 fill
-                className="object-cover group-hover:scale-105 transition-transform duration-500"
+                sizes="(max-width: 768px) 50vw, 25vw"
+                className="object-cover group-hover:opacity-90 transition-opacity duration-300"
               />
             </div>
-            <span className="text-sm font-bold text-gray-900 tracking-wide hover:underline text-center">
+            <span className="text-[15px] sm:text-[16px] font-bold text-gray-900 group-hover:underline text-left">
               {dept.name}
             </span>
           </Link>

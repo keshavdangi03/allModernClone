@@ -25,7 +25,7 @@ const DepartmentNavigation: FC = () => {
             <li key={item.href}>
               <Link 
                 href={item.href} 
-                className="text-gray-700 transition-colors uppercase tracking-widest text-xs font-semibold"
+                className="text-gray-700 transition-colors hover:text-black hover:underline uppercase tracking-widest text-xs font-semibold"
               >
                 {item.label}
               </Link>
