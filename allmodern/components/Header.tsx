@@ -180,7 +180,7 @@ export default function Header() {
           {primaryNavItems.map((item) => (
             <div key={item} className="group/item relative">
               <Link href="#" className="flex items-center text-[12px] font-bold text-gray-900 py-4
-               uppercase tracking-widest hover:text-black border-b-[3px] border-transparent hover:border-black transition-all whitespace-nowrap">
+               uppercase tracking-widest hover:text-black border-b-[3px] border-transparent hover:border-blue transition-all whitespace-nowrap">
                 {item}
               </Link>
               
