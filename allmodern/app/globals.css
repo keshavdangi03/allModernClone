@@ -3,13 +3,27 @@
 @theme inline {
   --color-primary: #FF4500;
   --color-background: #ffffff;
-  --color-foreground: #111111;
+  --color-foreground: #0f172a;
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
 }
 
 @layer base {
+  :root {
+    color-scheme: light;
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
   body {
-    @apply bg-background text-foreground antialiased selection:bg-primary selection:text-white;
+    @apply min-h-screen overflow-x-clip bg-background text-foreground antialiased selection:bg-primary selection:text-white;
+  }
+
+  * {
+    @apply selection:bg-primary selection:text-white;
   }
 }
 
@@ -21,8 +35,4 @@
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
-}
-
-html {
-  scroll-behavior: smooth;
 }

@@ -2,33 +2,32 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
 const promos = [
-  "Up to 60% Off Living Room Seating",
-  "Up to 50% Off Beds",
-  "Up to 60% Off Area Rugs",
-  "Up to 40% Off Outdoor Furniture",
-  "Up to 50% Off Dining Furniture",
-  "Up to 60% Off Lighting",
-  "Up to 50% Off Decor & Pillows",
-  "Up to 40% Off Wall Art"
+  { title: "Living Room Seating", copy: "Up to 60% off modern sofas & sectionals" },
+  { title: "Bedroom Refresh", copy: "Save on beds, nightstands, and bedding" },
+  { title: "Decor Essentials", copy: "Shop pillows, lighting, and art" },
+  { title: "Outdoor Entertaining", copy: "Brighten patios with lounge & dining sets" },
 ];
 
 export default function PromoGrid() {
   return (
-    <div className="max-w-[1400px] mx-auto px-4 sm:px-6 py-12">
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        {promos.map((promo, index) => (
-          <Link
-            key={index}
-            href="#"
-            className="group flex justify-between items-center bg-gray-900 p-6 h-24 hover:bg-primary transition-colors"
-          >
-            <span className="text-white font-bold text-sm tracking-wide max-w-[80%] uppercase leading-tight">
-              {promo}
-            </span>
-            <ArrowRight className="text-white h-5 w-5 transform group-hover:translate-x-1 transition-transform" />
-          </Link>
-        ))}
-      </div>
+    <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      {promos.map((promo) => (
+        <Link
+          key={promo.title}
+          href="#"
+          className="group overflow-hidden rounded-[28px] border border-slate-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-xl"
+        >
+          <div>
+            <p className="text-xs uppercase tracking-[0.35em] text-orange-600">Limited time</p>
+            <h3 className="mt-3 text-xl font-black text-slate-950">{promo.title}</h3>
+            <p className="mt-3 text-sm leading-6 text-slate-600">{promo.copy}</p>
+          </div>
+          <div className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-slate-950">
+            Shop now
+            <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+          </div>
+        </Link>
+      ))}
     </div>
   );
 }
