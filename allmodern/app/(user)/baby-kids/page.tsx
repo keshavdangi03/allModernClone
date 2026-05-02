@@ -1,7 +1,7 @@
 import Image from "next/image";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
-import HelpChat from "@/components/HelpChat";
+
+
+
 
 const babyCategories = [
   "Baby Furniture",
@@ -48,7 +48,7 @@ const relatedSearches = [
 export default function BabyKidsPage() {
   return (
     <>
-      <Header />
+
       <main className="bg-[#f3f3f3] pb-12">
         <section className="mx-auto max-w-[1400px] px-4 pb-8 pt-4 sm:px-6">
           <div className="relative overflow-hidden bg-slate-200">
@@ -177,8 +177,8 @@ export default function BabyKidsPage() {
           </section>
         </section>
       </main>
-      <Footer />
-      <HelpChat />
+
+
     </>
   );
 }

@@ -1,7 +1,7 @@
 import Image from "next/image";
-import Header from "@/components/Header";
-import HelpChat from "@/components/HelpChat";
-import SaleFooter from "@/components/SaleFooter";
+
+
+
 
 const saleCategories = [
   { title: "Furniture Sale", image: "/images/cat_living_room.png" },
@@ -17,7 +17,7 @@ const saleCategories = [
 export default function SalePage() {
   return (
     <>
-      <Header />
+
       <main className="bg-[#efefef] pb-10">
         <section className="mx-auto max-w-[1400px] px-4 pb-8 pt-4 sm:px-6">
           <div className="grid h-[180px] items-center bg-[#f13600] px-12 text-white md:grid-cols-2">
@@ -54,8 +54,8 @@ export default function SalePage() {
           </div>
         </section>
       </main>
-      <SaleFooter />
-      <HelpChat />
+
+
     </>
   );
 }

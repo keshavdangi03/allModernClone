@@ -6,8 +6,8 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
 import { Search, CircleUserRound, ShoppingCart, Menu, X, ChevronRight, ChevronDown } from "lucide-react";
-import DepartmentNavigation from "./DepartmentNavigation";
-import { headerLinks, departmentNavItems, categoryMenus } from "./navigation-data";
+import DepartmentNavigation from "@/components/layout/DepartmentNavigation";
+import { headerLinks, departmentNavItems, categoryMenus } from "@/components/layout/navigation-data";
 
 const collectionsMenu = {
   links: [
@@ -108,7 +108,7 @@ export default function Header() {
     <header className="sticky top-0 z-50 bg-white/95 shadow-sm shadow-slate-900/5">
       <div className="bg-[#000000] text-[#a1a1a1]">
         <div className="mx-auto flex h-[26px] max-w-[1400px] items-center justify-between px-4 text-[11px] sm:px-6">
-          <div className="flex items-center gap-4">
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-1 py-1 sm:py-0">
             <span className="font-bold tracking-tight text-white flex items-center gap-1">
               <div className="w-[11px] h-[11px] border-[1.5px] border-white relative before:absolute before:inset-[1.5px] before:bg-white flex items-center justify-center">
                 <div className="w-[2px] h-[2px] bg-black z-10 rounded-full" />
@@ -116,9 +116,9 @@ export default function Header() {
               wayfair
             </span>
             <span className="font-medium tracking-widest uppercase text-white">ALLMODERN</span>
-            <span className="font-medium tracking-widest uppercase text-[#a1a1a1]">BIRCH LN</span>
-            <span className="font-medium tracking-widest uppercase text-[#a1a1a1]">JOSS & MAIN</span>
-            <span className="font-medium tracking-widest uppercase text-[#a1a1a1]">PERIGOLD</span>
+            <span className="hidden font-medium tracking-widest uppercase text-[#a1a1a1] sm:inline">BIRCH LN</span>
+            <span className="hidden font-medium tracking-widest uppercase text-[#a1a1a1] sm:inline">JOSS & MAIN</span>
+            <span className="hidden font-medium tracking-widest uppercase text-[#a1a1a1] lg:inline">PERIGOLD</span>
           </div>
           <div className="hidden items-center text-white md:flex text-[11px] font-medium tracking-wide">
             <a href="#" className="hover:underline">Join the Trade Program</a>
@@ -186,7 +186,7 @@ export default function Header() {
           </div>
 
           <div className="flex flex-1 justify-center md:justify-center">
-            <Link href="/" className="text-[26px] font-medium tracking-[0.15em] uppercase text-slate-950 sm:text-[30px] ml-4">
+            <Link href="/" className="text-[20px] font-medium tracking-[0.15em] uppercase text-slate-950 sm:text-[30px] ml-2 sm:ml-4">
               ALLMODERN
             </Link>
           </div>

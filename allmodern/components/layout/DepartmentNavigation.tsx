@@ -5,7 +5,7 @@ import { useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
-import { departmentNavItems, desktopMegaMenus } from "./navigation-data";
+import { departmentNavItems, desktopMegaMenus } from "@/components/layout/navigation-data";
 
 export default function DepartmentNavigation() {
   const [activeMega, setActiveMega] = useState<string | null>(null);

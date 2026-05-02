@@ -1,9 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ChevronDown, Heart, ArrowRight } from "lucide-react";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
-import HelpChat from "@/components/HelpChat";
+
+
+
 
 const rugCategories = [
   { title: "Area Rugs", image: "/images/cat_living_room.png" },
@@ -202,7 +202,7 @@ function StarRating({ rating }: { rating: number }) {
 export default function RugsPage() {
   return (
     <>
-      <Header />
+
       <main className="bg-white">
         {/* Promotional Banner */}
         <section className="bg-[#f04e1e] text-white">
@@ -379,8 +379,8 @@ export default function RugsPage() {
           </div>
         </section>
       </main>
-      <Footer />
-      <HelpChat />
+
+
     </>
   );
 }

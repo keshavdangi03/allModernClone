@@ -3,7 +3,7 @@ import { ArrowRight } from "lucide-react";
 
 export default function SaleBanner() {
   return (
-    <section className="bg-[#e43a06] text-white">
+    <section className="bg-[#e43a06] text-white w-full">
       <div className="mx-auto max-w-[1400px] px-6 sm:px-8 py-10 sm:py-16 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
         <h2 className="text-[clamp(4rem,10vw,8rem)] font-black leading-none tracking-tight">
           Sale

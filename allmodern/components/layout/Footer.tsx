@@ -1,25 +1,22 @@
 "use client";
 
 import Link from "next/link";
-import { Clock, Phone, ChevronUp, MessageSquare } from "lucide-react";
+import { Clock, Phone } from "lucide-react";
 
-const Instagram = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+const Instagram = ({ className }: { className?: string }) => (
+  <svg className={className} xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
 );
-const Facebook = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+const Facebook = ({ className }: { className?: string }) => (
+  <svg className={className} xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
 );
-const Youtube = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M2.5 7.1C2 8.7 2 12 2 12s0 3.3.5 4.9a3 3 0 0 0 2 2.1C6.2 19.5 12 19.5 12 19.5s5.8 0 7.5-.5a3 3 0 0 0 2-2.1c.5-1.6.5-4.9.5-4.9s0-3.3-.5-4.9a3 3 0 0 0-2-2.1C17.8 4.5 12 4.5 12 4.5s-5.8 0-7.5.5a3 3 0 0 0-2 2.1z"/><path d="m9.5 15.5 6-3.5-6-3.5z"/></svg>
+const Youtube = ({ className }: { className?: string }) => (
+  <svg className={className} xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M2.5 7.1C2 8.7 2 12 2 12s0 3.3.5 4.9a3 3 0 0 0 2 2.1C6.2 19.5 12 19.5 12 19.5s5.8 0 7.5-.5a3 3 0 0 0 2-2.1c.5-1.6.5-4.9.5-4.9s0-3.3-.5-4.9a3 3 0 0 0-2-2.1C17.8 4.5 12 4.5 12 4.5s-5.8 0-7.5.5a3 3 0 0 0-2 2.1z"/><path d="m9.5 15.5 6-3.5-6-3.5z"/></svg>
 );
-const Pinterest = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.372 0 12c0 5.084 3.163 9.426 7.627 11.174-.105-.949-.2-2.406.042-3.431.218-.937 1.407-5.965 1.407-5.965s-.359-.719-.359-1.782c0-1.668.967-2.914 2.171-2.914 1.023 0 1.518.769 1.518 1.688 0 1.029-.653 2.567-.992 3.992-.285 1.193.6 2.165 1.775 2.165 2.128 0 3.768-2.245 3.768-5.487 0-2.861-2.063-4.869-5.008-4.869-3.41 0-5.409 2.562-5.409 5.199 0 1.033.394 2.143.889 2.741.099.12.112.225.085.345l-.288 1.178c-.046.19-.152.232-.35.139-1.306-.615-2.121-2.542-2.121-4.098 0-3.333 2.42-6.398 6.993-6.398 3.67 0 6.521 2.614 6.521 6.096 0 3.648-2.298 6.582-5.491 6.582-1.073 0-2.081-.557-2.427-1.216l-.662 2.523c-.239.916-.892 2.061-1.332 2.759 1.05.323 2.155.498 3.298.498 6.627 0 12-5.373 12-12 0-6.628-5.373-12-12-12z"/></svg>
+const Pinterest = ({ className }: { className?: string }) => (
+  <svg className={className} xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.372 0 12c0 5.084 3.163 9.426 7.627 11.174-.105-.949-.2-2.406.042-3.431.218-.937 1.407-5.965 1.407-5.965s-.359-.719-.359-1.782c0-1.668.967-2.914 2.171-2.914 1.023 0 1.518.769 1.518 1.688 0 1.029-.653 2.567-.992 3.992-.285 1.193.6 2.165 1.775 2.165 2.128 0 3.768-2.245 3.768-5.487 0-2.861-2.063-4.869-5.008-4.869-3.41 0-5.409 2.562-5.409 5.199 0 1.033.394 2.143.889 2.741.099.12.112.225.085.345l-.288 1.178c-.046.19-.152.232-.35.139-1.306-.615-2.121-2.542-2.121-4.098 0-3.333 2.42-6.398 6.993-6.398 3.67 0 6.521 2.614 6.521 6.096 0 3.648-2.298 6.582-5.491 6.582-1.073 0-2.081-.557-2.427-1.216l-.662 2.523c-.239.916-.892 2.061-1.332 2.759 1.05.323 2.155.498 3.298.498 6.627 0 12-5.373 12-12 0-6.628-5.373-12-12-12z"/></svg>
 );
 
 export default function Footer() {
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
 
   return (
     <footer className="bg-white border-t border-slate-200 text-slate-900">
@@ -32,15 +29,15 @@ export default function Footer() {
               Privacy Policy
             </Link>
           </div>
-          <form className="flex h-[38px] w-full max-w-[340px]">
+          <form className="flex flex-col sm:flex-row w-full max-w-[340px] gap-2 sm:gap-0">
             <input
               type="email"
               placeholder="Email Address"
-              className="h-full w-full border border-slate-400 px-3 text-[13px] outline-none focus:border-slate-800 focus:ring-1 focus:ring-slate-800"
+              className="h-[38px] w-full border border-slate-400 px-3 text-[13px] outline-none focus:border-slate-800 focus:ring-1 focus:ring-slate-800"
             />
             <button
               type="submit"
-              className="h-full bg-[#1f1d24] px-6 text-[13px] font-bold text-white transition hover:bg-black"
+              className="h-[38px] bg-[#1f1d24] px-6 text-[13px] font-bold text-white transition hover:bg-black"
             >
               Submit
             </button>

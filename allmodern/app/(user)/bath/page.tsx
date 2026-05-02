@@ -1,7 +1,7 @@
 import Image from "next/image";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
-import HelpChat from "@/components/HelpChat";
+
+
+
 import { ChevronRight } from "lucide-react";
 
 const topSubcategories = [
@@ -87,7 +87,7 @@ const relatedSearches = [
 export default function BathPage() {
   return (
     <>
-      <Header />
+
       <main className="bg-[#f3f3f3] pb-12">
         {/* Top Banner */}
         <div className="bg-[#e64900] text-center text-white py-2 text-[12px] font-bold tracking-wide flex items-center justify-center gap-1">
@@ -274,10 +274,10 @@ export default function BathPage() {
                   <div className="px-1 flex flex-col flex-1">
                     <h4 className="text-[13px] leading-snug text-slate-800 mb-2 line-clamp-2 group-hover:underline">{product.name}</h4>
                     <div className="flex items-baseline gap-2 mt-auto">
-                      {product.sale && product.originalPrice ? (
+                      {product.sale && (product as any).originalPrice ? (
                         <>
                           <span className="font-bold text-[14px] text-[#bf5a2e]">${product.price}</span>
-                          <span className="text-slate-500 line-through text-[12px]">${product.originalPrice}</span>
+                          <span className="text-slate-500 line-through text-[12px]">${(product as any).originalPrice}</span>
                         </>
                       ) : (
                         <span className="font-bold text-[14px] text-slate-900">${product.price}</span>
@@ -413,8 +413,8 @@ export default function BathPage() {
           </div>
         </section>
       </main>
-      <Footer />
-      <HelpChat />
+
+
     </>
   );
 }

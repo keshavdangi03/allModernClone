@@ -1,7 +1,7 @@
 import Image from "next/image";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
-import HelpChat from "@/components/HelpChat";
+
+
+
 import { ChevronRight } from "lucide-react";
 
 const topSubcategories = [
@@ -42,7 +42,7 @@ const relatedSearches = [
 export default function BeddingPage() {
   return (
     <>
-      <Header />
+
       <main className="bg-white pb-12">
         {/* Top Banner */}
         <div className="bg-[#e64900] text-center text-white py-2 text-[12px] font-bold tracking-wide uppercase flex items-center justify-center gap-1">
@@ -208,8 +208,8 @@ export default function BeddingPage() {
           </div>
         </section>
       </main>
-      <Footer />
-      <HelpChat />
+
+
     </>
   );
 }

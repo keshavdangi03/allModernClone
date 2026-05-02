@@ -1,20 +1,20 @@
-import Header from "@/components/Header";
-import HelpChat from "@/components/HelpChat";
-import Hero from "@/components/Hero";
-import ShopByDepartment from "@/components/ShopByDepartment";
-import OneStopOutdoorShop from "@/components/OneStopOutdoorShop";
-import SimpleSummerRefreshes from "@/components/SimpleSummerRefreshes";
-import NewArrivals from "@/components/NewArrivals";
-import DesignDrop from "@/components/DesignDrop";
-import ExploreCollections from "@/components/ExploreCollections";
-import SaleBanner from "@/components/SaleBanner";
-import RealLife from "@/components/RealLife";
-import Footer from "@/components/Footer";
+
+
+import Hero from "@/components/home/Hero";
+import ShopByDepartment from "@/components/home/ShopByDepartment";
+import OneStopOutdoorShop from "@/components/home/OneStopOutdoorShop";
+import SimpleSummerRefreshes from "@/components/home/SimpleSummerRefreshes";
+import NewArrivals from "@/components/home/NewArrivals";
+import DesignDrop from "@/components/home/DesignDrop";
+import ExploreCollections from "@/components/home/ExploreCollections";
+import SaleBanner from "@/components/home/SaleBanner";
+import RealLife from "@/components/home/RealLife";
+
 
 export default function Home() {
   return (
     <>
-      <Header />
+
       <main className="flex-1 bg-white">
         {/* Promotional Banner */}
         <section className="bg-[#1f228b] text-white">
@@ -40,8 +40,8 @@ export default function Home() {
         <RealLife />
         
       </main>
-      <HelpChat />
-      <Footer />
+
+
     </>
   );
 }

@@ -1,7 +1,7 @@
 import Image from "next/image";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
-import HelpChat from "@/components/HelpChat";
+
+
+
 
 const storageByProductCategories = [
   { name: "Shop Bookcases", image: "/images/cat_living_room.png" },
@@ -72,7 +72,7 @@ const relatedSearches = [
 export default function StoragePage() {
   return (
     <>
-      <Header />
+
       <main className="bg-[#f3f3f3] pb-12">
         <section className="mx-auto max-w-[1400px] px-4 pb-8 pt-4 sm:px-6">
           {/* Hero Section */}
@@ -311,8 +311,8 @@ export default function StoragePage() {
           </div>
         </section>
       </main>
-      <Footer />
-      <HelpChat />
+
+
     </>
   );
 }
