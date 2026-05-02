@@ -17,14 +17,11 @@ export default function Home() {
 
       <main className="flex-1 bg-white">
         {/* Promotional Banner */}
-        <section className="bg-[#1f228b] text-white">
-          <div className="mx-auto flex max-w-[1400px] flex-col md:flex-row items-center justify-between px-4 py-3 text-center sm:px-6 md:text-left">
-            <div className="flex flex-col md:flex-row md:items-baseline gap-2 md:gap-4">
-              <span className="text-[13px] sm:text-[15px] uppercase tracking-wide opacity-90">MODERN OUTDOOR SALE</span>
-              <span className="text-[24px] sm:text-[32px] font-bold tracking-tight">Up to 30% Off</span>
-            </div>
-            <a href="#" className="text-[12px] sm:text-[14px] font-bold uppercase tracking-wide text-white underline underline-offset-4 mt-2 md:mt-0 hover:opacity-80 transition-opacity">
-              SHOP OUTDOOR FURNITURE, DECOR + MORE
+        <section className="bg-[#ea3e15] text-white">
+          <div className="mx-auto flex max-w-[1400px] flex-col md:flex-row items-center justify-between px-4 py-4 text-center sm:px-6 md:text-left">
+            <span className="text-[22px] sm:text-[34px] font-bold tracking-tight">Up to 60% Off | 48-Hour Markdowns</span>
+            <a href="#" className="text-[14px] sm:text-[16px] font-bold uppercase tracking-wide text-white underline underline-offset-4 mt-2 md:mt-0 hover:opacity-80 transition-opacity">
+              SHOP NOW
             </a>
           </div>
         </section>

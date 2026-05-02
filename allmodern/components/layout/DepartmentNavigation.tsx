@@ -34,7 +34,7 @@ export default function DepartmentNavigation() {
 
   return (
     <div
-      className="relative border-b border-slate-200 bg-white"
+      className="relative bg-white"
       onMouseLeave={handleLeave}
       onMouseEnter={() => {
         if (closeTimeoutRef.current) {

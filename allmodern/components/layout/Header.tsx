@@ -3,9 +3,9 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
-import { Search, CircleUserRound, ShoppingCart, Menu, X, ChevronRight, ChevronDown } from "lucide-react";
+import { Search, CircleUserRound, ShoppingCart, Menu, X, ChevronRight, ChevronDown, ArrowRight } from "lucide-react";
 import DepartmentNavigation from "@/components/layout/DepartmentNavigation";
 import { headerLinks, departmentNavItems, categoryMenus } from "@/components/layout/navigation-data";
 
@@ -29,6 +29,7 @@ const collectionsMenu = {
 
 export default function Header() {
   const router = useRouter();
+  const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [cartOpen, setCartOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
@@ -109,21 +110,21 @@ export default function Header() {
       <div className="bg-[#000000] text-[#a1a1a1]">
         <div className="mx-auto flex h-[26px] max-w-[1400px] items-center justify-between px-4 text-[11px] sm:px-6">
           <div className="flex flex-wrap items-center gap-x-4 gap-y-1 py-1 sm:py-0">
-            <span className="font-bold tracking-tight text-white flex items-center gap-1">
-              <div className="w-[11px] h-[11px] border-[1.5px] border-white relative before:absolute before:inset-[1.5px] before:bg-white flex items-center justify-center">
+            <span className="font-semibold tracking-tight text-[#a1a1a1] flex items-center gap-1">
+              <div className="w-[11px] h-[11px] border-[1.5px] border-[#a1a1a1] relative before:absolute before:inset-[1.5px] before:bg-[#a1a1a1] flex items-center justify-center">
                 <div className="w-[2px] h-[2px] bg-black z-10 rounded-full" />
               </div>
               wayfair
             </span>
-            <span className="font-medium tracking-widest uppercase text-white">ALLMODERN</span>
-            <span className="hidden font-medium tracking-widest uppercase text-[#a1a1a1] sm:inline">BIRCH LN</span>
-            <span className="hidden font-medium tracking-widest uppercase text-[#a1a1a1] sm:inline">JOSS & MAIN</span>
-            <span className="hidden font-medium tracking-widest uppercase text-[#a1a1a1] lg:inline">PERIGOLD</span>
+            <span className="font-bold tracking-widest uppercase text-white">ALLMODERN</span>
+            <span className="hidden font-semibold tracking-widest uppercase text-[#a1a1a1] sm:inline">BIRCH LN</span>
+            <span className="hidden font-semibold tracking-widest uppercase text-[#a1a1a1] sm:inline">JOSS & MAIN</span>
+            <span className="hidden font-semibold tracking-widest uppercase text-[#a1a1a1] lg:inline">PERIGOLD</span>
           </div>
-          <div className="hidden items-center text-white md:flex text-[11px] font-medium tracking-wide">
-            <a href="#" className="hover:underline">Join the Trade Program</a>
+          <div className="hidden items-center text-[#a1a1a1] md:flex text-[11px] font-semibold tracking-wide">
+            <a href="#" className="hover:text-white transition">Join the Trade Program</a>
             <span className="mx-2">|</span>
-            <a href="#" className="hover:underline">Furniture Over $35 Ships FREE*</a>
+            <a href="#" className="hover:text-white transition text-white font-bold">Furniture Over $35 Ships FREE*</a>
           </div>
         </div>
       </div>
@@ -289,7 +290,7 @@ export default function Header() {
               aria-label="Open cart"
             >
               <ShoppingCart className="h-4 w-4" />
-              <span className="absolute -right-1.5 -top-1.5 inline-flex h-4 min-w-4 items-center justify-center rounded-full bg-orange-600 px-1 text-[9px] font-bold text-white">
+              <span className="absolute -right-1.5 -top-1.5 inline-flex h-4 min-w-4 items-center justify-center rounded-full bg-[#e43216] px-1 text-[9px] font-bold text-white">
                 0
               </span>
             </button>
@@ -370,15 +371,20 @@ export default function Header() {
         </AnimatePresence>
       </div>
 
-      <div className="hidden md:block">
+      <div className="hidden md:block border-b border-slate-200">
         <DepartmentNavigation />
       </div>
-      <div className="hidden border-b border-slate-200 bg-[#f7f2ef] md:block">
-        <div className="mx-auto max-w-[1400px] px-4 py-1 text-center text-[10px] font-semibold text-slate-900 sm:px-6">
-          Up to 30% off Outdoor
-          <span className="ml-1.5">&gt;</span>
+
+      {pathname !== "/" && (
+        <div className="bg-[#f04e1e] text-white">
+          <div className="mx-auto flex max-w-[1400px] justify-center px-4 py-1.5 sm:px-6">
+            <Link href="#" className="flex items-center text-[13px] font-bold tracking-wide hover:underline">
+              Up to 60% Off | 48-Hour Markdowns
+              <ArrowRight className="ml-1 h-3.5 w-3.5 stroke-[2.5]" />
+            </Link>
+          </div>
         </div>
-      </div>
+      )}
 
       <AnimatePresence>
         {mobileOpen ? (

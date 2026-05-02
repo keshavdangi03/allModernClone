@@ -50,7 +50,7 @@ const linensSubcategories = [
   { name: "Shop Countertop Accessories", image: "/images/cat_dining.png" }
 ];
 
-const linensProducts = [
+const linensProducts: { name: string; price: number; originalPrice?: number; sale?: boolean; image: string; rating: number; reviews: number }[] = [
   { name: "Joseph Joseph Tota Laundry Hamper Separation Basket with Lid", price: 115, image: "/images/hero.png", rating: 5, reviews: 120 },
   { name: "Yamazaki Home Tissue Box Cover", price: 47, image: "/images/cat_outdoor.png", rating: 4, reviews: 85 },
   { name: "Brabantia Laundry Hamper with Cork Lid", price: 102, image: "/images/cat_bedroom.png", rating: 5, reviews: 340 },
@@ -89,11 +89,6 @@ export default function BathPage() {
     <>
 
       <main className="bg-[#f3f3f3] pb-12">
-        {/* Top Banner */}
-        <div className="bg-[#e64900] text-center text-white py-2 text-[12px] font-bold tracking-wide flex items-center justify-center gap-1">
-          Up to 60% Off | 48-Hour Markdowns <ChevronRight className="w-4 h-4 inline-block" />
-        </div>
-
         <section className="mx-auto max-w-[1400px] px-4 pb-8 pt-4 sm:px-6">
           {/* Hero Section */}
           <div className="relative overflow-hidden bg-slate-200">
@@ -274,10 +269,10 @@ export default function BathPage() {
                   <div className="px-1 flex flex-col flex-1">
                     <h4 className="text-[13px] leading-snug text-slate-800 mb-2 line-clamp-2 group-hover:underline">{product.name}</h4>
                     <div className="flex items-baseline gap-2 mt-auto">
-                      {product.sale && (product as any).originalPrice ? (
+                      {product.sale && product.originalPrice ? (
                         <>
                           <span className="font-bold text-[14px] text-[#bf5a2e]">${product.price}</span>
-                          <span className="text-slate-500 line-through text-[12px]">${(product as any).originalPrice}</span>
+                          <span className="text-slate-500 line-through text-[12px]">${product.originalPrice}</span>
                         </>
                       ) : (
                         <span className="font-bold text-[14px] text-slate-900">${product.price}</span>

@@ -29,15 +29,15 @@ export default function Footer() {
               Privacy Policy
             </Link>
           </div>
-          <form className="flex flex-col sm:flex-row w-full max-w-[340px] gap-2 sm:gap-0">
+          <form className="flex flex-col sm:flex-row w-full max-w-[340px]">
             <input
               type="email"
               placeholder="Email Address"
-              className="h-[38px] w-full border border-slate-400 px-3 text-[13px] outline-none focus:border-slate-800 focus:ring-1 focus:ring-slate-800"
+              className="h-[38px] flex-1 border border-slate-300 px-3 text-[13px] outline-none focus:border-slate-800 focus:ring-1 focus:ring-slate-800"
             />
             <button
               type="submit"
-              className="h-[38px] bg-[#1f1d24] px-6 text-[13px] font-bold text-white transition hover:bg-black"
+              className="h-[38px] bg-[#595959] px-6 text-[13px] font-bold text-white transition hover:bg-[#404040]"
             >
               Submit
             </button>
@@ -96,13 +96,13 @@ export default function Footer() {
 
             <div className="mb-6">
               <h5 className="font-bold text-[13.5px] text-slate-950 mb-1">Customer Service</h5>
-              <p className="text-[13px] text-slate-600">Closed. Opens at 8:00 AM ET.</p>
+              <p className="text-[13px] text-slate-600">Open. Closes at 10:00PM ET.</p>
               <Link href="#" className="text-[13px] text-slate-600 underline hover:text-slate-900 block mt-0.5">Weekly Hours</Link>
             </div>
 
             <div>
               <h5 className="font-bold text-[13.5px] text-slate-950 mb-1">Shopping Assistance</h5>
-              <p className="text-[13px] text-slate-600">Closed. Opens at 8:00 AM ET.</p>
+              <p className="text-[13px] text-slate-600">Open. Closes at 8:00PM ET.</p>
               <Link href="#" className="text-[13px] text-slate-600 underline hover:text-slate-900 block mt-0.5">Weekly Hours</Link>
             </div>
           </div>

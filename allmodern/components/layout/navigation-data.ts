@@ -41,12 +41,12 @@ export const headerLinks = [
 ];
 
 export const departmentNavItems: DepartmentNavItem[] = [
-  { label: "New", href: "#" },
-  { label: "Furniture", href: "#" },
-  { label: "Outdoor", href: "#" },
-  { label: "Lighting", href: "#" },
-  { label: "Decor + Pillows", href: "#" },
-  { label: "Wall Decor + Mirrors", href: "#" },
+  { label: "New", href: "/new" },
+  { label: "Furniture", href: "/furniture" },
+  { label: "Outdoor", href: "/outdoor" },
+  { label: "Lighting", href: "/lighting" },
+  { label: "Decor + Pillows", href: "/decor-pillows" },
+  { label: "Wall Decor + Mirrors", href: "/wall-decor" },
   { label: "Rugs", href: "/rugs" },
   { label: "Bedding", href: "/bedding" },
   { label: "Bath", href: "/bath" },

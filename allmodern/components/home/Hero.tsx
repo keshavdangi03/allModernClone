@@ -16,8 +16,8 @@ export default function Hero() {
       </div>
 
       <div className="absolute inset-0 z-10 flex items-end justify-center pb-16 sm:pb-24 lg:pb-32">
-        <h1 className="text-[clamp(2rem,8vw,5.5rem)] font-black tracking-[-0.02em] leading-[1] text-white drop-shadow-md text-center px-4">
-          Designed <span className="font-semibold tracking-normal text-[clamp(1.25rem,4vw,3rem)] align-middle mx-2">for</span> Staycations
+        <h1 className="text-[clamp(2.5rem,6vw,5.5rem)] font-bold tracking-[-0.01em] leading-[1] text-white drop-shadow-md text-center px-4">
+          Designed for Staycations
         </h1>
       </div>
     </section>

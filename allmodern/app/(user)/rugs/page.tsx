@@ -204,15 +204,7 @@ export default function RugsPage() {
     <>
 
       <main className="bg-white">
-        {/* Promotional Banner */}
-        <section className="bg-[#f04e1e] text-white">
-          <div className="mx-auto flex max-w-[1400px] justify-center px-4 py-1 sm:px-6">
-            <Link href="#" className="flex items-center text-[13px] font-bold tracking-wide hover:underline">
-              Up to 60% Off | 48-Hour Markdowns
-              <ArrowRight className="ml-1 h-3.5 w-3.5 stroke-[2.5]" />
-            </Link>
-          </div>
-        </section>
+
 
         {/* Hero Banner */}
         <section className="relative h-[250px] w-full sm:h-[350px] md:h-[450px]">

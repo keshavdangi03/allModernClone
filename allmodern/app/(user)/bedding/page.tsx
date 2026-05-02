@@ -44,11 +44,6 @@ export default function BeddingPage() {
     <>
 
       <main className="bg-white pb-12">
-        {/* Top Banner */}
-        <div className="bg-[#e64900] text-center text-white py-2 text-[12px] font-bold tracking-wide uppercase flex items-center justify-center gap-1">
-          Up to 60% Off | 48-Hour Markdowns <ChevronRight className="w-4 h-4 inline-block" />
-        </div>
-
         <section className="mx-auto max-w-[1400px] px-4 pb-8 sm:px-6">
           {/* Hero Section */}
           <div className="relative overflow-hidden bg-slate-200">
