@@ -22,7 +22,7 @@ export default function DesignDrop() {
             Design Drop
           </h2>
           <p className="mt-2 sm:mt-4 text-[clamp(1.1rem,2vw,1.5rem)] text-white/90">
-            The Season's Top 10 Styles
+            The Season&apos;s Top 10 Styles
           </p>
         </div>
         

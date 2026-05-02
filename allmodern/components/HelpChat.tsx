@@ -36,7 +36,7 @@ export default function HelpChat() {
 
           <div className="p-6">
             <h3 className="text-[17px] font-bold text-slate-950 mb-1">
-              We're here to help.
+              We&apos;re here to help.
             </h3>
             <p className="text-[14px] text-slate-700 mb-6">
               How can we assist you today?

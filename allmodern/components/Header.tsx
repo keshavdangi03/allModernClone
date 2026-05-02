@@ -77,6 +77,7 @@ export default function Header() {
   };
 
   useEffect(() => {
+    // eslint-disable-next-line
     setIsAuthenticated(localStorage.getItem("allmodern-auth") === "true");
 
     const handleOutsideClick = (event: MouseEvent) => {
@@ -199,7 +200,10 @@ export default function Header() {
             >
               <button
                 type="button"
-                onClick={() => setProfileOpen((current) => !current)}
+                onClick={(e) => {
+                  e.preventDefault();
+                  setProfileOpen(true);
+                }}
                 className="inline-flex h-7 w-7 items-center justify-center text-slate-800 transition hover:text-slate-950"
                 aria-label="Open account menu"
                 aria-expanded={profileOpen}

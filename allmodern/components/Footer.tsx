@@ -147,7 +147,7 @@ export default function Footer() {
           <div className="space-y-4">
             <p className="text-[12px] text-slate-700">Your Opt Out Preference Signal is Honored</p>
             <p className="text-[12.5px] font-bold text-slate-950 max-w-[800px]">
-              Could not generate your unique web-ID verification code, please refresh or try a different page. If you're using an Ad Blocker or VPN, consider turning it off and trying again.
+              Could not generate your unique web-ID verification code, please refresh or try a different page. If you&apos;re using an Ad Blocker or VPN, consider turning it off and trying again.
             </p>
             <div className="flex flex-wrap gap-4 pt-2">
               <Link href="#" className="text-[11px] text-slate-600 underline hover:text-slate-900">Terms of Use</Link>
