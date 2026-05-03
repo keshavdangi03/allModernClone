@@ -1,4 +1,5 @@
 import Image from "next/image";
+import FilterableProductLayout from "@/components/ui/FilterableProductLayout";
 
 
 
@@ -77,22 +78,8 @@ export default function BabyKidsPage() {
             ))}
           </div>
 
-          <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
-            <div className="flex items-end gap-2">
-              <h2 className="text-[37px] font-bold tracking-[-0.02em] text-slate-900">Baby + Kids</h2>
-              <span className="pb-1 text-[14px] text-slate-500">547 Items</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <button className="h-8 border border-slate-500 px-6 text-[13px] text-slate-800">Show Filters</button>
-              <select className="h-8 border border-slate-300 bg-white px-3 text-[12px] text-slate-700">
-                <option>Recommended</option>
-                <option>Price: Low to High</option>
-                <option>Price: High to Low</option>
-              </select>
-            </div>
-          </div>
-
-          <div className="mt-5 grid grid-cols-2 gap-3 md:grid-cols-3">
+          <FilterableProductLayout title="Baby + Kids" itemCount={547}>
+            <div className="mt-5 grid grid-cols-2 gap-3 md:grid-cols-3">
             {productNames.map((name, idx) => (
               <article key={name} className="bg-[#f3f3f3]">
                 <div className="relative aspect-[0.86/1] border border-[#e2e2e2] bg-[#efefef]">
@@ -128,6 +115,7 @@ export default function BabyKidsPage() {
             <span>52</span>
             <button className="h-9 w-9 border border-slate-500 bg-white">→</button>
           </div>
+          </FilterableProductLayout>
 
           <section className="mt-10 bg-[#f3f3f3] text-slate-800">
             <h3 className="text-[34px] font-bold tracking-[-0.02em]">Baby + Kids</h3>

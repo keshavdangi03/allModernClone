@@ -1,4 +1,5 @@
 import Image from "next/image";
+import FilterableProductLayout from "@/components/ui/FilterableProductLayout";
 
 
 
@@ -224,29 +225,7 @@ export default function KitchenTabletopPage() {
               </a>
             </div>
 
-            <div className="flex flex-col md:flex-row items-baseline justify-between border-b border-slate-300 pb-4 mb-6">
-              <div className="flex items-end gap-2">
-                <h2 className="text-[28px] md:text-[34px] font-bold tracking-[-0.02em] text-slate-900">Kitchen + Tabletop</h2>
-                <span className="pb-1.5 text-[14px] text-slate-500">3,061 Items</span>
-              </div>
-              <div className="flex items-center gap-4 mt-4 md:mt-0 w-full md:w-auto">
-                <button className="flex-1 md:flex-none h-10 border border-slate-400 px-6 text-[14px] text-slate-800 flex items-center justify-center gap-2 hover:bg-slate-50 transition-colors">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M1.5 1.5A.5.5 0 0 1 2 1h12a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.128.334L10 8.692V13.5a.5.5 0 0 1-.342.474l-3 1A.5.5 0 0 1 6 14.5V8.692L1.628 3.834A.5.5 0 0 1 1.5 3.5v-2zM2.618 2L5.5 5.5h5L13.382 2H2.618z"/></svg>
-                  Show Filters
-                </button>
-                <div className="flex-1 md:flex-none relative">
-                  <select className="w-full h-10 border border-slate-400 bg-white px-3 text-[14px] text-slate-700 appearance-none pr-8 hover:bg-slate-50 transition-colors cursor-pointer">
-                    <option>Recommended</option>
-                    <option>Price: Low to High</option>
-                    <option>Price: High to Low</option>
-                  </select>
-                  <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-slate-700">
-                    <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
-                  </div>
-                </div>
-              </div>
-            </div>
-
+            <FilterableProductLayout title="Kitchen + Tabletop" itemCount={3061}>
             <div className="grid grid-cols-2 gap-x-4 gap-y-10 md:grid-cols-3 lg:grid-cols-3">
               {allProducts.map((product, idx) => (
                 <article key={idx} className="bg-white group cursor-pointer flex flex-col">
@@ -305,6 +284,7 @@ export default function KitchenTabletopPage() {
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path fillRule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/></svg>
               </button>
             </div>
+            </FilterableProductLayout>
           </div>
 
           {/* Related Searches */}

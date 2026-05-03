@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ChevronDown, Heart } from "lucide-react";
 import Header from "@/components/layout/Header";
+import FilterableProductLayout from "@/components/ui/FilterableProductLayout";
 import Footer from "@/components/layout/Footer";
 import HelpChat from "@/components/layout/HelpChat";
 
@@ -78,39 +79,13 @@ export default function LightingPage() {
         </section>
 
         {/* MAIN CATEGORY SECTION: Lighting */}
-        <section className="mx-auto max-w-[1400px] px-4 pt-10 sm:px-6">
-          <div className="flex items-end gap-2 pb-6">
-            <h2 className="text-2xl font-bold text-slate-950 sm:text-[28px]">Lighting</h2>
-            <span className="pb-1 text-[13px] text-slate-600">2,212 Items</span>
-          </div>
+        <FilterableProductLayout title="Lighting" itemCount={2212}>
 
-          <div className="flex flex-col justify-between gap-4 border-b border-slate-200 pb-4 sm:flex-row sm:items-center">
-            <button className="flex w-fit items-center justify-center border border-slate-300 bg-white px-10 py-2.5 text-[13px] font-medium text-slate-900 hover:border-slate-400">
-              <svg className="mr-2 h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M22 3H2l8 9.46V19l4 2v-8.54L22 3z"/></svg>
-              Show Filters
-            </button>
-            <div className="flex items-center text-[13px]">
-              <span className="mr-3 text-slate-600">Sort By</span>
-              <div className="relative w-[200px]">
-                <select className="appearance-none w-full border border-slate-300 bg-white py-2.5 pl-3 pr-8 text-[13px] text-slate-900 outline-none hover:border-slate-400 focus:border-slate-900">
-                  <option>Recommended</option>
-                  <option>Price: Low to High</option>
-                  <option>Price: High to Low</option>
-                  <option>Customer Ratings</option>
-                </select>
-                <ChevronDown className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-500" />
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* 3-COLUMN PRODUCT GRID */}
-        <section className="mx-auto max-w-[1400px] px-4 pb-16 pt-8 sm:px-6">
           <div className="grid grid-cols-2 gap-x-4 gap-y-10 md:grid-cols-3 lg:gap-x-6 lg:gap-y-12">
             {mainGridProducts.map((p) => (
               <div key={p.id} className="group relative flex flex-col">
                 <div className="relative aspect-square w-full overflow-hidden bg-[#f4f4f4]">
-                  <Image src={p.image} alt={p.name} fill className="object-cover mix-blend-multiply" />
+                  <Image src={p.image || "/images/hero.png"} alt={p.name} fill className="object-cover mix-blend-multiply" />
                   <button className="absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-full bg-white/80 text-slate-600 shadow-sm backdrop-blur-sm hover:text-slate-950 hover:bg-white">
                     <Heart className="h-4 w-4" />
                   </button>
@@ -122,22 +97,24 @@ export default function LightingPage() {
                 </div>
 
                 <div className="mt-3 flex flex-1 flex-col">
-                  {/* Colors */}
-                  <div className="mb-1.5 flex items-center gap-1">
-                    {p.colors && p.colors.map((color, idx) => (
-                      <div key={idx} className="h-[15px] w-[15px] rounded-full border border-slate-300" style={{ backgroundColor: color }}></div>
-                    ))}
-                    {p.colorCount && <span className="text-[11px] text-slate-500">{p.colorCount} Colors</span>}
-                  </div>
+                  {p.colors && (
+                    <div className="mb-1.5 flex items-center gap-1">
+                      {p.colors.map((color, idx) => (
+                        <div key={idx} className="h-[15px] w-[15px] rounded-full border border-slate-300" style={{ backgroundColor: color }}></div>
+                      ))}
 
+                    </div>
+                  )}
                   <h3 className="mt-0.5 text-[13px] leading-tight text-slate-900 group-hover:underline whitespace-pre-line">
                     {p.name}
                   </h3>
                   {p.subtitle && <div className="text-[12px] text-slate-500 mt-0.5">{p.subtitle}</div>}
-                  <div className="mt-1 flex items-center gap-1">
-                    <StarRating rating={p.rating} />
-                    <span className="text-[11px] text-slate-500">({p.reviews})</span>
-                  </div>
+                  {p.rating && (
+                    <div className="mt-1 flex items-center gap-1">
+                      <StarRating rating={p.rating} />
+                      <span className="text-[11px] text-slate-500">({p.reviews || 0})</span>
+                    </div>
+                  )}
                   <div className="mt-1 flex flex-wrap items-baseline gap-2">
                     <span className="text-[15px] font-bold text-[#a63f15]">${p.price}</span>
                     {p.originalPrice && (
@@ -165,13 +142,14 @@ export default function LightingPage() {
               <button className="hover:underline">3</button>
               <button className="hover:underline">4</button>
               <span>...</span>
-              <button className="hover:underline">47</button>
+              <button className="hover:underline">10</button>
             </div>
             <button className="flex h-10 w-10 items-center justify-center border border-slate-900 bg-white text-slate-900 hover:bg-slate-50" aria-label="Next page">
               <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
             </button>
           </div>
-        </section>
+
+        </FilterableProductLayout>
 
         {/* SEO Text */}
         <section className="mx-auto max-w-[1400px] px-4 pb-20 pt-8 sm:px-6">

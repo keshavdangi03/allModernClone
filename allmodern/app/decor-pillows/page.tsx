@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ChevronDown, Heart, ArrowRight } from "lucide-react";
 import Header from "@/components/layout/Header";
+import FilterableProductLayout from "@/components/ui/FilterableProductLayout";
 import Footer from "@/components/layout/Footer";
 import HelpChat from "@/components/layout/HelpChat";
 
@@ -177,7 +178,7 @@ export default function DecorPillowsPage() {
           </div>
           
           <div className="flex justify-end pt-4 pb-16 border-b border-slate-200">
-             <Link href="#" className="text-[15px] font-bold tracking-wide text-slate-900 underline underline-offset-4 hover:text-slate-600 uppercase">
+             <Link href="#" className="text-[13px] sm:text-[15px] font-bold tracking-wide text-slate-900 underline underline-offset-4 hover:text-slate-600 uppercase text-right">
                SHOP ALL HOME DECOR
              </Link>
           </div>
@@ -225,7 +226,7 @@ export default function DecorPillowsPage() {
           </div>
           
           <div className="flex justify-end pt-4 pb-16 border-b border-slate-200">
-             <Link href="#" className="text-[15px] font-bold tracking-wide text-slate-900 underline underline-offset-4 hover:text-slate-600 uppercase">
+             <Link href="#" className="text-[13px] sm:text-[15px] font-bold tracking-wide text-slate-900 underline underline-offset-4 hover:text-slate-600 uppercase text-right">
                SHOP ALL ORGANIZATIONAL DECOR
              </Link>
           </div>
@@ -270,7 +271,7 @@ export default function DecorPillowsPage() {
           </div>
           
           <div className="flex justify-end pt-4 pb-16 border-b border-slate-200">
-             <Link href="#" className="text-[15px] font-bold tracking-wide text-slate-900 underline underline-offset-4 hover:text-slate-600 uppercase">
+             <Link href="#" className="text-[13px] sm:text-[15px] font-bold tracking-wide text-slate-900 underline underline-offset-4 hover:text-slate-600 uppercase text-right">
                SHOP ALL PILLOWS + THROWS
              </Link>
           </div>
@@ -304,39 +305,13 @@ export default function DecorPillowsPage() {
         </section>
 
         {/* MAIN CATEGORY SECTION: DECOR + PILLOWS */}
-        <section className="mx-auto max-w-[1400px] px-4 pt-4 sm:px-6">
-          <div className="flex items-end gap-2 pb-6">
-            <h2 className="text-[28px] font-bold text-slate-950 sm:text-[34px]">Decor + Pillows</h2>
-            <span className="pb-2 text-[14px] text-slate-600">2,744 Items</span>
-          </div>
+        <FilterableProductLayout title="Decor + Pillows" itemCount={2744}>
 
-          <div className="flex flex-col justify-between gap-4 border-b border-slate-200 pb-4 sm:flex-row sm:items-center">
-            <button className="flex w-fit items-center justify-center border border-slate-300 bg-white px-8 py-2 text-[14px] font-medium text-slate-900 hover:border-slate-400 transition">
-              <svg className="mr-2 h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M22 3H2l8 9.46V19l4 2v-8.54L22 3z"/></svg>
-              Show Filters
-            </button>
-            <div className="flex items-center text-[13px]">
-              <span className="mr-2 text-slate-600">Sort By</span>
-              <div className="relative">
-                <select className="appearance-none border border-slate-300 bg-white py-2 pl-3 pr-8 text-[13px] text-slate-900 outline-none hover:border-slate-400 focus:border-slate-900 cursor-pointer">
-                  <option>Recommended</option>
-                  <option>Price: Low to High</option>
-                  <option>Price: High to Low</option>
-                  <option>Customer Ratings</option>
-                </select>
-                <ChevronDown className="pointer-events-none absolute right-2.5 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-500" />
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* 3-COLUMN PRODUCT GRID */}
-        <section className="mx-auto max-w-[1400px] px-4 pb-16 pt-8 sm:px-6">
           <div className="grid grid-cols-2 gap-x-4 gap-y-10 md:grid-cols-3 lg:gap-x-6 lg:gap-y-12">
-            {mainGridProducts.map((p) => (
-              <div key={p.id} className="group relative flex flex-col">
+            {mainGridProducts.map((p, idx) => (
+              <div key={p.id || idx} className="group relative flex flex-col">
                 <div className="relative aspect-square w-full overflow-hidden bg-[#f4f4f4] border border-transparent group-hover:border-slate-200 transition">
-                  <Image src={p.image} alt={p.name} fill className="object-cover mix-blend-multiply p-6" />
+                  <Image src={p.image || "/images/hero.png"} alt={p.name} fill className="object-cover mix-blend-multiply p-6" />
                   <button className="absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-full bg-white/80 text-slate-600 shadow-sm backdrop-blur-sm hover:text-red-500 hover:bg-white z-10 transition">
                     <Heart className="h-4 w-4" />
                   </button>
@@ -345,31 +320,31 @@ export default function DecorPillowsPage() {
                       {p.badge}
                     </div>
                   )}
+
                 </div>
 
                 <div className="mt-3 flex flex-1 flex-col px-1">
-                  {(p.colors > 0) && (
+                  {(p.colors && p.colors > 0) ? (
                     <div className="flex items-center gap-1 mb-2">
                       {Array.from({ length: Math.min(p.colors, 5) }).map((_, i) => (
                           <div key={i} className={`w-5 h-5 rounded-full border border-slate-300 ${['bg-slate-800', 'bg-[#c5a687]', 'bg-white', 'bg-[#466a7b]', 'bg-slate-400'][i % 5]}`} />
                       ))}
                       {p.colors > 5 && <span className="text-[12px] text-slate-500 ml-1">+{p.colors - 5}</span>}
                     </div>
-                  )}
-                  {p.subtitle && (p.colors === 0) && <div className="text-[11px] text-slate-500 mb-1">{p.subtitle}</div>}
-                  {(p.sizes && p.colors > 0) && <div className="text-[11px] text-slate-500 mb-1">{p.colors} Colors, {p.sizes} Sizes</div>}
-                  {(!p.sizes && p.colors > 0 && p.subtitle) && <div className="text-[11px] text-slate-500 mb-1">{p.colors} Colors</div>}
+                  ) : null}
+                  {p.subtitle && (!p.colors || p.colors === 0) && <div className="text-[11px] text-slate-500 mb-1">{p.subtitle}</div>}
+
                   
                   <h3 className="mt-0.5 text-[13px] leading-snug text-slate-900 group-hover:underline">
                     {p.name}
                   </h3>
                   
-                  {p.rating > 0 && (
+                  {(p.rating && p.rating > 0) ? (
                     <div className="mt-1 flex items-center gap-1">
                       <StarRating rating={p.rating} />
                       <span className="text-[11px] text-slate-500">({p.reviews})</span>
                     </div>
-                  )}
+                  ) : null}
                   
                   <div className="mt-1 flex flex-col gap-0.5 mt-auto">
                     <div className="flex items-baseline gap-2">
@@ -402,13 +377,14 @@ export default function DecorPillowsPage() {
               <button className="flex h-10 w-10 items-center justify-center hover:bg-slate-100 rounded transition">3</button>
               <button className="flex h-10 w-10 items-center justify-center hover:bg-slate-100 rounded transition">4</button>
               <span className="flex h-10 w-10 items-center justify-center">...</span>
-              <button className="flex h-10 w-10 items-center justify-center hover:bg-slate-100 rounded transition">58</button>
+              <button className="flex h-10 w-10 items-center justify-center hover:bg-slate-100 rounded transition">12</button>
             </div>
             <button className="flex h-10 w-10 items-center justify-center border border-slate-400 bg-white text-slate-800 hover:bg-slate-50 transition" aria-label="Next page">
               <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
             </button>
           </div>
-        </section>
+
+        </FilterableProductLayout>
 
         {/* SEO Text Block */}
         <section className="mx-auto max-w-[1400px] px-4 pb-8 sm:px-6">

@@ -195,7 +195,7 @@ export default function Header() {
           <div className="flex flex-1 items-center justify-end gap-2 sm:gap-3">
             <div
               ref={profileMenuRef}
-              className="relative hidden md:block"
+              className="relative"
               onMouseEnter={openProfileMenu}
               onMouseLeave={closeProfileMenu}
             >
@@ -214,14 +214,14 @@ export default function Header() {
               <AnimatePresence>
                 {profileOpen ? (
                   <motion.div
-                    className="absolute left-1/2 top-[calc(100%+4px)] z-50 w-[290px] -translate-x-1/2 pt-[10px]"
+                    className="absolute right-[-10px] top-[calc(100%+4px)] z-50 w-[290px] pt-[10px] sm:right-auto sm:left-1/2 sm:-translate-x-1/2"
                     initial={{ opacity: 0, y: -6 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -6 }}
                     transition={{ duration: 0.12, ease: "easeOut" }}
                   >
                     <div className="relative border border-[#c8ceda] bg-white px-5 py-5 shadow-lg">
-                      <div className="absolute left-1/2 top-[-6px] h-3 w-3 -translate-x-1/2 rotate-45 border-l border-t border-[#c8ceda] bg-white" />
+                      <div className="absolute right-[16px] sm:right-auto sm:left-1/2 top-[-6px] h-3 w-3 sm:-translate-x-1/2 rotate-45 border-l border-t border-[#c8ceda] bg-white" />
                       {!isAuthenticated ? (
                         <>
                           <div className="text-center">
@@ -395,103 +395,126 @@ export default function Header() {
             exit={{ opacity: 0 }}
           >
             <motion.div
-              className="absolute left-0 top-0 h-full w-[86vw] max-w-sm overflow-y-auto bg-white p-5 shadow-2xl sm:p-6"
-              initial={{ x: -360 }}
+              className="absolute left-0 top-0 flex h-full w-[86vw] max-w-sm flex-col overflow-hidden bg-white shadow-2xl"
+              initial={{ x: "-100%" }}
               animate={{ x: 0 }}
-              exit={{ x: -360 }}
+              exit={{ x: "-100%" }}
               transition={{ type: "spring", stiffness: 240, damping: 28 }}
             >
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-xs uppercase tracking-[0.35em] text-slate-500">Menu</p>
-                  <p className="mt-1 text-xl font-black text-slate-950">AllModern</p>
-                </div>
+              <div className="flex shrink-0 items-center border-b border-slate-200 px-4 py-4">
                 <button
                   type="button"
                   onClick={() => setMobileOpen(false)}
-                  className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-900 shadow-sm"
+                  className="mr-4 text-slate-500 hover:text-slate-900"
                   aria-label="Close menu"
                 >
-                  <X className="h-5 w-5" />
+                  <X className="h-[22px] w-[22px] stroke-[1]" />
                 </button>
+                <div className="text-[20px] font-medium tracking-[0.15em] uppercase text-slate-950 sm:text-[24px]">
+                  ALLMODERN
+                </div>
               </div>
 
-              <div className="mt-6">
-                <div className="relative">
-                  <Search className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-slate-400" />
-                  <input
-                    type="search"
-                    aria-label="Search site"
-                    placeholder="Search modern furniture, decor..."
-                    className="w-full rounded-full border border-slate-200 bg-slate-50 py-3.5 pl-12 pr-4 text-sm text-slate-900 outline-none focus:border-slate-400 focus:ring-2 focus:ring-orange-400/20"
-                  />
-                </div>
-
-                <div className="mt-7 space-y-2">
+              <div className="flex-1 overflow-y-auto">
+                <div className="flex flex-col">
                   {departmentNavItems.map((item) => (
                     <div key={item.label}>
                       {item.label === "Sale" ? (
                         <Link
                           href={item.href}
                           onClick={() => setMobileOpen(false)}
-                          className="flex w-full items-center justify-between rounded-2xl border border-slate-200 bg-white px-4 py-3 text-left text-sm font-semibold text-red-600 shadow-sm transition hover:border-slate-300"
+                          className="flex items-center justify-between border-b border-slate-200 px-5 py-4 text-[15px] text-slate-800 transition hover:bg-slate-50"
                         >
-                          <span>{item.label}</span>
+                          <span className="text-red-600 font-semibold">{item.label}</span>
                         </Link>
                       ) : (
-                        <>
-                          <button
-                            type="button"
-                            onClick={() => setMobileSection((current) => (current === item.label ? null : item.label))}
-                            className="flex w-full items-center justify-between rounded-2xl border border-slate-200 bg-white px-4 py-3 text-left text-sm font-semibold text-slate-900 shadow-sm transition hover:border-slate-300"
-                          >
-                            <span>{item.label}</span>
-                            <ChevronDown
-                              className={`h-4 w-4 text-slate-400 transition-transform ${mobileSection === item.label ? "rotate-180" : ""}`}
-                            />
-                          </button>
-                          <AnimatePresence>
-                            {mobileSection === item.label ? (
-                              <motion.div
-                                initial={{ height: 0, opacity: 0 }}
-                                animate={{ height: "auto", opacity: 1 }}
-                                exit={{ height: 0, opacity: 0 }}
-                                className="overflow-hidden"
-                              >
-                                <div className="space-y-3 border-l-2 border-slate-300 bg-slate-50 p-4 text-sm text-slate-700">
-                                  {categoryMenus[item.label]?.sections.map((section) => (
-                                    <div key={section.title}>
-                                      <p className="text-xs uppercase tracking-[0.32em] text-slate-500">{section.title}</p>
-                                      <div className="mt-2 space-y-1">
-                                        {section.links.map((link) => (
-                                          <a key={link} href="#" className="block rounded-xl px-3 py-2 transition hover:bg-white hover:text-slate-950">
-                                            {link}
-                                          </a>
-                                        ))}
-                                      </div>
-                                    </div>
-                                  ))}
-                                </div>
-                              </motion.div>
-                            ) : null}
-                          </AnimatePresence>
-                        </>
+                        <button
+                          type="button"
+                          onClick={() => setMobileSection((current) => (current === item.label ? null : item.label))}
+                          className="flex w-full items-center justify-between border-b border-slate-200 px-5 py-4 text-left text-[15px] text-slate-800 transition hover:bg-slate-50"
+                        >
+                          <span>{item.label}</span>
+                          {mobileSection === item.label ? (
+                            <ChevronDown className="h-4 w-4 text-slate-400 stroke-[1.5]" />
+                          ) : (
+                            <ChevronRight className="h-4 w-4 text-slate-400 stroke-[1.5]" />
+                          )}
+                        </button>
                       )}
+                      <AnimatePresence>
+                        {mobileSection === item.label && item.label !== "Sale" ? (
+                          <motion.div
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: "auto", opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
+                            className="overflow-hidden bg-slate-50"
+                          >
+                            <div className="space-y-4 p-5 border-b border-slate-200 text-[14px] text-slate-700">
+                              {categoryMenus[item.label]?.sections.map((section) => (
+                                <div key={section.title}>
+                                  <p className="mb-2 font-bold text-slate-900">{section.title}</p>
+                                  <div className="space-y-2.5">
+                                    {section.links.map((link) => (
+                                      <Link key={link} href="#" className="block hover:underline">
+                                        {link}
+                                      </Link>
+                                    ))}
+                                  </div>
+                                </div>
+                              ))}
+                            </div>
+                          </motion.div>
+                        ) : null}
+                      </AnimatePresence>
                     </div>
                   ))}
                 </div>
 
-                <div className="mt-8 rounded-3xl bg-slate-950 p-6 text-white shadow-xl">
-                  <p className="text-xs uppercase tracking-[0.35em] text-orange-300">Need help?</p>
-                  <h3 className="mt-3 text-lg font-black">Explore seasonal decor.</h3>
-                  <p className="mt-3 text-sm text-slate-300">
-                    Find curated inspiration, bold accents, and brand-new arrivals in one place.
-                  </p>
-                  <Link href="#" className="mt-5 inline-flex items-center text-sm font-semibold text-orange-300 hover:text-white">
-                    Discover more
-                    <ChevronRight className="ml-2 h-4 w-4" />
-                  </Link>
+                <div className="flex flex-col">
+                  {[
+                    "Best Sellers",
+                    "Inspiration",
+                    "Seasonal Catalog",
+                    "Shop by Style",
+                    "Free Design Services",
+                    "Trade"
+                  ].map((label) => (
+                    <Link
+                      key={label}
+                      href="#"
+                      className="border-b border-slate-200 px-5 py-4 text-[15px] text-slate-800 transition hover:bg-slate-50"
+                    >
+                      {label}
+                    </Link>
+                  ))}
                 </div>
+
+                <div className="px-5 py-6 pb-24">
+                  <h3 className="mb-5 text-[15px] font-bold text-slate-950">Shop Other Brands</h3>
+                  <div className="flex flex-col gap-6">
+                    <div className="flex items-center text-[#7F187F]">
+                      <svg className="h-[22px] w-auto" viewBox="0 0 200 45" fill="currentColor">
+                        <path d="M48.2 26.6l-5.3-15h-4.3l7 19.3h5l7-19.3h-4.2l-5.2 15zm23-4c-3.4 0-5.6-2.1-5.6-5.5s2.2-5.5 5.6-5.5 5.6 2.1 5.6 5.5-2.2 5.5-5.6 5.5zm0-14.3c-5.7 0-9.8 3.8-9.8 8.8s4 8.8 9.8 8.8 9.8-3.8 9.8-8.8-4-8.8-9.8-8.8zm21.1 27.6l10-27h-4.7l-7.7 20.8-2.6-7h-4.2l5.4 14.6-5.2 14 4 1.2 5-13.6zm13.1-23.4h-3.3v-4h3.3v4zm0 2.2h-3.3v15h3.3v-15zm13-10.7c-2 0-3.6 1.6-3.6 3.6 0 2 1.6 3.6 3.6 3.6s3.6-1.6 3.6-3.6c0-2-1.6-3.6-3.6-3.6zm1.7 13.5v-2.8h-3.4v15h3.4v-8.2c0-3.3 1.5-4.4 3.4-4.4v-3c-1.3 0-2.6.8-3.4 3.4zm10.7-5.1c-3.4 0-5.6 2.1-5.6 5.5s2.2 5.5 5.6 5.5 5.6-2.1 5.6-5.5-2.2-5.5-5.6-5.5zm0-3.4c5.7 0 9.8 3.8 9.8 8.8s-4 8.8-9.8 8.8-9.8-3.8-9.8-8.8 4-8.8 9.8-8.8zm-113.8 8c-2.3 0-4.3-1.8-4.3-4.2 0-2.3 2-4.2 4.3-4.2s4.3 1.8 4.3 4.2c0 2.3-2 4.2-4.3 4.2zm-9.3-4.2c0-5 3.8-9.3 8.8-9.3s8.8 4.2 8.8 9.3c0 5-3.8 9.3-8.8 9.3s-8.8-4.2-8.8-9.3zm-6.2 8.3c2.3 0 4.3 1.8 4.3 4.2 0 2.3-2 4.2-4.3 4.2s-4.3-1.8-4.3-4.2c0-2.3 2-4.2 4.3-4.2zm9.3 4.2c0 5-3.8 9.3-8.8 9.3s-8.8-4.2-8.8-9.3c0-5 3.8-9.3 8.8-9.3s8.8 4.2 8.8 9.3z" />
+                      </svg>
+                    </div>
+                    <div className="flex items-center text-[#1f1d24]">
+                      <span className="font-serif text-[22px] tracking-[0.08em] text-[#1f1d24] leading-none">JOSS & MAIN</span>
+                    </div>
+                    <div className="flex items-center text-[#4b5a45]">
+                      <span className="font-serif text-[24px] tracking-wide font-medium leading-none">BIRCH <span className="underline underline-offset-[4px] decoration-1">LN</span></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="shrink-0 border-t border-slate-200 bg-white px-4 py-4 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)]">
+                <button
+                  type="button"
+                  onClick={goToAccountPage}
+                  className="w-full bg-[#222222] py-3.5 text-[15px] text-white transition hover:bg-black"
+                >
+                  Sign In
+                </button>
               </div>
             </motion.div>
           </motion.div>

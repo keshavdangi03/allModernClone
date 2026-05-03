@@ -93,8 +93,8 @@ export default function DepartmentNavigation() {
                         <span className="ml-1 text-slate-500">›</span>
                       </h3>
                       <div className="space-y-1">
-                        {column.links.map((link) => (
-                          <Link key={link} href="#" className="block text-[12px] leading-5 text-slate-700 transition hover:text-slate-950 hover:underline">
+                        {column.links.map((link, idx) => (
+                          <Link key={`${column.title}-${link}-${idx}`} href="#" className="block text-[12px] leading-5 text-slate-700 transition hover:text-slate-950 hover:underline">
                             {link}
                           </Link>
                         ))}

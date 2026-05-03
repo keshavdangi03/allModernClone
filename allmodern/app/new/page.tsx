@@ -1,6 +1,8 @@
 import Image from "next/image";
 import { ChevronDown, Heart } from "lucide-react";
 import Header from "@/components/layout/Header";
+import FilterableProductLayout from "@/components/ui/FilterableProductLayout";
+import SortFilterBar from "@/components/ui/SortFilterBar";
 import Footer from "@/components/layout/Footer";
 import HelpChat from "@/components/layout/HelpChat";
 
@@ -262,35 +264,7 @@ export default function NewPage() {
           </div>
         </section>
 
-        <section className="mx-auto max-w-[1400px] px-4 pt-3 sm:px-6">
-          <div className="flex items-end gap-2 pb-4">
-            <h2 className="text-2xl font-bold text-slate-950 sm:text-[38px]">New Arrivals</h2>
-            <span className="pb-1 text-[13px] text-slate-600">53 Items</span>
-          </div>
-
-          <div className="flex flex-col justify-between gap-4 pb-4 sm:flex-row sm:items-center">
-            <button className="flex w-fit items-center justify-center border border-slate-400 bg-white px-10 py-1.5 text-[13px] font-medium text-slate-900 hover:border-slate-500">
-              <svg className="mr-2 h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M22 3H2l8 9.46V19l4 2v-8.54L22 3z" />
-              </svg>
-              Show Filters
-            </button>
-            <div className="flex items-center text-[13px]">
-              <span className="mr-3 text-slate-600">Sort By</span>
-              <div className="relative w-[180px]">
-                <select className="appearance-none w-full border border-slate-300 bg-white py-1.5 pl-3 pr-8 text-[13px] text-slate-900 outline-none hover:border-slate-400 focus:border-slate-900">
-                  <option>Recommended</option>
-                  <option>Price: Low to High</option>
-                  <option>Price: High to Low</option>
-                  <option>Customer Ratings</option>
-                </select>
-                <ChevronDown className="pointer-events-none absolute right-2 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-500" />
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section className="mx-auto max-w-[1400px] px-4 pb-12 pt-2 sm:px-6">
+        <FilterableProductLayout title="New Arrivals" itemCount={53}>
           <div className="grid grid-cols-2 gap-x-3 gap-y-8 md:grid-cols-3 lg:gap-x-4 lg:gap-y-10">
             {products.map((p) => (
               <div key={p.id} className="group relative flex flex-col">
@@ -351,7 +325,7 @@ export default function NewPage() {
               </svg>
             </button>
           </div>
-        </section>
+        </FilterableProductLayout>
       </main>
       <Footer />
       <HelpChat />

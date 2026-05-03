@@ -1,5 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
+import Header from "@/components/layout/Header";
+import FilterableProductLayout from "@/components/ui/FilterableProductLayout";
+import SortFilterBar from "@/components/ui/SortFilterBar";
 import { ChevronDown, Heart, ArrowRight } from "lucide-react";
 
 
@@ -11,7 +14,29 @@ const rugCategories = [
   { title: "Rugs by Size", image: "/images/cat_outdoor.png" },
 ];
 
-const products = [
+type Product = {
+  id: string;
+  name: string;
+  size?: string;
+  image: string;
+  price: number;
+  originalPrice?: number;
+  isSale?: boolean;
+  rating?: number;
+  reviews?: number;
+  shippingText?: string;
+  sizesCount?: number;
+  badgeText?: string;
+  badge?: string;
+  colors?: string[];
+  colorCount?: number;
+  subtitle?: string;
+  priceStr?: string;
+  origPriceStr?: string;
+  extraText?: string;
+};
+
+const products: Product[] = [
   {
     id: "1",
     name: "Bottorff Dual Surface 0.25\" Non Slip Rug Pad",
@@ -245,81 +270,53 @@ export default function RugsPage() {
         </section>
 
         {/* Filtering and Sort Header */}
-        <section className="mx-auto max-w-[1400px] px-4 pt-16 sm:px-6">
-          <div className="flex items-end gap-2 pb-6">
-            <h2 className="text-2xl font-bold text-slate-950 sm:text-[28px]">Rugs</h2>
-            <span className="pb-1 text-[13px] text-slate-600">930 Items</span>
-          </div>
+        <FilterableProductLayout title="Rugs" itemCount={930}>
 
-          <div className="flex flex-col justify-between gap-4 border-b border-slate-200 pb-4 sm:flex-row sm:items-center">
-            <button className="flex w-fit items-center justify-center border border-slate-300 bg-white px-8 py-2 text-[13px] font-medium text-slate-900 hover:border-slate-400">
-              <svg className="mr-2 h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M22 3H2l8 9.46V19l4 2v-8.54L22 3z" />
-              </svg>
-              Show Filters
-            </button>
-            <div className="flex items-center text-[13px]">
-              <span className="mr-2 text-slate-600">Sort By</span>
-              <div className="relative">
-                <select className="appearance-none border border-slate-300 bg-white py-2 pl-3 pr-8 text-[13px] text-slate-900 outline-none hover:border-slate-400 focus:border-slate-900">
-                  <option>Recommended</option>
-                  <option>Price: Low to High</option>
-                  <option>Price: High to Low</option>
-                  <option>Customer Ratings</option>
-                </select>
-                <ChevronDown className="pointer-events-none absolute right-2.5 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-500" />
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Product Grid */}
-        <section className="mx-auto max-w-[1400px] px-4 pb-16 pt-8 sm:px-6">
           <div className="grid grid-cols-2 gap-x-4 gap-y-10 md:grid-cols-3 lg:gap-x-6 lg:gap-y-12">
-            {products.map((product) => (
-              <div key={product.id} className="group relative flex flex-col">
-                <div className="relative aspect-[0.9/1] w-full overflow-hidden bg-[#f4f4f4] sm:aspect-square">
-                  <Image
-                    src={product.image}
-                    alt={product.name}
-                    fill
-                    className="object-cover mix-blend-multiply"
-                    sizes="(max-width: 768px) 50vw, 33vw"
-                  />
+            {products.map((p) => (
+              <div key={p.id} className="group relative flex flex-col">
+                <div className="relative aspect-square w-full overflow-hidden bg-[#f4f4f4]">
+                  <Image src={p.image || "/images/hero.png"} alt={p.name} fill className="object-cover mix-blend-multiply" />
                   <button className="absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-full bg-white/80 text-slate-600 shadow-sm backdrop-blur-sm hover:text-slate-950 hover:bg-white">
                     <Heart className="h-4 w-4" />
                   </button>
-                  {product.badgeText ? (
-                    <div className="absolute bottom-0 left-0 bg-[#9c3f19] px-2 py-0.5 text-[11px] font-bold text-white">
-                      {product.badgeText}
+                  {p.badge && (
+                    <div className="absolute bottom-0 left-0 bg-[#a63f15] px-2 py-0.5 text-[11px] font-bold text-white z-10">
+                      {p.badge}
                     </div>
-                  ) : product.isSale ? (
-                    <div className="absolute bottom-0 left-0 bg-[#a63f15] px-2 py-0.5 text-[11px] font-bold text-white">
-                      Sale
-                    </div>
-                  ) : null}
+                  )}
                 </div>
 
                 <div className="mt-3 flex flex-1 flex-col">
-                  <div className="text-[11px] text-slate-500">{product.sizesCount} Sizes</div>
-                  <h3 className="mt-0.5 text-[13px] font-medium leading-tight text-slate-900 group-hover:underline">
-                    {product.name}
+                  {p.colors && (
+                    <div className="mb-1.5 flex items-center gap-1">
+                      {p.colors.map((color, idx) => (
+                        <div key={idx} className="h-[15px] w-[15px] rounded-full border border-slate-300" style={{ backgroundColor: color }}></div>
+                      ))}
+                      {p.colorCount && <span className="text-[11px] text-slate-500">{p.colorCount} Colors</span>}
+                    </div>
+                  )}
+                  <h3 className="mt-0.5 text-[13px] leading-tight text-slate-900 group-hover:underline whitespace-pre-line">
+                    {p.name}
                   </h3>
-                  <p className="mt-1 text-[11px] text-slate-500">{product.size}</p>
-
-                  <div className="mt-1 flex items-center gap-1">
-                    <StarRating rating={product.rating} />
-                    <span className="text-[11px] text-slate-500">({product.reviews})</span>
-                  </div>
-
-                  <div className="mt-1 flex items-center gap-2">
-                    <span className="text-[15px] font-bold text-[#a63f15]">${product.price}</span>
-                    {product.originalPrice && (
-                      <span className="text-[12px] text-slate-500 line-through">${product.originalPrice}</span>
+                  {p.subtitle && <div className="text-[12px] text-slate-500 mt-0.5">{p.subtitle}</div>}
+                  {p.rating && (
+                    <div className="mt-1 flex items-center gap-1">
+                      <StarRating rating={p.rating} />
+                      <span className="text-[11px] text-slate-500">({p.reviews || 0})</span>
+                    </div>
+                  )}
+                  <div className="mt-1 flex flex-wrap items-baseline gap-2">
+                    <span className="text-[15px] font-bold text-[#a63f15]">{p.priceStr || `${p.price}`}</span>
+                    {(p.origPriceStr || p.originalPrice) && (
+                      <span className="text-[12px] text-slate-500 line-through">{p.origPriceStr || `${p.originalPrice}`}</span>
                     )}
                   </div>
-                  
-                  <div className="mt-1 text-[11px] text-slate-600">{product.shippingText}</div>
+                  {p.extraText && (
+                    <div className="mt-1 text-[11px] text-slate-600 whitespace-pre-line leading-tight">
+                      {p.extraText}
+                    </div>
+                  )}
                 </div>
               </div>
             ))}
@@ -336,13 +333,14 @@ export default function RugsPage() {
               <button className="hover:underline">3</button>
               <button className="hover:underline">4</button>
               <span>...</span>
-              <button className="hover:underline">20</button>
+              <button className="hover:underline">10</button>
             </div>
             <button className="flex h-10 w-10 items-center justify-center border border-slate-900 bg-white text-slate-900 hover:bg-slate-50" aria-label="Next page">
               <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
             </button>
           </div>
-        </section>
+
+        </FilterableProductLayout>
 
         {/* SEO Text Section */}
         <section className="mx-auto max-w-[1400px] px-4 pb-12 pt-8 sm:px-6">
