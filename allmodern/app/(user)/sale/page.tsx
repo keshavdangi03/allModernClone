@@ -1,17 +1,19 @@
 import Image from "next/image";
+import Link from "next/link";
+import FurniturePage from "../furniture/page";
 
 
 
 
 const saleCategories = [
-  { title: "Furniture Sale", image: "/images/cat_living_room.png" },
-  { title: "Decor Sale", image: "/images/cat_dining.png" },
-  { title: "Lighting Sale", image: "/images/cat_bedroom.png" },
-  { title: "Rug Sale", image: "/images/cat_living_room.png" },
-  { title: "Outdoor Sale", image: "/images/cat_outdoor.png" },
-  { title: "Bed + Bath Sale", image: "/images/cat_bedroom.png" },
-  { title: "Home Renovation Sale", image: "/images/cat_dining.png" },
-  { title: "Tabletop Sale", image: "/images/cat_outdoor.png" },
+  { title: "Furniture Sale", image: "/images/cat_living_room.png", href: "/furniture" },
+  { title: "Decor Sale", image: "/images/cat_dining.png", href: "/decor-pillows" },
+  { title: "Lighting Sale", image: "/images/cat_bedroom.png", href: "/lighting" },
+  { title: "Rug Sale", image: "/images/cat_living_room.png", href: "/rugs" },
+  { title: "Outdoor Sale", image: "/images/cat_outdoor.png", href: "/outdoor" },
+  { title: "Bed + Bath Sale", image: "/images/cat_bedroom.png", href: "/bath" },
+  { title: "Home Renovation Sale", image: "/images/cat_dining.png", href: "/wall-decor" },
+  { title: "Tabletop Sale", image: "/images/cat_outdoor.png", href: "/new" },
 ];
 
 export default function SalePage() {
@@ -27,7 +29,7 @@ export default function SalePage() {
 
           <div className="mt-4 grid grid-cols-2 gap-2 md:grid-cols-4">
             {saleCategories.map((item) => (
-              <a key={item.title} href="#" className="block">
+              <a key={item.title} href={item.href} className="block">
                 <div className="relative aspect-[1.02/1] bg-slate-200">
                   <Image src={item.image} alt={item.title} fill className="object-cover" sizes="(max-width: 768px) 50vw, 25vw" />
                 </div>

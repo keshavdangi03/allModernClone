@@ -11,19 +11,19 @@ import { headerLinks, departmentNavItems, categoryMenus } from "@/components/lay
 
 const collectionsMenu = {
   links: [
-    "Outdoor Collections",
-    "Bedroom Collections",
-    "Sofa + Sectional Collections",
-    "Living Room Accent Collections",
-    "Kitchen + Dining Collections",
-    "Rug Collections",
-    "Home Office Collections",
-    "Lighting Collections",
+    { label: "Outdoor Collections", href: "/outdoor" },
+    { label: "Bedroom Collections", href: "/bedding" },
+    { label: "Sofa + Sectional Collections", href: "/furniture" },
+    { label: "Living Room Accent Collections", href: "/furniture" },
+    { label: "Kitchen + Dining Collections", href: "/kitchen-tabletop" },
+    { label: "Rug Collections", href: "/rugs" },
+    { label: "Home Office Collections", href: "/furniture" },
+    { label: "Lighting Collections", href: "/lighting" },
   ],
   tiles: [
-    { title: "Shop Top-Rated Outdoor Collections", image: "/images/cat_outdoor.png" },
-    { title: "Shop Top-Rated Bedroom Collections", image: "/images/cat_bedroom.png" },
-    { title: "Shop Top-Rated Sofa + Sectional Collections", image: "/images/cat_living_room.png" },
+    { title: "Shop Top-Rated Outdoor Collections", image: "/images/cat_outdoor.png", href: "/outdoor" },
+    { title: "Shop Top-Rated Bedroom Collections", image: "/images/cat_bedroom.png", href: "/bedding" },
+    { title: "Shop Top-Rated Sofa + Sectional Collections", image: "/images/cat_living_room.png", href: "/furniture" },
   ],
 };
 
@@ -340,18 +340,19 @@ export default function Header() {
                   <div className="space-y-1.5">
                     {collectionsMenu.links.map((link) => (
                       <Link
-                        key={link}
-                        href="#"
+                        key={link.label}
+                        href={link.href}
+                        onClick={() => setActiveTopMenu(null)}
                         className="block text-[12px] leading-5 text-slate-700 transition hover:text-slate-950 hover:underline"
                       >
-                        {link}
+                        {link.label}
                       </Link>
                     ))}
                   </div>
                 </div>
                 <div className="grid grid-cols-3 gap-2.5">
                   {collectionsMenu.tiles.map((tile) => (
-                    <Link key={tile.title} href="#" className="group block">
+                    <Link key={tile.title} href={tile.href} onClick={() => setActiveTopMenu(null)} className="group block">
                       <div className="relative aspect-[1.85/1] overflow-hidden bg-slate-100">
                         <Image
                           src={tile.image}

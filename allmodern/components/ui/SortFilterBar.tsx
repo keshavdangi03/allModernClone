@@ -19,7 +19,7 @@ const sortOptions = [
 
 export default function SortFilterBar({ 
   productCount = 546,
-  showDesktopFilters = true,
+  showDesktopFilters = false,
   onToggleDesktopFilters = () => {}
 }: SortFilterBarProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
