@@ -33,11 +33,11 @@ export const topLinks = [
 
 export const headerLinks = [
   { label: "Collections", href: "#" },
-  { label: "Best Sellers", href: "#" },
-  { label: "Inspiration", href: "#" },
-  { label: "Seasonal Catalog", href: "#" },
-  { label: "Shop by Style", href: "#" },
-  { label: "Free Design Services", href: "#" },
+  { label: "Best Sellers", href: "/best-sellers" },
+  { label: "Inspiration", href: "/inspiration" },
+  { label: "Seasonal Catalog", href: "/seasonal-catalog" },
+  { label: "Shop by Style", href: "/shop-by-style" },
+  { label: "Free Design Services", href: "/design-services" },
 ];
 
 export const departmentNavItems: DepartmentNavItem[] = [

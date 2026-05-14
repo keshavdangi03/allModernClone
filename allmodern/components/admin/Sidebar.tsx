@@ -96,14 +96,9 @@ export default function Sidebar() {
     <aside className="w-64 bg-white border-r border-gray-100 flex flex-col h-full overflow-y-auto scrollbar-hide shrink-0 shadow-sm z-10">
       {/* Logo Area */}
       <div className="h-16 flex items-center px-6 border-b border-gray-100 sticky top-0 bg-white z-20">
-        <Link href="/dashboard" className="flex items-center gap-2">
-          <div className="bg-blue-600 text-white p-1.5 rounded-lg">
-            <ShoppingCart size={24} />
-          </div>
-          <span className="text-xl font-bold text-gray-800">
-            Cozy
-            <br />
-            <span className="text-sm font-medium text-gray-500 -mt-1 block">commerce</span>
+        <Link href="/dashboard" className="flex items-center">
+          <span className="text-[20px] font-medium tracking-[0.15em] uppercase text-slate-950">
+            ALLMODERN
           </span>
         </Link>
       </div>

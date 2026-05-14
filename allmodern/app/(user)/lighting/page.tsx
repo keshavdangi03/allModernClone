@@ -1,10 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ChevronDown, Heart } from "lucide-react";
-import Header from "@/components/layout/Header";
 import FilterableProductLayout from "@/components/ui/FilterableProductLayout";
-import Footer from "@/components/layout/Footer";
-import HelpChat from "@/components/layout/HelpChat";
 
 const topCategories = [
   { title: "Ceiling Lights", image: "/images/cat_living_room.png" },
@@ -182,8 +179,6 @@ export default function LightingPage() {
         </section>
 
       </main>
-      <Footer />
-      <HelpChat />
     </>
   );
 }

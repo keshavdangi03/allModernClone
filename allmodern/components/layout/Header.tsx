@@ -11,19 +11,19 @@ import { headerLinks, departmentNavItems, categoryMenus } from "@/components/lay
 
 const collectionsMenu = {
   links: [
-    { label: "Outdoor Collections", href: "/outdoor" },
-    { label: "Bedroom Collections", href: "/bedding" },
-    { label: "Sofa + Sectional Collections", href: "/furniture" },
-    { label: "Living Room Accent Collections", href: "/furniture" },
-    { label: "Kitchen + Dining Collections", href: "/kitchen-tabletop" },
-    { label: "Rug Collections", href: "/rugs" },
-    { label: "Home Office Collections", href: "/furniture" },
-    { label: "Lighting Collections", href: "/lighting" },
+    { label: "Outdoor Collections", href: "/outdoor-collections" },
+    { label: "Bedroom Collections", href: "/bedroom-collections" },
+    { label: "Sofa + Sectional Collections", href: "/sofa-sectional-collections" },
+    { label: "Living Room Accent Collections", href: "/living-room-accent-collections" },
+    { label: "Kitchen + Dining Collections", href: "/kitchen-dining-collections" },
+    { label: "Rug Collections", href: "/rug-collections" },
+    { label: "Home Office Collections", href: "/home-office-collections" },
+    { label: "Lighting Collections", href: "/lighting-collections" },
   ],
   tiles: [
-    { title: "Shop Top-Rated Outdoor Collections", image: "/images/cat_outdoor.png", href: "/outdoor" },
-    { title: "Shop Top-Rated Bedroom Collections", image: "/images/cat_bedroom.png", href: "/bedding" },
-    { title: "Shop Top-Rated Sofa + Sectional Collections", image: "/images/cat_living_room.png", href: "/furniture" },
+    { title: "Shop Top-Rated Outdoor Collections", image: "/images/cat_outdoor.png", href: "/outdoor-collections" },
+    { title: "Shop Top-Rated Bedroom Collections", image: "/images/cat_bedroom.png", href: "/bedroom-collections" },
+    { title: "Shop Top-Rated Sofa + Sectional Collections", image: "/images/cat_living_room.png", href: "/sofa-sectional-collections" },
   ],
 };
 

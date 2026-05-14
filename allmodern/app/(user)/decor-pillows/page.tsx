@@ -1,10 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ChevronDown, Heart, ArrowRight } from "lucide-react";
-import Header from "@/components/layout/Header";
 import FilterableProductLayout from "@/components/ui/FilterableProductLayout";
-import Footer from "@/components/layout/Footer";
-import HelpChat from "@/components/layout/HelpChat";
 
 const topCategories = [
   { title: "Home Decor", image: "/images/cat_living_room.png" },
@@ -421,8 +418,6 @@ export default function DecorPillowsPage() {
            <a href="#" className="text-[12px] text-slate-500 underline mt-4 hover:text-slate-800">Privacy Policy</a>
         </section>
       </main>
-      <Footer />
-      <HelpChat />
     </>
   );
 }

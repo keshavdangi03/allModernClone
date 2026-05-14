@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import Header from "@/components/layout/Header";
+
 import FilterableProductLayout from "@/components/ui/FilterableProductLayout";
 import SortFilterBar from "@/components/ui/SortFilterBar";
 import { ChevronDown, Heart, ArrowRight } from "lucide-react";

@@ -1,9 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ChevronDown, Heart } from "lucide-react";
-import Header from "@/components/layout/Header";
-import Footer from "@/components/layout/Footer";
-import HelpChat from "@/components/layout/HelpChat";
+
 import FilterableProductLayout from "@/components/ui/FilterableProductLayout";
 
 const topCategories = [
@@ -382,8 +380,6 @@ export default function FurniturePage() {
         </section>
 
       </main>
-      <Footer />
-      <HelpChat />
     </>
   );
 }

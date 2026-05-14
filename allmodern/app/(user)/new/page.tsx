@@ -1,10 +1,7 @@
 import Image from "next/image";
 import { ChevronDown, Heart } from "lucide-react";
-import Header from "@/components/layout/Header";
 import FilterableProductLayout from "@/components/ui/FilterableProductLayout";
 import SortFilterBar from "@/components/ui/SortFilterBar";
-import Footer from "@/components/layout/Footer";
-import HelpChat from "@/components/layout/HelpChat";
 
 type Product = {
   id: string;
@@ -326,8 +323,6 @@ export default function NewPage() {
           </div>
         </FilterableProductLayout>
       </main>
-      <Footer />
-      <HelpChat />
     </>
   );
 }
