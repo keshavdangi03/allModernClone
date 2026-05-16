@@ -78,44 +78,7 @@ export default function BabyKidsPage() {
             ))}
           </div>
 
-          <FilterableProductLayout title="Baby + Kids" itemCount={547}>
-            <div className="mt-5 grid grid-cols-2 gap-3 md:grid-cols-3">
-            {productNames.map((name, idx) => (
-              <article key={name} className="bg-[#f3f3f3]">
-                <div className="relative aspect-[0.86/1] border border-[#e2e2e2] bg-[#efefef]">
-                  <Image
-                    src={idx % 3 === 0 ? "/images/cat_outdoor.png" : idx % 3 === 1 ? "/images/cat_bedroom.png" : "/images/cat_living_room.png"}
-                    alt={name}
-                    fill
-                    className="object-cover"
-                  />
-                  <button className="absolute right-2 top-2 h-7 w-7 border border-slate-300 bg-white text-[13px] text-slate-500">♡</button>
-                  {idx % 4 === 0 ? (
-                    <span className="absolute left-2 top-2 bg-[#bf5a2e] px-1 py-0.5 text-[9px] font-semibold text-white">Sale</span>
-                  ) : null}
-                </div>
-                <p className="mt-2 line-clamp-2 text-[12px] leading-4 text-slate-800">{name}</p>
-                <div className="mt-1 flex items-center gap-1 text-[11px] text-slate-600">
-                  <span>{"★".repeat(4)}☆</span>
-                  <span>({900 + idx * 31})</span>
-                </div>
-                <p className="mt-1 text-[17px] text-slate-950">${70 + idx * 15}</p>
-                <p className="text-[11px] text-slate-500">Free 1-Day Delivery</p>
-              </article>
-            ))}
-          </div>
-
-          <div className="mt-8 flex items-center justify-center gap-3 text-[14px] text-slate-700">
-            <button className="h-9 w-9 border border-slate-300 bg-white">←</button>
-            <span className="underline">1</span>
-            <span>2</span>
-            <span>3</span>
-            <span>4</span>
-            <span>...</span>
-            <span>52</span>
-            <button className="h-9 w-9 border border-slate-500 bg-white">→</button>
-          </div>
-          </FilterableProductLayout>
+          <FilterableProductLayout title="Baby + Kids" itemCount={547} products={[]} categoryName="Baby + Kids"></FilterableProductLayout>
 
           <section className="mt-10 bg-[#f3f3f3] text-slate-800">
             <h3 className="text-[34px] font-bold tracking-[-0.02em]">Baby + Kids</h3>

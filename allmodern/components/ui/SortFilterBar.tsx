@@ -9,6 +9,8 @@ interface SortFilterBarProps {
   productCount?: number;
   showDesktopFilters?: boolean;
   onToggleDesktopFilters?: () => void;
+  selectedSort?: string;
+  onSortChange?: (sort: string) => void;
 }
 
 const sortOptions = [
@@ -20,11 +22,12 @@ const sortOptions = [
 export default function SortFilterBar({ 
   productCount = 546,
   showDesktopFilters = false,
-  onToggleDesktopFilters = () => {}
+  onToggleDesktopFilters = () => {},
+  selectedSort = sortOptions[0],
+  onSortChange = () => {}
 }: SortFilterBarProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isSortDropdownOpen, setIsSortDropdownOpen] = useState(false);
-  const [selectedSort, setSelectedSort] = useState(sortOptions[0]);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   // Close dropdown when clicking outside
@@ -89,7 +92,7 @@ export default function SortFilterBar({
                         <button
                           className="flex w-full items-center justify-between px-4 py-3 text-left text-[14px] text-slate-800 hover:bg-slate-50 focus:bg-slate-50 focus:outline-none"
                           onClick={() => {
-                            setSelectedSort(option);
+                            onSortChange(option);
                             setIsSortDropdownOpen(false);
                           }}
                         >

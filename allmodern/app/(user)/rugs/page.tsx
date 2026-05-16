@@ -270,77 +270,7 @@ export default function RugsPage() {
         </section>
 
         {/* Filtering and Sort Header */}
-        <FilterableProductLayout title="Rugs" itemCount={930}>
-
-          <div className="grid grid-cols-2 gap-x-4 gap-y-10 md:grid-cols-3 lg:gap-x-6 lg:gap-y-12">
-            {products.map((p) => (
-              <div key={p.id} className="group relative flex flex-col">
-                <div className="relative aspect-square w-full overflow-hidden bg-[#f4f4f4]">
-                  <Image src={p.image || "/images/hero.png"} alt={p.name} fill className="object-cover mix-blend-multiply" />
-                  <button className="absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-full bg-white/80 text-slate-600 shadow-sm backdrop-blur-sm hover:text-slate-950 hover:bg-white">
-                    <Heart className="h-4 w-4" />
-                  </button>
-                  {p.badge && (
-                    <div className="absolute bottom-0 left-0 bg-[#a63f15] px-2 py-0.5 text-[11px] font-bold text-white z-10">
-                      {p.badge}
-                    </div>
-                  )}
-                </div>
-
-                <div className="mt-3 flex flex-1 flex-col">
-                  {p.colors && (
-                    <div className="mb-1.5 flex items-center gap-1">
-                      {p.colors.map((color, idx) => (
-                        <div key={idx} className="h-[15px] w-[15px] rounded-full border border-slate-300" style={{ backgroundColor: color }}></div>
-                      ))}
-                      {p.colorCount && <span className="text-[11px] text-slate-500">{p.colorCount} Colors</span>}
-                    </div>
-                  )}
-                  <h3 className="mt-0.5 text-[13px] leading-tight text-slate-900 group-hover:underline whitespace-pre-line">
-                    {p.name}
-                  </h3>
-                  {p.subtitle && <div className="text-[12px] text-slate-500 mt-0.5">{p.subtitle}</div>}
-                  {p.rating && (
-                    <div className="mt-1 flex items-center gap-1">
-                      <StarRating rating={p.rating} />
-                      <span className="text-[11px] text-slate-500">({p.reviews || 0})</span>
-                    </div>
-                  )}
-                  <div className="mt-1 flex flex-wrap items-baseline gap-2">
-                    <span className="text-[15px] font-bold text-[#a63f15]">{p.priceStr || `${p.price}`}</span>
-                    {(p.origPriceStr || p.originalPrice) && (
-                      <span className="text-[12px] text-slate-500 line-through">{p.origPriceStr || `${p.originalPrice}`}</span>
-                    )}
-                  </div>
-                  {p.extraText && (
-                    <div className="mt-1 text-[11px] text-slate-600 whitespace-pre-line leading-tight">
-                      {p.extraText}
-                    </div>
-                  )}
-                </div>
-              </div>
-            ))}
-          </div>
-
-          {/* Pagination */}
-          <div className="mt-16 flex items-center justify-center gap-3">
-            <button className="flex h-10 w-10 items-center justify-center border border-slate-300 bg-white text-slate-400 hover:bg-slate-50" aria-label="Previous page">
-              <svg className="h-4 w-4 rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-            </button>
-            <div className="flex items-center gap-4 text-[13px] text-slate-700">
-              <span className="font-bold underline underline-offset-4">1</span>
-              <button className="hover:underline">2</button>
-              <button className="hover:underline">3</button>
-              <button className="hover:underline">4</button>
-              <span>...</span>
-              <button className="hover:underline">10</button>
-            </div>
-            <button className="flex h-10 w-10 items-center justify-center border border-slate-900 bg-white text-slate-900 hover:bg-slate-50" aria-label="Next page">
-              <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-            </button>
-          </div>
-
-        </FilterableProductLayout>
+        <FilterableProductLayout title="Rugs" itemCount={930} products={products} categoryName="Rugs"></FilterableProductLayout>
 
         {/* SEO Text Section */}
         <section className="mx-auto max-w-[1400px] px-4 pb-12 pt-8 sm:px-6">

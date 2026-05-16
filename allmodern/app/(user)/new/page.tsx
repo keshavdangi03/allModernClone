@@ -260,68 +260,7 @@ export default function NewPage() {
           </div>
         </section>
 
-        <FilterableProductLayout title="New Arrivals" itemCount={53}>
-          <div className="grid grid-cols-2 gap-x-3 gap-y-8 md:grid-cols-3 lg:gap-x-4 lg:gap-y-10">
-            {products.map((p) => (
-              <div key={p.id} className="group relative flex flex-col">
-                <div className="relative aspect-square w-full overflow-hidden bg-[#f4f4f4]">
-                  <Image src={p.image} alt={p.name} fill className="object-cover mix-blend-multiply" />
-                  <button className="absolute right-2 top-2 flex h-7 w-7 items-center justify-center bg-white/85 text-slate-600 hover:text-slate-950 hover:bg-white">
-                    <Heart className="h-4 w-4" />
-                  </button>
-                  {p.badge && (
-                    <div className="absolute bottom-0 left-0 bg-[#a63f15] px-2 py-0.5 text-[10px] font-bold text-white z-10">{p.badge}</div>
-                  )}
-                </div>
-
-                <div className="mt-2 flex flex-1 flex-col">
-                  {(p.colors || p.moreColors) && (
-                    <div className="mb-1 flex items-center gap-1">
-                      {p.colors?.map((color, idx) => (
-                        <div key={idx} className="h-[15px] w-[15px] rounded-full border border-slate-300" style={{ backgroundColor: color }} />
-                      ))}
-                      {p.moreColors ? <span className="text-[11px] text-slate-500">+ {p.moreColors}</span> : null}
-                    </div>
-                  )}
-
-                  <h3 className="text-[13px] leading-tight text-slate-900 group-hover:underline">{p.name}</h3>
-                  {p.subtitle ? <div className="mt-0.5 text-[11px] text-slate-500">{p.subtitle}</div> : null}
-                  {p.rating > 0 ? (
-                    <div className="mt-0.5 flex items-center gap-1">
-                      <StarRating rating={p.rating} />
-                      <span className="text-[11px] text-slate-500">({p.reviews})</span>
-                    </div>
-                  ) : null}
-                  <div className="mt-1 flex items-baseline gap-1.5">
-                    <span className="text-[24px] font-semibold leading-none text-[#a63f15]">${p.price}</span>
-                    {p.originalPrice ? <span className="text-[12px] text-slate-500 line-through">${p.originalPrice}</span> : null}
-                  </div>
-                  <div className="mt-0.5 text-[11px] text-slate-600">Free Fast Delivery</div>
-                  {p.quickview ? <button className="mt-1 w-fit text-[11px] underline">Quickview</button> : null}
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <div className="mt-10 flex items-center justify-center gap-4">
-            <button className="flex h-8 w-8 items-center justify-center border border-slate-300 bg-white text-slate-500 hover:bg-slate-50" aria-label="Previous page">
-              <svg className="h-4 w-4 rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M5 12h14M12 5l7 7-7 7" />
-              </svg>
-            </button>
-            <div className="flex items-center gap-4 text-[13px] text-slate-700">
-              <span className="font-bold underline underline-offset-4">1</span>
-              <button className="hover:underline">2</button>
-              <button className="hover:underline">3</button>
-              <button className="hover:underline">4</button>
-            </div>
-            <button className="flex h-8 w-8 items-center justify-center border border-slate-500 bg-white text-slate-900 hover:bg-slate-50" aria-label="Next page">
-              <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M5 12h14M12 5l7 7-7 7" />
-              </svg>
-            </button>
-          </div>
-        </FilterableProductLayout>
+        <FilterableProductLayout title="New Arrivals" itemCount={53} products={products} categoryName="New"></FilterableProductLayout>
       </main>
     </>
   );

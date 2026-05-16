@@ -225,66 +225,7 @@ export default function KitchenTabletopPage() {
               </a>
             </div>
 
-            <FilterableProductLayout title="Kitchen + Tabletop" itemCount={3061}>
-            <div className="grid grid-cols-2 gap-x-4 gap-y-10 md:grid-cols-3 lg:grid-cols-3">
-              {allProducts.map((product, idx) => (
-                <article key={idx} className="bg-white group cursor-pointer flex flex-col">
-                  <div className="relative aspect-square bg-[#f8f8f8] mb-3 border border-transparent group-hover:border-slate-300 transition-colors">
-                    <Image src={product.image} alt={product.name} fill className="object-cover mix-blend-multiply p-6" />
-                    <button className="absolute right-3 top-3 h-8 w-8 rounded-full bg-white/80 border border-slate-200 flex items-center justify-center text-slate-500 hover:text-red-500 hover:bg-white shadow-sm transition-colors z-10">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 16 16"><path d="M8 2.748l-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/></svg>
-                    </button>
-                    {product.sale && (
-                      <span className="absolute left-3 bottom-3 bg-[#bf5a2e] px-1.5 py-0.5 text-[12px] font-semibold text-white tracking-wide z-10">Sale</span>
-                    )}
-                    {product.badge && (
-                      <span className="absolute left-3 top-3 bg-white px-2 py-0.5 text-[10px] font-bold text-slate-900 tracking-wide uppercase shadow-sm z-10">{product.badge}</span>
-                    )}
-                  </div>
-                  <div className="px-1 flex flex-col flex-1">
-                    {(product.colors) && (
-                      <div className="flex items-center gap-1 mb-2">
-                        {Array.from({ length: Math.min(product.colors, 5) }).map((_, i) => (
-                           <div key={i} className={`w-5 h-5 rounded-full border border-slate-300 ${['bg-slate-800', 'bg-[#c5a687]', 'bg-white', 'bg-[#466a7b]', 'bg-slate-400'][i % 5]}`} />
-                        ))}
-                        {product.colors > 5 && <span className="text-[12px] text-slate-500 ml-1">+{product.colors - 5}</span>}
-                      </div>
-                    )}
-                    <h3 className="text-[14px] leading-snug text-slate-800 mb-1 line-clamp-2 group-hover:underline">{product.name}</h3>
-                    <div className="flex items-center gap-1 text-[12px] text-slate-600 mb-2">
-                      <span className="text-slate-800 tracking-tighter">{"★".repeat(product.rating)}{"☆".repeat(5 - product.rating)}</span>
-                      <span>({product.reviews})</span>
-                    </div>
-                    <div className="flex items-center gap-2 mb-1 mt-auto">
-                      {product.sale && product.originalPrice ? (
-                        <>
-                          <span className="font-bold text-[18px] text-[#bf5a2e]">${product.price}</span>
-                          <span className="text-slate-500 line-through text-[14px]">${product.originalPrice}</span>
-                        </>
-                      ) : (
-                        <span className="font-bold text-[18px] text-slate-900">${product.price}</span>
-                      )}
-                    </div>
-                  </div>
-                </article>
-              ))}
-            </div>
-
-            <div className="mt-16 mb-8 flex items-center justify-center gap-2 text-[15px] text-slate-700">
-              <button className="h-10 w-10 border border-slate-300 bg-white flex items-center justify-center text-slate-400 hover:border-slate-400 hover:text-slate-600 transition-colors">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path fillRule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/></svg>
-              </button>
-              <span className="h-10 w-10 flex items-center justify-center border-b-2 border-slate-900 font-semibold text-slate-900">1</span>
-              <button className="h-10 w-10 flex items-center justify-center hover:bg-slate-100 rounded transition-colors">2</button>
-              <button className="h-10 w-10 flex items-center justify-center hover:bg-slate-100 rounded transition-colors">3</button>
-              <button className="h-10 w-10 flex items-center justify-center hover:bg-slate-100 rounded transition-colors">4</button>
-              <span className="h-10 w-10 flex items-center justify-center">...</span>
-              <button className="h-10 w-10 flex items-center justify-center hover:bg-slate-100 rounded transition-colors">64</button>
-              <button className="h-10 w-10 border border-slate-400 bg-white flex items-center justify-center text-slate-800 hover:bg-slate-50 transition-colors">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path fillRule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/></svg>
-              </button>
-            </div>
-            </FilterableProductLayout>
+            <FilterableProductLayout title="Kitchen + Tabletop" itemCount={3061} products={allProducts} categoryName="Kitchen + Tabletop"></FilterableProductLayout>
           </div>
 
           {/* Related Searches */}

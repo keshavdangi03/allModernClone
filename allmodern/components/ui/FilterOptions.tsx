@@ -95,12 +95,12 @@ export function CustomCheckbox({ label, id }: { label: React.ReactNode; id: stri
   );
 }
 
-export function CustomToggle({ label, id, isSale = false }: { label: React.ReactNode; id: string; isSale?: boolean }) {
+export function CustomToggle({ label, id, isSale = false, checked, onChange }: { label: React.ReactNode; id: string; isSale?: boolean; checked?: boolean; onChange?: () => void }) {
   return (
     <label htmlFor={id} className="flex cursor-pointer items-center justify-between py-3">
       <div className="flex items-center gap-3">
         <div className="relative inline-flex h-8 w-[56px] items-center rounded-full border border-slate-400 bg-white transition-colors peer-checked:bg-slate-800">
-          <input type="checkbox" id={id} className="peer sr-only" />
+          <input type="checkbox" id={id} className="peer sr-only" checked={checked} onChange={onChange} />
           <span className="inline-block h-6 w-6 translate-x-1 rounded-full bg-slate-600 transition-transform peer-checked:translate-x-[26px] peer-checked:bg-white" />
         </div>
         <span className={`text-[15px] ${isSale ? "bg-[#8f3a1e] px-2 py-0.5 text-white" : "text-slate-800"}`}>
@@ -123,7 +123,7 @@ export function StarRating({ stars }: { stars: number }) {
   );
 }
 
-export function FilterOptionsList({ isMobile = false }: { isMobile?: boolean }) {
+export function FilterOptionsList({ isMobile = false, isSaleOnly, onToggleSale }: { isMobile?: boolean, isSaleOnly?: boolean, onToggleSale?: () => void }) {
   return (
     <>
       {/* Sort (Only on Mobile, Desktop uses dropdown in toolbar) */}
@@ -158,7 +158,7 @@ export function FilterOptionsList({ isMobile = false }: { isMobile?: boolean }) 
       {/* Filters (Toggles) */}
       <div className="border-b border-slate-200 py-4">
         {isMobile && <h3 className="mb-2 font-bold text-slate-900">Filters</h3>}
-        <CustomToggle id="filter-sale" label="Sale" isSale />
+        <CustomToggle id="filter-sale" label="Sale" isSale checked={isSaleOnly} onChange={onToggleSale} />
         <CustomToggle id="filter-fast" label={<>Fast Delivery to: <span className="underline">67346</span></>} />
       </div>
 

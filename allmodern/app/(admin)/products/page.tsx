@@ -1,12 +1,11 @@
 "use client";
 
-import React, { useState } from "react";
-import Image from "next/image";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { Pencil, Trash2, Plus, ArrowLeft, ArrowRight } from "lucide-react";
 
 // Mock data from allmodern clone components
-const allProducts = [
+const initialProducts = [
   { id: 1, name: "Miller 56\" Upholstered Loveseat", image: "/images/cat_living_room.png" },
   { id: 2, name: "Bennett Upholstered Swivel Barrel Chair", image: "/images/cat_dining.png" },
   { id: 3, name: "Miller 84\" Upholstered Sofa", image: "/images/hero.png" },
@@ -18,11 +17,25 @@ const allProducts = [
 ];
 
 export default function ProductsPage() {
+  const [products, setProducts] = useState<any[]>([]);
+  const [isLoaded, setIsLoaded] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 6;
-  const totalPages = Math.ceil(allProducts.length / itemsPerPage);
 
-  const paginatedProducts = allProducts.slice(
+  useEffect(() => {
+    const saved = localStorage.getItem("allmodern_admin_products");
+    if (saved) {
+      setProducts(JSON.parse(saved));
+    } else {
+      setProducts(initialProducts);
+      localStorage.setItem("allmodern_admin_products", JSON.stringify(initialProducts));
+    }
+    setIsLoaded(true);
+  }, []);
+
+  const itemsPerPage = 6;
+  const totalPages = Math.ceil(products.length / itemsPerPage);
+
+  const paginatedProducts = products.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
@@ -33,13 +46,26 @@ export default function ProductsPage() {
     }
   };
 
+  const handleDelete = (productId: any) => {
+    if (window.confirm("Are you sure you want to delete this product?")) {
+      const updatedProducts = products.filter(p => p.id !== productId);
+      setProducts(updatedProducts);
+      localStorage.setItem("allmodern_admin_products", JSON.stringify(updatedProducts));
+      
+      // If we deleted the last item on the current page, go back one page
+      if (updatedProducts.length > 0 && currentPage > Math.ceil(updatedProducts.length / itemsPerPage)) {
+        setCurrentPage(Math.max(1, currentPage - 1));
+      }
+    }
+  };
+
   return (
     <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden flex flex-col min-h-[600px]">
       {/* Header */}
       <div className="p-6 border-b border-gray-50 flex items-center justify-between">
         <h2 className="text-lg font-bold text-[#1f2937]">All Products</h2>
         <Link 
-          href="/admin/products/add" 
+          href="/products/add" 
           className="bg-[#1f2937] hover:bg-gray-800 text-white px-4 py-2 rounded-lg text-sm font-medium flex items-center gap-2 transition-colors"
         >
           <Plus size={16} />
@@ -54,12 +80,13 @@ export default function ProductsPage() {
             <div key={product.id} className="group">
               <div className="border border-gray-100 rounded-xl p-4 flex flex-col h-[280px] bg-white shadow-sm hover:shadow-md transition-shadow">
                 <div className="flex-1 relative w-full mb-4 flex items-center justify-center overflow-hidden rounded-lg bg-gray-50/50">
-                  <Image
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
                     src={product.image}
                     alt={product.name}
-                    width={200}
-                    height={200}
-                    className="object-contain max-h-full mix-blend-multiply"
+                    className="object-contain max-h-full mix-blend-multiply w-[200px] h-[200px]"
+                    onError={(e) => (e.currentTarget.style.display = 'none')}
+                    onLoad={(e) => (e.currentTarget.style.display = 'block')}
                   />
                 </div>
                 <div className="flex items-center gap-2 mt-auto">
@@ -67,7 +94,10 @@ export default function ProductsPage() {
                     <Pencil size={16} />
                     Edit Product
                   </button>
-                  <button className="w-10 h-10 border border-gray-200 rounded-lg flex items-center justify-center text-gray-500 hover:text-red-600 hover:border-red-200 hover:bg-red-50 transition-colors shrink-0">
+                  <button 
+                    onClick={() => handleDelete(product.id)}
+                    className="w-10 h-10 border border-gray-200 rounded-lg flex items-center justify-center text-gray-500 hover:text-red-600 hover:border-red-200 hover:bg-red-50 transition-colors shrink-0"
+                  >
                     <Trash2 size={16} />
                   </button>
                 </div>

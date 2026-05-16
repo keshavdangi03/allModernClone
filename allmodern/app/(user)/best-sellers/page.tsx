@@ -139,25 +139,7 @@ export default function BestSellersPage() {
       </section>
 
       {/* Main Filterable Layout */}
-      <FilterableProductLayout title="Top-Rated Best Sellers" itemCount={486}>
-        <div className="grid grid-cols-2 gap-x-4 gap-y-10 md:grid-cols-3 lg:gap-x-6 lg:gap-y-12">
-          {bestSellerProducts.map((product, idx) => (
-            <ProductCard key={idx} product={product} />
-          ))}
-        </div>
-
-        {/* Pagination Dummy */}
-        <div className="mt-16 flex items-center justify-center gap-1 border-t border-slate-200 pt-10">
-           <button className="flex h-10 w-10 items-center justify-center border border-slate-200 text-slate-400 opacity-50" disabled>&larr;</button>
-           <button className="flex h-10 w-10 items-center justify-center font-bold text-slate-900 border-b-2 border-slate-900">1</button>
-           <button className="flex h-10 w-10 items-center justify-center font-semibold text-slate-500 hover:text-slate-900">2</button>
-           <button className="flex h-10 w-10 items-center justify-center font-semibold text-slate-500 hover:text-slate-900">3</button>
-           <button className="flex h-10 w-10 items-center justify-center font-semibold text-slate-500 hover:text-slate-900">4</button>
-           <span className="flex h-10 w-8 items-center justify-center text-slate-400">...</span>
-           <button className="flex h-10 w-10 items-center justify-center font-semibold text-slate-500 hover:text-slate-900">11</button>
-           <button className="flex h-10 w-10 items-center justify-center border border-slate-200 text-slate-900 hover:bg-slate-50">&rarr;</button>
-        </div>
-      </FilterableProductLayout>
+      <FilterableProductLayout title="Top-Rated Best Sellers" itemCount={486} products={bestSellerProducts} categoryName="Top-Rated Best Sellers"></FilterableProductLayout>
     </main>
   );
 }

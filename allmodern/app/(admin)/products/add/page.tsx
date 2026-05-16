@@ -1,11 +1,13 @@
 "use client";
 
 import React, { useState } from "react";
+import { useRouter } from "next/navigation";
 import { 
   Bold, Italic, Underline as UnderlineIcon, Strikethrough, 
   AlignLeft, AlignCenter, AlignRight, Type,
   Plus, X
 } from "lucide-react";
+import { categoryMenus } from "@/components/layout/navigation-data";
 
 const ALLMODERN_CATEGORIES = [
   { id: "furniture", label: "Furniture" },
@@ -22,18 +24,32 @@ const ALLMODERN_CATEGORIES = [
 ];
 
 export default function AddProductPage() {
+  const router = useRouter();
   const [title, setTitle] = useState("");
   const [slug, setSlug] = useState("");
   const [description, setDescription] = useState("");
   const [shortDescription, setShortDescription] = useState("");
-  const [category, setCategory] = useState("");
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [price, setPrice] = useState("0");
   const [discountedPrice, setDiscountedPrice] = useState("0");
   
+  const [images, setImages] = useState<{ id: number; url: string }[]>([]);
   const [variants, setVariants] = useState<{ id: number; value: string }[]>([]);
   const [customAttributes, setCustomAttributes] = useState<{ id: number; value: string }[]>([]);
   const [additionalInfo, setAdditionalInfo] = useState<{ id: number; value: string }[]>([]);
   const [body, setBody] = useState("");
+
+  const addImage = () => {
+    setImages((prev) => [...prev, { id: Date.now(), url: "" }]);
+  };
+
+  const removeImage = (id: number) => {
+    setImages((prev) => prev.filter((img) => img.id !== id));
+  };
+
+  const updateImage = (id: number, url: string) => {
+    setImages((prev) => prev.map((img) => (img.id === id ? { ...img, url } : img)));
+  };
 
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newTitle = e.target.value;
@@ -66,11 +82,51 @@ export default function AddProductPage() {
   };
 
   const handleSave = () => {
-    if (!title || !shortDescription || !category || !price) {
+    if (!title || !shortDescription || selectedCategories.length === 0 || !price) {
       alert("Please fill in all required fields.");
       return;
     }
+
+    const newProduct = {
+      id: Date.now(),
+      name: title,
+      image: images.length > 0 ? images[0].url : "/images/hero.png",
+      slug,
+      description,
+      shortDescription,
+      categories: selectedCategories,
+      price,
+      discountedPrice,
+      images,
+      variants,
+      customAttributes,
+      additionalInfo,
+      body,
+    };
+
+    const saved = localStorage.getItem("allmodern_admin_products");
+    let products = [];
+    if (saved) {
+      products = JSON.parse(saved);
+    } else {
+      // Mock data initial state
+      products = [
+        { id: 1, name: "Miller 56\" Upholstered Loveseat", image: "/images/cat_living_room.png" },
+        { id: 2, name: "Bennett Upholstered Swivel Barrel Chair", image: "/images/cat_dining.png" },
+        { id: 3, name: "Miller 84\" Upholstered Sofa", image: "/images/hero.png" },
+        { id: 4, name: "Miller Upholstered Armchair", image: "/images/cat_living_room.png" },
+        { id: 5, name: "Bennett Vegan Leather Swivel Barrel Chair", image: "/images/cat_bedroom.png" },
+        { id: 6, name: "Miller 2 - Piece Upholstered Chaise Sectional", image: "/images/cat_outdoor.png" },
+        { id: 7, name: "Salma Colorful Enamel End Table", image: "/images/cat_dining.png" },
+        { id: 8, name: "Rustic Pine Wood Platform Bed", image: "/images/cat_bedroom.png" }
+      ];
+    }
+
+    products.unshift(newProduct);
+    localStorage.setItem("allmodern_admin_products", JSON.stringify(products));
+
     alert("Product saved successfully!");
+    router.push("/products");
   };
 
   const RichTextToolbar = () => (
@@ -146,37 +202,63 @@ export default function AddProductPage() {
           </div>
         </div>
 
-        {/* Short Description & Category */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div>
-            <label className="block text-sm font-medium text-gray-500 mb-2">Short Description <span className="text-red-500">*</span></label>
-            <input
-              type="text"
-              placeholder="Write short description"
-              value={shortDescription}
-              onChange={(e) => setShortDescription(e.target.value)}
-              className="w-full px-4 py-3 text-sm border border-gray-200 rounded-xl focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 bg-white text-gray-700"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-500 mb-2">Category <span className="text-red-500">*</span></label>
-            <div className="relative">
-              <select
-                value={category}
-                onChange={(e) => setCategory(e.target.value)}
-                className="w-full px-4 py-3 text-sm border border-gray-200 rounded-xl focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 bg-white text-gray-700 appearance-none"
-              >
-                <option value="" disabled>Select a category</option>
-                {ALLMODERN_CATEGORIES.map((cat) => (
-                  <option key={cat.id} value={cat.id}>{cat.label}</option>
-                ))}
-              </select>
-              <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-gray-500">
-                <svg className="h-4 w-4 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                  <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
-                </svg>
+        {/* Short Description */}
+        <div>
+          <label className="block text-sm font-medium text-gray-500 mb-2">Short Description <span className="text-red-500">*</span></label>
+          <input
+            type="text"
+            placeholder="Write short description"
+            value={shortDescription}
+            onChange={(e) => setShortDescription(e.target.value)}
+            className="w-full px-4 py-3 text-sm border border-gray-200 rounded-xl focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 bg-white text-gray-700"
+          />
+        </div>
+
+        {/* Categories */}
+        <div>
+          <label className="block text-sm font-medium text-gray-500 mb-2">Categories & Subcategories <span className="text-red-500">*</span></label>
+          <div className="border border-gray-200 p-4 rounded-xl max-h-96 overflow-y-auto bg-white space-y-6">
+            {Object.entries(categoryMenus).map(([mainCategory, data]) => (
+              <div key={mainCategory} className="space-y-3">
+                <div className="font-bold text-gray-800 border-b pb-2 sticky top-0 bg-white z-10 flex items-center gap-2">
+                  <input 
+                    type="checkbox"
+                    checked={selectedCategories.includes(mainCategory)}
+                    onChange={() => {
+                      setSelectedCategories(prev => 
+                        prev.includes(mainCategory) 
+                          ? prev.filter(id => id !== mainCategory)
+                          : [...prev, mainCategory]
+                      );
+                    }}
+                    className="w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500 cursor-pointer"
+                  />
+                  <span>{mainCategory} (Main Category)</span>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2 pl-2">
+                  {Array.from(new Set(data.sections.flatMap(s => s.links))).map((subCat) => {
+                    const val = `${mainCategory} > ${subCat}`;
+                    return (
+                      <label key={val} className="flex items-start gap-2 cursor-pointer hover:bg-gray-50 p-1 rounded">
+                        <input 
+                          type="checkbox"
+                          checked={selectedCategories.includes(val)}
+                          onChange={() => {
+                            setSelectedCategories(prev => 
+                              prev.includes(val) 
+                                ? prev.filter(id => id !== val)
+                                : [...prev, val]
+                            );
+                          }}
+                          className="mt-0.5 w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500 cursor-pointer shrink-0"
+                        />
+                        <span className="text-sm text-gray-700 leading-tight">{subCat}</span>
+                      </label>
+                    );
+                  })}
+                </div>
               </div>
-            </div>
+            ))}
           </div>
         </div>
 
@@ -200,6 +282,57 @@ export default function AddProductPage() {
               className="w-full px-4 py-3 text-sm border border-gray-200 rounded-xl focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 bg-white text-gray-700"
             />
           </div>
+        </div>
+
+        {/* Images */}
+        <div className="space-y-4">
+          <label className="block text-sm font-medium text-gray-500">Product Images</label>
+          {images.length === 0 ? (
+            <div className="w-full px-4 py-3 text-sm border border-gray-100 rounded-xl bg-gray-50/50 text-gray-400 text-center">
+              No images added.
+            </div>
+          ) : (
+            <div className="space-y-3">
+              {images.map((img) => (
+                <div key={img.id} className="flex items-start gap-3">
+                  <div className="flex-1 space-y-2">
+                    <input
+                      type="text"
+                      value={img.url}
+                      onChange={(e) => updateImage(img.id, e.target.value)}
+                      placeholder="Enter image URL (e.g., /images/product.png or https://...)"
+                      className="w-full px-4 py-2.5 text-sm border border-gray-200 rounded-xl focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 text-gray-700"
+                    />
+                    {img.url && (
+                      <div className="relative w-20 h-20 border border-gray-200 rounded-lg overflow-hidden bg-gray-50 flex items-center justify-center">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img 
+                          src={img.url} 
+                          alt="Preview" 
+                          className="max-w-full max-h-full object-contain" 
+                          onError={(e) => (e.currentTarget.style.display = 'none')} 
+                          onLoad={(e) => (e.currentTarget.style.display = 'block')}
+                        />
+                      </div>
+                    )}
+                  </div>
+                  <button
+                    onClick={() => removeImage(img.id)}
+                    className="p-2.5 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-xl transition-colors border border-transparent hover:border-red-100 shrink-0"
+                  >
+                    <X size={18} />
+                  </button>
+                </div>
+              ))}
+            </div>
+          )}
+          <button
+            onClick={addImage}
+            className="bg-[#1f2937] hover:bg-gray-800 text-white px-4 py-2 rounded-lg text-sm font-medium flex items-center gap-2 transition-colors w-fit"
+          >
+            <Plus size={16} />
+            Add Image
+          </button>
         </div>
 
         {/* Dynamic Lists */}
