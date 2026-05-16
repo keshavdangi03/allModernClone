@@ -42,6 +42,9 @@ export default function Header() {
   const profileMenuRef = useRef<HTMLDivElement | null>(null);
   const searchRef = useRef<HTMLDivElement | null>(null);
 
+  const [dynamicCategoryMenus, setDynamicCategoryMenus] = useState<any>(categoryMenus);
+  const [dynamicDepartmentNavItems, setDynamicDepartmentNavItems] = useState<any[]>(departmentNavItems);
+
   const openTopMenu = (label: string) => {
     if (topMenuCloseTimeoutRef.current) {
       clearTimeout(topMenuCloseTimeoutRef.current);
@@ -81,6 +84,50 @@ export default function Header() {
     // eslint-disable-next-line
     setIsAuthenticated(localStorage.getItem("allmodern-auth") === "true");
 
+    const loadCategories = () => {
+      const saved = localStorage.getItem("allmodern_admin_categories");
+      if (saved) {
+        try {
+          const parsed = JSON.parse(saved);
+          const newCategoryMenus: any = {};
+          const newDepartmentNavItems: any[] = [];
+          parsed.forEach((cat: any) => {
+            if (newDepartmentNavItems.find((n) => n.label === cat.title)) return;
+            // Canonicalize href from static nav (fixes old IDs like "Furniture" → /furniture)
+            const canonical = departmentNavItems.find(
+              (n) => n.label.toLowerCase() === cat.title.toLowerCase()
+            );
+            const href = canonical
+              ? canonical.href
+              : `/${cat.id.toLowerCase().replace(/\s+/g, "-").replace(/[^a-z0-9-]/g, "")}`;
+            newDepartmentNavItems.push({ label: cat.title, href, color: cat.color || "" });
+            newCategoryMenus[cat.title] = {
+              image: cat.image,
+              badge: cat.badge,
+              sections: cat.sections
+            };
+          });
+          
+          if (!newDepartmentNavItems.find(n => n.label.toLowerCase() === "new")) {
+            newDepartmentNavItems.unshift({ label: "New", href: "/new", color: "" });
+            newCategoryMenus["New"] = categoryMenus["New"] || { image: "", badge: "", sections: [] };
+          }
+          if (!newDepartmentNavItems.find(n => n.label.toLowerCase() === "sale")) {
+            newDepartmentNavItems.push({ label: "Sale", href: "/sale", color: "#e43216" });
+            newCategoryMenus["Sale"] = categoryMenus["Sale"] || { image: "", badge: "", sections: [] };
+          }
+
+          setDynamicDepartmentNavItems(newDepartmentNavItems);
+          setDynamicCategoryMenus(newCategoryMenus);
+        } catch (e) {
+          console.error("Failed to parse categories", e);
+        }
+      }
+    };
+    
+    loadCategories();
+    window.addEventListener("storage", loadCategories);
+
     const handleOutsideClick = (event: MouseEvent) => {
       if (profileMenuRef.current && !profileMenuRef.current.contains(event.target as Node)) {
         setProfileOpen(false);
@@ -96,6 +143,7 @@ export default function Header() {
 
     return () => {
       document.removeEventListener("mousedown", handleOutsideClick);
+      window.removeEventListener("storage", loadCategories);
       if (topMenuCloseTimeoutRef.current) {
         clearTimeout(topMenuCloseTimeoutRef.current);
       }
@@ -418,7 +466,7 @@ export default function Header() {
 
               <div className="flex-1 overflow-y-auto">
                 <div className="flex flex-col">
-                  {departmentNavItems.map((item) => (
+                  {dynamicDepartmentNavItems.map((item) => (
                     <div key={item.label}>
                       {item.label === "Sale" ? (
                         <Link
@@ -426,7 +474,7 @@ export default function Header() {
                           onClick={() => setMobileOpen(false)}
                           className="flex items-center justify-between border-b border-slate-200 px-5 py-4 text-[15px] text-slate-800 transition hover:bg-slate-50"
                         >
-                          <span className="text-red-600 font-semibold">{item.label}</span>
+                          <span style={{ color: item.color || "" }} className={!item.color ? "text-red-600 font-semibold" : "font-semibold"}>{item.label}</span>
                         </Link>
                       ) : (
                         <button
@@ -451,11 +499,11 @@ export default function Header() {
                             className="overflow-hidden bg-slate-50"
                           >
                             <div className="space-y-4 p-5 border-b border-slate-200 text-[14px] text-slate-700">
-                              {categoryMenus[item.label]?.sections.map((section) => (
+                              {dynamicCategoryMenus[item.label]?.sections?.map((section: any) => (
                                 <div key={section.title}>
                                   <p className="mb-2 font-bold text-slate-900">{section.title}</p>
                                   <div className="space-y-2.5">
-                                    {section.links.map((link) => (
+                                    {section.links.map((link: string) => (
                                       <Link key={link} href="#" className="block hover:underline">
                                         {link}
                                       </Link>

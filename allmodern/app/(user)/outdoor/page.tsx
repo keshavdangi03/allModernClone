@@ -277,7 +277,7 @@ export default function OutdoorPage() {
           </div>
         </section>
 
-        <FilterableProductLayout title="Outdoor" itemCount={2766} products={mainGridProducts} categoryName="Outdoor"></FilterableProductLayout>
+        <FilterableProductLayout title="Outdoor" itemCount={2766} products={[]} categoryName="Outdoor"></FilterableProductLayout>
 
         {/* SEO Text */}
         <section className="mx-auto max-w-[1400px] px-4 pb-20 pt-8 sm:px-6">

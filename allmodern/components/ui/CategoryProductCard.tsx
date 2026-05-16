@@ -50,6 +50,14 @@ export default function CategoryProductCard({ p }: { p: Product }) {
   const isExternalImage = p.image?.startsWith("http") || p.image?.startsWith("data:");
   const price = typeof p.price === 'string' ? parseFloat(p.price) : p.price;
   const originalPrice = p.originalPrice || (p.discountedPrice ? parseFloat(p.discountedPrice) : null);
+  // Normalize colors — admin may store as comma-separated string instead of array
+  const rawColors: any = p.colors;
+  const colors: string[] = Array.isArray(rawColors)
+    ? rawColors
+    : typeof rawColors === "string" && rawColors.trim()
+      ? rawColors.split(",").map((c: string) => c.trim())
+      : [];
+
 
   return (
     <div className="group relative flex flex-col h-full">
@@ -76,9 +84,9 @@ export default function CategoryProductCard({ p }: { p: Product }) {
       </div>
 
       <div className="mt-3 flex flex-1 flex-col">
-        {(p.colors || p.colorCount || p.moreColors) && (
+        {(colors.length > 0 || p.colorCount || p.moreColors) && (
           <div className="mb-1.5 flex items-center gap-1">
-            {p.colors?.map((color, idx) => (
+            {colors.map((color, idx) => (
               <div key={idx} className="h-[15px] w-[15px] rounded-full border border-slate-300" style={{ backgroundColor: color }} />
             ))}
             {(p.moreColors || p.colorCount) ? <span className="text-[11px] text-slate-500">+ {p.moreColors || p.colorCount} Colors</span> : null}

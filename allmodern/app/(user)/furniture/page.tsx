@@ -274,7 +274,7 @@ export default function FurniturePage() {
 
         </section>
 
-        <FilterableProductLayout title="Furniture" itemCount={3810} products={mainGridProducts} categoryName="Furniture"></FilterableProductLayout>
+        <FilterableProductLayout title="Furniture" itemCount={3810} products={[]} categoryName="Furniture"></FilterableProductLayout>
       {/* SEO Text */}
         <section className="mx-auto max-w-[1400px] px-4 pb-20 pt-8 sm:px-6">
           <h2 className="mb-4 text-[19px] font-bold text-slate-950">Furniture</h2>

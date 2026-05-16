@@ -147,8 +147,8 @@ export default function Footer() {
               Could not generate your unique web-ID verification code, please refresh or try a different page. If you&apos;re using an Ad Blocker or VPN, consider turning it off and trying again.
             </p>
             <div className="flex flex-wrap gap-4 pt-2">
-              <Link href="#" className="text-[11px] text-slate-600 underline hover:text-slate-900">Terms of Use</Link>
-              <Link href="#" className="text-[11px] text-slate-600 underline hover:text-slate-900">Privacy Policy</Link>
+              <Link href="/terms" className="text-[11px] text-slate-600 underline hover:text-slate-900">Terms of Use</Link>
+              <Link href="/privacy-policy" className="text-[11px] text-slate-600 underline hover:text-slate-900">Privacy Policy</Link>
               <Link href="#" className="text-[11px] text-slate-600 underline hover:text-slate-900">Your Privacy Rights & Choices</Link>
             </div>
             <p className="text-[10.5px] text-slate-500 pt-3">

@@ -202,7 +202,7 @@ export default function StoragePage() {
 
           {/* Main Product Grid */}
           <div className="mt-12 bg-white p-4">
-            <FilterableProductLayout title="Storage" itemCount={1750} products={allProducts} categoryName="Storage"></FilterableProductLayout>
+            <FilterableProductLayout title="Storage" itemCount={1750} products={[]} categoryName="Storage"></FilterableProductLayout>
           </div>
 
           {/* Related Searches */}

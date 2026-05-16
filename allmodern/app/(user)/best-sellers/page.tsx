@@ -139,7 +139,7 @@ export default function BestSellersPage() {
       </section>
 
       {/* Main Filterable Layout */}
-      <FilterableProductLayout title="Top-Rated Best Sellers" itemCount={486} products={bestSellerProducts} categoryName="Top-Rated Best Sellers"></FilterableProductLayout>
+      <FilterableProductLayout title="Top-Rated Best Sellers" itemCount={486} products={[]} categoryName="Top-Rated Best Sellers"></FilterableProductLayout>
     </main>
   );
 }

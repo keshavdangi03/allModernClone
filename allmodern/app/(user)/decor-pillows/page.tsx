@@ -301,7 +301,7 @@ export default function DecorPillowsPage() {
         </section>
 
         {/* MAIN CATEGORY SECTION: DECOR + PILLOWS */}
-        <FilterableProductLayout title="Decor + Pillows" itemCount={2744} products={mainGridProducts} categoryName="Decor + Pillows"></FilterableProductLayout>
+        <FilterableProductLayout title="Decor + Pillows" itemCount={2744} products={[]} categoryName="Decor + Pillows"></FilterableProductLayout>
 
         {/* SEO Text Block */}
         <section className="mx-auto max-w-[1400px] px-4 pb-8 sm:px-6">

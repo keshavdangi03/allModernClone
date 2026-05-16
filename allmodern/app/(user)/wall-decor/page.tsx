@@ -212,7 +212,7 @@ export default function WallDecorPage() {
         </section>
 
         {/* MAIN CATEGORY SECTION: WALL DECOR + MIRRORS */}
-        <FilterableProductLayout title="Wall Decor + Mirrors" itemCount={1774} products={mainGridProducts} categoryName="Wall Decor + Mirrors"></FilterableProductLayout>
+        <FilterableProductLayout title="Wall Decor + Mirrors" itemCount={1774} products={[]} categoryName="Wall Decor + Mirrors"></FilterableProductLayout>
 
         {/* Related Searches */}
         <section className="mx-auto max-w-[1400px] px-4 pb-12 sm:px-6">

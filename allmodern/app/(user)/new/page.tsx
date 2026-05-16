@@ -260,7 +260,7 @@ export default function NewPage() {
           </div>
         </section>
 
-        <FilterableProductLayout title="New Arrivals" itemCount={53} products={products} categoryName="New"></FilterableProductLayout>
+        <FilterableProductLayout title="New Arrivals" itemCount={53} products={[]} categoryName="New"></FilterableProductLayout>
       </main>
     </>
   );

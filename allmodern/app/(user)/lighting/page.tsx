@@ -75,7 +75,7 @@ export default function LightingPage() {
         </section>
 
         {/* MAIN CATEGORY SECTION: Lighting */}
-        <FilterableProductLayout title="Lighting" itemCount={2212} products={mainGridProducts} categoryName="Lighting"></FilterableProductLayout>
+        <FilterableProductLayout title="Lighting" itemCount={2212} products={[]} categoryName="Lighting"></FilterableProductLayout>
 
         {/* SEO Text */}
         <section className="mx-auto max-w-[1400px] px-4 pb-20 pt-8 sm:px-6">

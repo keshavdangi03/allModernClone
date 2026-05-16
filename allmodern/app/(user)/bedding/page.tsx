@@ -72,7 +72,7 @@ export default function BeddingPage() {
           </div>
 
           {/* Main Product Grid */}
-          <FilterableProductLayout title="Bedding" itemCount={908} products={allProducts} categoryName="Bedding"></FilterableProductLayout>
+          <FilterableProductLayout title="Bedding" itemCount={908} products={[]} categoryName="Bedding"></FilterableProductLayout>
           
           <hr className="border-slate-200 my-8" />
 

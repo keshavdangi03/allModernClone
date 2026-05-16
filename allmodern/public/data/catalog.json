@@ -1,0 +1,2212 @@
+[
+  {
+    "id": "wall-decor_mg1",
+    "name": "Grist 7.87 in. x 7.87 in. Matte Porcelain Floor and Wall Tile (12.48 Sq. Ft. / Case)",
+    "subtitle": "Light Gray",
+    "priceStr": "$7.69 /sq. ft.",
+    "origPriceStr": "$9.70 /sq. ft.",
+    "extraText": "$96 per box",
+    "reviews": 106,
+    "rating": 4.5,
+    "badge": null,
+    "image": "/images/cat_living_room.png",
+    "categories": [
+      "Wall Decor + Mirrors"
+    ]
+  },
+  {
+    "id": "wall-decor_mg2",
+    "name": "Bellamy 3 Piece Metal Tiered Shelf",
+    "subtitle": "Gold",
+    "price": 175,
+    "originalPrice": 189,
+    "extraText": "Free 3-Day Delivery",
+    "reviews": 84,
+    "rating": 4.5,
+    "badge": null,
+    "image": "/images/cat_bedroom.png",
+    "categories": [
+      "Wall Decor + Mirrors"
+    ]
+  },
+  {
+    "id": "wall-decor_mg3",
+    "name": "Nomalanga Peel & Stick Wallpaper Roll",
+    "subtitle": "Olive/Linen, Non-pasted",
+    "priceStr": "$4.70 /sq. ft.",
+    "extraText": "$98 per roll",
+    "reviews": 66,
+    "rating": 4.5,
+    "badge": null,
+    "image": "/images/cat_dining.png",
+    "categories": [
+      "Wall Decor + Mirrors"
+    ]
+  },
+  {
+    "id": "wall-decor_mg4",
+    "name": "Modern Acrylic Shadowbox with Linen Canvas 3\" Depth | UV Grade",
+    "subtitle": "16\" x 20\"",
+    "price": 180,
+    "extraText": "Free Fast Delivery",
+    "reviews": 119,
+    "rating": 5,
+    "badge": null,
+    "image": "/images/cat_outdoor.png",
+    "categories": [
+      "Wall Decor + Mirrors"
+    ]
+  },
+  {
+    "id": "wall-decor_mg5",
+    "name": "Camden 12 in. x 12 in. Gauged Slate Floor and Wall Tile",
+    "subtitle": "Charcoal",
+    "priceStr": "$4.50 /sq. ft.",
+    "extraText": "$45 per box\nFast Delivery",
+    "reviews": 347,
+    "rating": 4.5,
+    "badge": null,
+    "image": "/images/hero.png",
+    "categories": [
+      "Wall Decor + Mirrors"
+    ]
+  },
+  {
+    "id": "wall-decor_mg6",
+    "name": "Auburn Chevron 24 in. x 48 in. Matte Porcelain Floor and Wall Tile (15.49 Sq. Ft. / Case)",
+    "subtitle": "Brown",
+    "priceStr": "$11.68 /sq. ft.",
+    "extraText": "$181 per box",
+    "reviews": 93,
+    "rating": 4.5,
+    "badge": null,
+    "image": "/images/cat_living_room.png",
+    "categories": [
+      "Wall Decor + Mirrors"
+    ]
+  },
+  {
+    "id": "wall-decor_mg7",
+    "name": "Balone French Pleat Signature Velvet Curtains for Bedroom Blackout Curtains for Living Room Single Panel",
+    "subtitle": "Neutral Ground, 25\" W x 96\" L",
+    "price": 58,
+    "extraText": "Free Fast Delivery",
+    "reviews": 561,
+    "rating": 4.5,
+    "badge": null,
+    "image": "/images/cat_bedroom.png",
+    "categories": [
+      "Wall Decor + Mirrors",
+      "Furniture > Beds"
+    ]
+  },
+  {
+    "id": "wall-decor_mg8",
+    "name": "Orwell Square Plastic Wall Clock 9.25 Inches",
+    "subtitle": "Orange",
+    "price": 24,
+    "originalPrice": 27,
+    "extraText": "Fast Delivery",
+    "reviews": 1022,
+    "rating": 4.5,
+    "badge": "Limited Time Only",
+    "image": "/images/cat_dining.png",
+    "categories": [
+      "Wall Decor + Mirrors"
+    ]
+  },
+  {
+    "id": "wall-decor_mg9",
+    "name": "Airy 2.83 in. x 7.67 in. Fishscale Matte Ceramic Wall Tile (5.15 Sq. Ft. / Case)",
+    "subtitle": "Terracotta",
+    "priceStr": "$14.17 /sq. ft.",
+    "origPriceStr": "$17.48 /sq. ft.",
+    "extraText": "$73 per box",
+    "reviews": 46,
+    "rating": 4.5,
+    "badge": "Sale",
+    "image": "/images/cat_outdoor.png",
+    "categories": [
+      "Wall Decor + Mirrors"
+    ]
+  },
+  {
+    "name": "Trinsic Single Towel Hook Bath Hardware Accessory",
+    "price": 34,
+    "colors": 5,
+    "rating": 5,
+    "reviews": 1350,
+    "image": "/images/cat_living_room.png",
+    "categories": [
+      "Storage",
+      "Bath > Bath Towels"
+    ],
+    "id": "storage_undefined"
+  },
+  {
+    "name": "Trinsic Wall Mount Single Post Toilet Paper Holder Bath Hardware Accessory",
+    "price": 35,
+    "originalPrice": 67,
+    "sale": true,
+    "colors": 5,
+    "rating": 5,
+    "reviews": 3080,
+    "image": "/images/cat_bedroom.png",
+    "categories": [
+      "Storage"
+    ],
+    "id": "storage_undefined"
+  },
+  {
+    "name": "Trinsic Wall Mount Towel Bar Bath Hardware Accessory",
+    "price": 42,
+    "originalPrice": 68,
+    "sale": true,
+    "colors": 5,
+    "sizes": 3,
+    "rating": 4,
+    "reviews": 1103,
+    "image": "/images/cat_outdoor.png",
+    "categories": [
+      "Storage",
+      "Bath > Bath Towels"
+    ],
+    "id": "storage_undefined"
+  },
+  {
+    "name": "Circular Toilet Paper Holder",
+    "price": 33,
+    "originalPrice": 38,
+    "colors": 5,
+    "rating": 4,
+    "reviews": 308,
+    "image": "/images/cat_dining.png",
+    "categories": [
+      "Storage"
+    ],
+    "id": "storage_undefined"
+  },
+  {
+    "name": "Stiles Etagere Bookcase",
+    "price": 499,
+    "colors": 3,
+    "rating": 5,
+    "reviews": 1886,
+    "image": "/images/cat_living_room.png",
+    "categories": [
+      "Storage"
+    ],
+    "id": "storage_undefined"
+  },
+  {
+    "name": "Yamazaki Home Tower Modern Slim Console Table, Metal And Wood Skinny Hallway Table, 32\" - Steel",
+    "price": 95,
+    "colors": 2,
+    "rating": 4,
+    "reviews": 408,
+    "image": "/images/cat_bedroom.png",
+    "categories": [
+      "Storage",
+      "Furniture > Coffee Tables"
+    ],
+    "id": "storage_undefined"
+  },
+  {
+    "id": "rugs_1",
+    "name": "Bottorff Dual Surface 0.25\" Non Slip Rug Pad",
+    "size": "Rectangle 8' x 10'",
+    "image": "/images/cat_living_room.png",
+    "price": 72,
+    "originalPrice": 78,
+    "isSale": true,
+    "rating": 4.5,
+    "reviews": 380585,
+    "shippingText": "Free Fast Delivery",
+    "sizesCount": 40,
+    "categories": [
+      "Rugs"
+    ]
+  },
+  {
+    "id": "rugs_2",
+    "name": "Bottorff Dual Surface 0.33\" Non Slip Rug Pad",
+    "size": "Rectangle 8' x 10'",
+    "image": "/images/cat_bedroom.png",
+    "price": 81,
+    "originalPrice": 87,
+    "isSale": true,
+    "rating": 4.5,
+    "reviews": 380585,
+    "shippingText": "Free 3-Day Delivery",
+    "sizesCount": 38,
+    "categories": [
+      "Rugs"
+    ]
+  },
+  {
+    "id": "rugs_3",
+    "name": "Wayfair Basics® All-Weather Rug Pad",
+    "size": "Rectangle 4' x 6'",
+    "image": "/images/cat_outdoor.png",
+    "price": 22,
+    "originalPrice": 31,
+    "isSale": false,
+    "rating": 4.5,
+    "reviews": 11458,
+    "shippingText": "3-Day Delivery",
+    "sizesCount": 16,
+    "categories": [
+      "Rugs"
+    ]
+  },
+  {
+    "id": "rugs_4",
+    "name": "Classic Felt Supreme Cushioned Rug Pad (1/2\")",
+    "size": "Rectangle 8' x 10'",
+    "image": "/images/cat_dining.png",
+    "price": 115,
+    "originalPrice": 181,
+    "isSale": true,
+    "rating": 5,
+    "reviews": 1498,
+    "shippingText": "Free Fast Delivery",
+    "sizesCount": 47,
+    "categories": [
+      "Rugs"
+    ]
+  },
+  {
+    "id": "rugs_5",
+    "name": "Chris Loves Julia x Loloi Polly Handmade Ivory/Natural Rug",
+    "size": "Rectangle 7'9\" x 9'9\"",
+    "image": "/images/hero.png",
+    "price": 311,
+    "originalPrice": 473,
+    "isSale": true,
+    "rating": 4.5,
+    "reviews": 873,
+    "shippingText": "Free Fast Delivery",
+    "sizesCount": 10,
+    "categories": [
+      "Rugs"
+    ]
+  },
+  {
+    "id": "rugs_6",
+    "name": "Icon Striped Indoor Outdoor Multi Rug",
+    "size": "Rectangle 3'7\" x 5'7\"",
+    "image": "/images/cat_living_room.png",
+    "price": 99,
+    "originalPrice": 119,
+    "isSale": true,
+    "rating": 5,
+    "reviews": 137,
+    "shippingText": "Free Fast Delivery",
+    "sizesCount": 7,
+    "categories": [
+      "Rugs"
+    ]
+  },
+  {
+    "id": "rugs_7",
+    "name": "Santiago Hand Loomed Wool Rug",
+    "size": "Runner 2'3\" x 8'",
+    "image": "/images/cat_bedroom.png",
+    "price": 142,
+    "originalPrice": 191,
+    "isSale": true,
+    "rating": 4.5,
+    "reviews": 286,
+    "shippingText": "Free Fast Delivery",
+    "sizesCount": 19,
+    "categories": [
+      "Rugs"
+    ]
+  },
+  {
+    "id": "rugs_8",
+    "name": "Ovilla Pet Friendly Dual Surface Non-Slip Rug Pad (0.25\")",
+    "size": "2'W x 8'L",
+    "image": "/images/cat_outdoor.png",
+    "price": 39,
+    "originalPrice": 45,
+    "isSale": true,
+    "rating": 4.5,
+    "reviews": 776,
+    "shippingText": "Free 3-Day Delivery",
+    "sizesCount": 13,
+    "categories": [
+      "Rugs"
+    ]
+  },
+  {
+    "id": "rugs_9",
+    "name": "Danette Hand Loomed Wool Rug",
+    "size": "Runner 2'3\" x 8'",
+    "image": "/images/cat_dining.png",
+    "price": 135,
+    "originalPrice": 189,
+    "isSale": true,
+    "rating": 4.5,
+    "reviews": 228,
+    "shippingText": "Free Fast Delivery",
+    "sizesCount": 23,
+    "categories": [
+      "Rugs"
+    ]
+  },
+  {
+    "id": "rugs_10",
+    "name": "Silva White Indoor/Outdoor Rug",
+    "size": "Rectangle 5'4\" x 7'",
+    "image": "/images/hero.png",
+    "price": 95,
+    "originalPrice": 129,
+    "isSale": true,
+    "rating": 4.5,
+    "reviews": 910,
+    "shippingText": "Free Fast Delivery",
+    "sizesCount": 3,
+    "categories": [
+      "Rugs"
+    ]
+  },
+  {
+    "id": "rugs_11",
+    "name": "Sola Wool Cream/Black/Light Beige Rug",
+    "size": "Rectangle 8' x 10'",
+    "image": "/images/cat_living_room.png",
+    "price": 549,
+    "originalPrice": 699,
+    "isSale": false,
+    "badgeText": "Limited Time Only",
+    "rating": 4.5,
+    "reviews": 419,
+    "shippingText": "Free Fast Delivery",
+    "sizesCount": 12,
+    "categories": [
+      "Rugs"
+    ]
+  },
+  {
+    "id": "outdoor_mg1",
+    "name": "Block Series Span Planter",
+    "subtitle": "Black",
+    "price": 192,
+    "originalPrice": null,
+    "extraText": "Free Fast Delivery",
+    "reviews": 2954,
+    "rating": 4.5,
+    "badge": null,
+    "image": "/images/cat_living_room.png",
+    "colorCount": 3,
+    "categories": [
+      "Outdoor"
+    ]
+  },
+  {
+    "id": "outdoor_mg2",
+    "name": "Lani Outdoor Sunbrella Seat/Back Cushion",
+    "subtitle": "Cast Ash Sunbrella Plainweave",
+    "price": 135,
+    "originalPrice": 169,
+    "extraText": "Free 3-Day Delivery",
+    "reviews": 403,
+    "rating": 4.5,
+    "badge": "Limited Time Only",
+    "image": "/images/cat_bedroom.png",
+    "colors": [
+      "#d9c8b8",
+      "#333",
+      "#a66",
+      "#e8e0d5",
+      "#f4e4e9"
+    ],
+    "categories": [
+      "Outdoor"
+    ]
+  },
+  {
+    "id": "outdoor_mg3",
+    "name": "Block Series Long Box Planter",
+    "subtitle": "Black",
+    "price": 150,
+    "originalPrice": null,
+    "extraText": "Free Fast Delivery",
+    "reviews": 2444,
+    "rating": 4.5,
+    "badge": null,
+    "image": "/images/cat_dining.png",
+    "colorCount": 3,
+    "categories": [
+      "Outdoor"
+    ]
+  },
+  {
+    "id": "outdoor_mg4",
+    "name": "POLYWOOD Modern Curveback Adirondack Chair",
+    "subtitle": "Black",
+    "price": 319,
+    "originalPrice": null,
+    "extraText": "Free 3-Day Delivery",
+    "reviews": 899,
+    "rating": 4.5,
+    "badge": null,
+    "image": "/images/cat_outdoor.png",
+    "colors": [
+      "#000",
+      "#0078d7",
+      "#ccc",
+      "#c00",
+      "#f90",
+      "#8b4513"
+    ],
+    "categories": [
+      "Outdoor",
+      "Furniture > Accent + Lounge Chairs"
+    ]
+  },
+  {
+    "id": "outdoor_mg5",
+    "name": "Breshawna Aluminum Matte Black Outdoor Armed Sconce",
+    "subtitle": null,
+    "price": 74,
+    "originalPrice": 82,
+    "extraText": "Free Fast Delivery",
+    "reviews": 190,
+    "rating": 4.5,
+    "badge": null,
+    "image": "/images/hero.png",
+    "categories": [
+      "Outdoor"
+    ]
+  },
+  {
+    "id": "outdoor_mg6",
+    "name": "Sunbrella Outdoor Ottoman Cushion",
+    "subtitle": "Canvas Navy Sunbrella Canvas",
+    "price": 117,
+    "originalPrice": 134,
+    "extraText": "Free Fast Delivery",
+    "reviews": 420,
+    "rating": 4.5,
+    "badge": "Sale",
+    "image": "/images/cat_living_room.png",
+    "colors": [
+      "#1e3a8a",
+      "#ccc",
+      "#87ceeb",
+      "#f5f5dc",
+      "#000"
+    ],
+    "categories": [
+      "Outdoor"
+    ]
+  },
+  {
+    "id": "outdoor_mg7",
+    "name": "Menades 157\" Cantilever Outdoor Umbrella",
+    "subtitle": "Black",
+    "price": 899,
+    "originalPrice": 1149,
+    "extraText": "Free 3-Day Delivery",
+    "reviews": 36,
+    "rating": 4.5,
+    "badge": "Sale",
+    "image": "/images/cat_bedroom.png",
+    "colors": [
+      "#000",
+      "#ccc"
+    ],
+    "categories": [
+      "Outdoor"
+    ]
+  },
+  {
+    "id": "outdoor_mg8",
+    "name": "6 ft. H x 4 ft. W Metal Privacy Screen",
+    "subtitle": "Black",
+    "price": 120,
+    "originalPrice": 162,
+    "extraText": "Free Fast Delivery",
+    "reviews": 381,
+    "rating": 4.5,
+    "badge": "Sale",
+    "image": "/images/cat_dining.png",
+    "colorCount": 3,
+    "categories": [
+      "Outdoor"
+    ]
+  },
+  {
+    "id": "outdoor_mg9",
+    "name": "Stevie 108\" Outdoor Umbrella",
+    "subtitle": "White - Olefin",
+    "price": 179,
+    "originalPrice": 249,
+    "extraText": "Free Fast Delivery",
+    "reviews": 2255,
+    "rating": 4.5,
+    "badge": "Sale",
+    "image": "/images/cat_outdoor.png",
+    "colors": [
+      "#fff",
+      "#1e3a8a",
+      "#8b4513",
+      "#c5b358",
+      "#ffcc00"
+    ],
+    "categories": [
+      "Outdoor"
+    ]
+  },
+  {
+    "id": "new_n1",
+    "name": "Miller 86'' Upholstered Loveseat",
+    "subtitle": "Blue Velvet",
+    "price": 999,
+    "reviews": 345,
+    "rating": 4.5,
+    "image": "/images/cat_living_room.png",
+    "colors": [
+      "#6b8197",
+      "#7f8769",
+      "#d9d8d2",
+      "#f1efed",
+      "#aaa39b"
+    ],
+    "categories": [
+      "New",
+      "Furniture > Sofas"
+    ]
+  },
+  {
+    "id": "new_n2",
+    "name": "Charia Acacia Adirondack Chair",
+    "subtitle": "Teak Brown / Cream",
+    "price": 179,
+    "originalPrice": 199,
+    "reviews": 21,
+    "rating": 4.5,
+    "badge": "Sale",
+    "image": "/images/cat_outdoor.png",
+    "colors": [
+      "#8b5a2b",
+      "#e8dbc9"
+    ],
+    "categories": [
+      "New",
+      "Furniture > Accent + Lounge Chairs"
+    ]
+  },
+  {
+    "id": "new_n3",
+    "name": "Miller 84'' Upholstered Sofa",
+    "subtitle": "Blue Velvet",
+    "price": 1099,
+    "originalPrice": 1229,
+    "reviews": 2467,
+    "rating": 4.5,
+    "badge": "Sale",
+    "image": "/images/cat_living_room.png",
+    "colors": [
+      "#6b8197",
+      "#f0efe8",
+      "#b6b4ae",
+      "#646d4f",
+      "#ece9e1"
+    ],
+    "categories": [
+      "New",
+      "Furniture > Sofas"
+    ]
+  },
+  {
+    "id": "new_n4",
+    "name": "Kalle 86'' Upholstered Sofa",
+    "subtitle": "Monroe Just Boucle",
+    "price": 1299,
+    "originalPrice": 1499,
+    "reviews": 74,
+    "rating": 4.5,
+    "image": "/images/cat_bedroom.png",
+    "colors": [
+      "#dfddd6",
+      "#ccc9bf",
+      "#beb8ac",
+      "#474441",
+      "#1d2b3a"
+    ],
+    "moreColors": 18,
+    "categories": [
+      "New",
+      "Furniture > Sofas"
+    ]
+  },
+  {
+    "id": "new_n5",
+    "name": "Dwyer 3 Piece Aluminum Outdoor Lounge Set",
+    "subtitle": "Black",
+    "price": 999,
+    "originalPrice": 1499,
+    "reviews": 1,
+    "rating": 4.5,
+    "image": "/images/hero.png",
+    "colors": [
+      "#121212",
+      "#e0d6c8"
+    ],
+    "categories": [
+      "New"
+    ]
+  },
+  {
+    "id": "new_n6",
+    "name": "Dwyer Outdoor Dining Chairs (Set Of 2)",
+    "subtitle": "Black",
+    "price": 519,
+    "originalPrice": 599,
+    "reviews": 18,
+    "rating": 4.5,
+    "image": "/images/cat_dining.png",
+    "colors": [
+      "#171717",
+      "#f3efe7"
+    ],
+    "categories": [
+      "New",
+      "Furniture > Accent + Lounge Chairs"
+    ]
+  },
+  {
+    "id": "new_n7",
+    "name": "Levit 39'' Teak Patio Coffee Table",
+    "subtitle": "",
+    "price": 1149,
+    "originalPrice": 1399,
+    "reviews": 2,
+    "rating": 4.5,
+    "badge": "Limited Time Only",
+    "image": "/images/cat_outdoor.png",
+    "categories": [
+      "New",
+      "Furniture > Coffee Tables"
+    ]
+  },
+  {
+    "id": "new_n8",
+    "name": "Block Bench",
+    "subtitle": "Black",
+    "price": 579,
+    "originalPrice": 829,
+    "reviews": 7,
+    "rating": 4.5,
+    "badge": "Sale",
+    "image": "/images/cat_dining.png",
+    "categories": [
+      "New"
+    ]
+  },
+  {
+    "id": "new_n9",
+    "name": "Kalle Upholstered Ottoman",
+    "subtitle": "Bellan Blue Performance Velvet",
+    "price": 599,
+    "originalPrice": 699,
+    "reviews": 8,
+    "rating": 4.5,
+    "badge": "Limited Time Only",
+    "image": "/images/cat_living_room.png",
+    "colors": [
+      "#1d3557",
+      "#cdc7b8",
+      "#403d39",
+      "#6f7250",
+      "#212121"
+    ],
+    "moreColors": 18,
+    "categories": [
+      "New"
+    ]
+  },
+  {
+    "id": "new_n10",
+    "name": "Skyla Hand Tufted Rug",
+    "subtitle": "Ivory / Tan 7'9'' x 9'9''",
+    "price": 529,
+    "originalPrice": 779,
+    "reviews": 1,
+    "rating": 4.5,
+    "badge": "Limited Time Only",
+    "image": "/images/cat_bedroom.png",
+    "categories": [
+      "New"
+    ]
+  },
+  {
+    "id": "new_n11",
+    "name": "Salina Colorful Framed End Table",
+    "subtitle": "Peru Blue",
+    "price": 249,
+    "originalPrice": 320,
+    "reviews": 8,
+    "rating": 4.5,
+    "image": "/images/cat_dining.png",
+    "colors": [
+      "#96bad1",
+      "#f4f1e8",
+      "#ced5d6",
+      "#5d7f89",
+      "#d5526f"
+    ],
+    "categories": [
+      "New",
+      "Furniture > Coffee Tables"
+    ]
+  },
+  {
+    "id": "new_n12",
+    "name": "Miller 2 Piece Upholstered Chais Sectional",
+    "subtitle": "Right Hand Facing, Olive Green Polyester Blend",
+    "price": 2599,
+    "originalPrice": 2999,
+    "reviews": 173,
+    "rating": 4.5,
+    "badge": "Limited Time Only",
+    "image": "/images/hero.png",
+    "colors": [
+      "#6c7c5f",
+      "#dbd5ca",
+      "#f2f0ea",
+      "#b6cad8"
+    ],
+    "categories": [
+      "New",
+      "Furniture > Sectionals"
+    ]
+  },
+  {
+    "id": "new_n13",
+    "name": "Anzie End Table",
+    "subtitle": "",
+    "price": 185,
+    "originalPrice": 279,
+    "reviews": 5,
+    "rating": 4.5,
+    "image": "/images/cat_outdoor.png",
+    "categories": [
+      "New",
+      "Furniture > Coffee Tables"
+    ]
+  },
+  {
+    "id": "new_n14",
+    "name": "Tessa Upholstered Bed",
+    "subtitle": "Queen, Cream",
+    "price": 1299,
+    "originalPrice": 1599,
+    "reviews": 33,
+    "rating": 4.5,
+    "badge": "Sale",
+    "image": "/images/cat_bedroom.png",
+    "colors": [
+      "#f1f1ec",
+      "#7a8756"
+    ],
+    "categories": [
+      "New",
+      "Furniture > Beds"
+    ]
+  },
+  {
+    "id": "new_n15",
+    "name": "Dwyer Full-Grain Leather Ottoman",
+    "subtitle": "Cognac Tan",
+    "price": 599,
+    "originalPrice": 917,
+    "reviews": 208,
+    "rating": 4.5,
+    "badge": "Sale",
+    "image": "/images/cat_living_room.png",
+    "colors": [
+      "#a55d2e",
+      "#121212",
+      "#2b3953"
+    ],
+    "categories": [
+      "New"
+    ]
+  },
+  {
+    "id": "new_n16",
+    "name": "Essex 2 Piece 118'' Upholstered Sectional",
+    "subtitle": "Right Hand Facing, Beige Cotton Blend",
+    "price": 2599,
+    "originalPrice": 2999,
+    "reviews": 88,
+    "rating": 4.5,
+    "badge": "Sale",
+    "image": "/images/cat_outdoor.png",
+    "colors": [
+      "#e9e2d7"
+    ],
+    "quickview": true,
+    "categories": [
+      "New",
+      "Furniture > Sectionals"
+    ]
+  },
+  {
+    "id": "new_n17",
+    "name": "Terrace Accent Pillow",
+    "subtitle": "Blue, Polyester, Square 18''",
+    "price": 55,
+    "reviews": 0,
+    "rating": 0,
+    "image": "/images/cat_living_room.png",
+    "colors": [
+      "#d7dbe2",
+      "#be3f3f"
+    ],
+    "categories": [
+      "New",
+      "Decor + Pillows > Throw Pillows"
+    ]
+  },
+  {
+    "id": "new_n18",
+    "name": "Argon 54'' 3 Piece Ottoman With Solid Wood Base",
+    "subtitle": "",
+    "price": 1299,
+    "originalPrice": 1499,
+    "reviews": 18,
+    "rating": 4.5,
+    "image": "/images/cat_dining.png",
+    "categories": [
+      "New"
+    ]
+  },
+  {
+    "id": "lighting_mg1",
+    "name": "Mendel 60\" Floor Lamp",
+    "subtitle": "Black/Brass",
+    "price": 145,
+    "originalPrice": 180,
+    "extraText": "Free Fast Delivery",
+    "reviews": 124,
+    "rating": 4.5,
+    "badge": "Sale",
+    "image": "/images/cat_living_room.png",
+    "categories": [
+      "Lighting",
+      "Lighting > Table Lamps"
+    ]
+  },
+  {
+    "id": "lighting_mg2",
+    "name": "Aedan 1-Light Dimmable Wall Sconce",
+    "subtitle": "Brass",
+    "price": 85,
+    "originalPrice": null,
+    "extraText": "Free 3-Day Delivery",
+    "reviews": 89,
+    "rating": 5,
+    "badge": null,
+    "image": "/images/cat_dining.png",
+    "categories": [
+      "Lighting"
+    ]
+  },
+  {
+    "id": "lighting_mg3",
+    "name": "Ove 2-Light Dimmable Vanity Light",
+    "subtitle": "Brass/Frosted Glass",
+    "price": 120,
+    "originalPrice": 150,
+    "extraText": "Free Fast Delivery",
+    "reviews": 210,
+    "rating": 4.5,
+    "badge": "Limited Time Only",
+    "image": "/images/cat_bedroom.png",
+    "categories": [
+      "Lighting"
+    ]
+  },
+  {
+    "id": "lighting_mg4",
+    "name": "Rooks 2-Light Dimmable Vanity Light",
+    "subtitle": "White, Midnight Black",
+    "price": 108,
+    "originalPrice": null,
+    "extraText": "Free 3-Day Delivery",
+    "reviews": 692,
+    "rating": 4.5,
+    "badge": null,
+    "image": "/images/cat_outdoor.png",
+    "colors": [
+      "#fff",
+      "#000"
+    ],
+    "categories": [
+      "Lighting"
+    ]
+  },
+  {
+    "id": "lighting_mg5",
+    "name": "Rooks 3-Light Dimmable Vanity Light",
+    "subtitle": "Satin Brass, Clear",
+    "price": 162,
+    "originalPrice": null,
+    "extraText": "Free 3-Day Delivery",
+    "reviews": 785,
+    "rating": 4.5,
+    "badge": null,
+    "image": "/images/hero.png",
+    "colors": [
+      "#c5b358",
+      "#ccc"
+    ],
+    "categories": [
+      "Lighting"
+    ]
+  },
+  {
+    "id": "lighting_mg6",
+    "name": "Childerley 2 Light Vanity",
+    "subtitle": "Clear, Satin Brass",
+    "price": 108,
+    "originalPrice": null,
+    "extraText": "Free Fast Delivery",
+    "reviews": 452,
+    "rating": 4.5,
+    "badge": null,
+    "image": "/images/cat_living_room.png",
+    "colors": [
+      "#c5b358",
+      "#000"
+    ],
+    "categories": [
+      "Lighting"
+    ]
+  },
+  {
+    "id": "lighting_mg7",
+    "name": "Lyle 60 Watt Dimmable Clear Bulb\n(Set of 3)",
+    "subtitle": null,
+    "price": 40,
+    "originalPrice": null,
+    "extraText": "$13.33 per item",
+    "reviews": 3041,
+    "rating": 4.5,
+    "badge": null,
+    "image": "/images/cat_dining.png",
+    "categories": [
+      "Lighting"
+    ]
+  },
+  {
+    "id": "lighting_mg8",
+    "name": "Emersynn 78.7\" Arched/Arc Floor Lamp with Remote Control, LED Bulb Included, and Metal Shade",
+    "subtitle": "Black",
+    "price": 103,
+    "originalPrice": 108,
+    "extraText": "Free Fast Delivery\nQuickview",
+    "reviews": 377,
+    "rating": 4.5,
+    "badge": "Sale",
+    "image": "/images/cat_bedroom.png",
+    "colors": [
+      "#000",
+      "#fff"
+    ],
+    "categories": [
+      "Lighting",
+      "Lighting > Table Lamps"
+    ]
+  },
+  {
+    "id": "lighting_mg9",
+    "name": "Dedmon Single Light Bell Outdoor Wall Light",
+    "subtitle": "No, Black",
+    "price": 48,
+    "originalPrice": 62,
+    "extraText": "Free Fast Delivery",
+    "reviews": 422,
+    "rating": 4.5,
+    "badge": "Limited Time Only",
+    "image": "/images/cat_outdoor.png",
+    "colors": [
+      "#000",
+      "#333"
+    ],
+    "categories": [
+      "Lighting"
+    ]
+  },
+  {
+    "id": "lighting_mg10",
+    "name": "9.45\" H All Iron Frame Rattan Lantern With Hemp Rope Handle",
+    "subtitle": "Natural",
+    "price": 30,
+    "originalPrice": 35,
+    "extraText": "3-Day Delivery",
+    "reviews": 26,
+    "rating": 4.5,
+    "badge": null,
+    "image": "/images/hero.png",
+    "colorCount": 2,
+    "categories": [
+      "Lighting"
+    ]
+  },
+  {
+    "id": "lighting_mg11",
+    "name": "Childerley 1 - Light 10\" Simple Globe Semi Flush Mount",
+    "subtitle": "Satin Brass",
+    "price": 74,
+    "originalPrice": null,
+    "extraText": "Free Fast Delivery",
+    "reviews": 95,
+    "rating": 4.5,
+    "badge": null,
+    "image": "/images/cat_living_room.png",
+    "colors": [
+      "#c5b358",
+      "#000"
+    ],
+    "categories": [
+      "Lighting"
+    ]
+  },
+  {
+    "id": "lighting_mg12",
+    "name": "Boyes Ceramic Table Lamp",
+    "subtitle": "Rust",
+    "price": 139,
+    "originalPrice": 175,
+    "extraText": "Free Fast Delivery",
+    "reviews": 104,
+    "rating": 4.5,
+    "badge": "Limited Time Only",
+    "image": "/images/cat_dining.png",
+    "colorCount": 3,
+    "categories": [
+      "Lighting",
+      "Furniture > Coffee Tables",
+      "Lighting > Table Lamps"
+    ]
+  },
+  {
+    "name": "over&back Stackable 16-Piece Semi Hand-Finished Stoneware Dinnerware Set",
+    "price": 90,
+    "sale": true,
+    "image": "/images/cat_bedroom.png",
+    "rating": 5,
+    "reviews": 120,
+    "categories": [
+      "Kitchen + Tabletop"
+    ],
+    "id": "kitchen-tabletop_undefined"
+  },
+  {
+    "name": "Noritake Colorwave Square Dinner Plates, 10-3/4\" (Set of 4)",
+    "price": 61,
+    "originalPrice": 89,
+    "sale": true,
+    "image": "/images/cat_dining.png",
+    "rating": 4,
+    "reviews": 85,
+    "categories": [
+      "Kitchen + Tabletop"
+    ],
+    "id": "kitchen-tabletop_undefined"
+  },
+  {
+    "name": "Tompson Drinking Glass (Set of 6)",
+    "price": 27,
+    "image": "/images/cat_outdoor.png",
+    "rating": 5,
+    "reviews": 340,
+    "categories": [
+      "Kitchen + Tabletop"
+    ],
+    "id": "kitchen-tabletop_undefined"
+  },
+  {
+    "name": "Noritake Colorwave Coupe Pasta Bowls, 9-1/4\", 35 Oz. (Set of 4)",
+    "price": 66,
+    "image": "/images/cat_living_room.png",
+    "rating": 4,
+    "reviews": 210,
+    "categories": [
+      "Kitchen + Tabletop"
+    ],
+    "id": "kitchen-tabletop_undefined"
+  },
+  {
+    "name": "Cloe 2.5\" x 8\" Ceramic Tile (Set of 76)",
+    "price": 12,
+    "sale": true,
+    "colors": 6,
+    "image": "/images/hero.png",
+    "rating": 5,
+    "reviews": 45,
+    "categories": [
+      "Kitchen + Tabletop"
+    ],
+    "id": "kitchen-tabletop_undefined"
+  },
+  {
+    "name": "Warwick Bar Pull 3\" Center To Center, Satin Brass",
+    "price": 15,
+    "colors": 4,
+    "image": "/images/cat_bedroom.png",
+    "rating": 4,
+    "reviews": 88,
+    "categories": [
+      "Kitchen + Tabletop"
+    ],
+    "id": "kitchen-tabletop_undefined"
+  },
+  {
+    "name": "Gibson Home Oslo 16 Piece Dinnerware Set White/Black Rim",
+    "price": 45,
+    "colors": 2,
+    "badge": "BEST SELLER",
+    "image": "/images/cat_dining.png",
+    "rating": 5,
+    "reviews": 1237,
+    "categories": [
+      "Kitchen + Tabletop"
+    ],
+    "id": "kitchen-tabletop_undefined"
+  },
+  {
+    "name": "Kody Vegan Leather Side Chair (Set of 2)",
+    "price": 169,
+    "originalPrice": 219,
+    "sale": true,
+    "colors": 3,
+    "image": "/images/cat_outdoor.png",
+    "rating": 4,
+    "reviews": 4472,
+    "categories": [
+      "Kitchen + Tabletop",
+      "Furniture > Accent + Lounge Chairs"
+    ],
+    "id": "kitchen-tabletop_undefined"
+  },
+  {
+    "name": "Brookline Polished 2\" x 10\" Ceramic Brick Look Subway Wall Tile",
+    "price": 8.92,
+    "originalPrice": 11.71,
+    "sale": true,
+    "colors": 5,
+    "image": "/images/cat_living_room.png",
+    "rating": 4,
+    "reviews": 323,
+    "categories": [
+      "Kitchen + Tabletop"
+    ],
+    "id": "kitchen-tabletop_undefined"
+  },
+  {
+    "name": "Libbey Stemless Margarita Glasses, 10.25 oz. (Set of 6)",
+    "price": 24,
+    "sale": true,
+    "image": "/images/hero.png",
+    "rating": 5,
+    "reviews": 170,
+    "categories": [
+      "Kitchen + Tabletop"
+    ],
+    "id": "kitchen-tabletop_undefined"
+  },
+  {
+    "name": "Evoque Arte Carthusian 10\" x 10\" Porcelain Patterned Wall & Floor Tile",
+    "price": 8.82,
+    "originalPrice": 11,
+    "badge": "BEST SELLER",
+    "image": "/images/cat_bedroom.png",
+    "rating": 4,
+    "reviews": 191,
+    "categories": [
+      "Kitchen + Tabletop"
+    ],
+    "id": "kitchen-tabletop_undefined"
+  },
+  {
+    "name": "Alivia Bar & Counter Stool (Set of 2)",
+    "price": 185,
+    "originalPrice": 209,
+    "colors": 3,
+    "image": "/images/cat_dining.png",
+    "rating": 4,
+    "reviews": 1016,
+    "categories": [
+      "Kitchen + Tabletop"
+    ],
+    "id": "kitchen-tabletop_undefined"
+  },
+  {
+    "id": "furniture_mg1",
+    "name": "Sleep by Wayfair 10\" Medium Memory Foam Mattress",
+    "subtitle": "Queen",
+    "price": 226,
+    "originalPrice": 270,
+    "extraText": "Free 3-Day Delivery",
+    "reviews": 89671,
+    "rating": 4.5,
+    "badge": "Sale",
+    "image": "/images/cat_bedroom.png",
+    "categories": [
+      "Furniture"
+    ]
+  },
+  {
+    "id": "furniture_mg2",
+    "name": "Sleep by Wayfair Medium Cooling Gel Memory Foam Mattress",
+    "subtitle": "Queen, 10\"",
+    "price": 257,
+    "originalPrice": 307,
+    "extraText": "Free 3-Day Delivery",
+    "reviews": 68419,
+    "rating": 4.5,
+    "badge": "Sale",
+    "image": "/images/cat_living_room.png",
+    "colorCount": 5,
+    "categories": [
+      "Furniture"
+    ]
+  },
+  {
+    "id": "furniture_mg3",
+    "name": "Amaryn Solid Wood Bed",
+    "subtitle": "Queen, Antique Espresso",
+    "price": 229,
+    "originalPrice": 259,
+    "extraText": "Free Fast Delivery",
+    "reviews": 12492,
+    "rating": 4.5,
+    "badge": "Limited Time Only",
+    "image": "/images/cat_dining.png",
+    "colors": [
+      "#3d2b1f",
+      "#fff",
+      "#ccc",
+      "#8b4513",
+      "#f5deb3"
+    ],
+    "categories": [
+      "Furniture",
+      "Furniture > Beds"
+    ]
+  },
+  {
+    "id": "furniture_mg4",
+    "name": "Anagrace Leather Upholstered Swivel Tilt Task Office Chair",
+    "subtitle": "Camel Pebbled Faux Leather",
+    "price": 160,
+    "originalPrice": 207,
+    "extraText": "Free 3-Day Delivery",
+    "reviews": 663,
+    "rating": 4.5,
+    "badge": "Sale",
+    "image": "/images/cat_outdoor.png",
+    "colors": [
+      "#c19a6b",
+      "#000",
+      "#fff",
+      "#a3b19b",
+      "#2c3e50"
+    ],
+    "categories": [
+      "Furniture",
+      "Furniture > Accent + Lounge Chairs"
+    ]
+  },
+  {
+    "id": "furniture_mg5",
+    "name": "Bennett Upholstered Swivel Barrel Chair",
+    "subtitle": "Effie Linen Performance Linen",
+    "price": 459,
+    "originalPrice": 629,
+    "extraText": "Free 3-Day Delivery",
+    "reviews": 2565,
+    "rating": 4.5,
+    "badge": "Sale",
+    "image": "/images/hero.png",
+    "colors": [
+      "#e5e0d8",
+      "#1e3a8a",
+      "#555",
+      "#d2b48c",
+      "#8b4513"
+    ],
+    "categories": [
+      "Furniture",
+      "Furniture > Accent + Lounge Chairs"
+    ]
+  },
+  {
+    "id": "furniture_mg6",
+    "name": "Ardin Solid Wood Bed Frame With Cream Boucle Upholstered Headboard",
+    "subtitle": "Natural, Queen",
+    "price": 320,
+    "originalPrice": 390,
+    "extraText": "Free 3-Day Delivery",
+    "reviews": 486,
+    "rating": 4.5,
+    "badge": "Sale",
+    "image": "/images/cat_bedroom.png",
+    "colors": [
+      "#e1c699",
+      "#000",
+      "#3d2b1f"
+    ],
+    "categories": [
+      "Furniture",
+      "Furniture > Beds"
+    ]
+  },
+  {
+    "id": "furniture_mg7",
+    "name": "Delpha Grounded Upholstered Wood Base Bed",
+    "subtitle": "King, Effie Linen Performance Linen",
+    "price": 1299,
+    "originalPrice": 1599,
+    "extraText": null,
+    "reviews": 291,
+    "rating": 4.5,
+    "badge": "Sale",
+    "image": "/images/cat_living_room.png",
+    "colors": [
+      "#e5e0d8",
+      "#555",
+      "#fff",
+      "#000",
+      "#ccc"
+    ],
+    "categories": [
+      "Furniture",
+      "Furniture > Beds"
+    ]
+  },
+  {
+    "id": "furniture_mg8",
+    "name": "Oxford Baby Uptown Upholstered Glider Recliner Rocking Chair Swivel...",
+    "subtitle": "Sand Polyester",
+    "price": 313,
+    "originalPrice": 400,
+    "extraText": null,
+    "reviews": 175,
+    "rating": 4.5,
+    "badge": "Sale",
+    "image": "/images/cat_dining.png",
+    "colors": [
+      "#e5e0d8",
+      "#8b4513",
+      "#ccc",
+      "#f5f5dc",
+      "#ddd"
+    ],
+    "categories": [
+      "Furniture",
+      "Furniture > Accent + Lounge Chairs"
+    ]
+  },
+  {
+    "id": "furniture_mg9",
+    "name": "Bennett Genuine Leather Swivel Barrel Chair (Set of 2)",
+    "subtitle": "Marseille Brown Genuine Leather",
+    "price": 1398,
+    "originalPrice": 2199,
+    "extraText": "Free Fast Delivery",
+    "reviews": 476,
+    "rating": 4.5,
+    "badge": null,
+    "image": "/images/cat_outdoor.png",
+    "colors": [
+      "#a0522d",
+      "#8b4513",
+      "#000"
+    ],
+    "categories": [
+      "Furniture",
+      "Furniture > Accent + Lounge Chairs"
+    ]
+  },
+  {
+    "id": "decor-pillows_mg1",
+    "name": "Faux Olive Tree in Pot",
+    "subtitle": "4 Sizes",
+    "price": 120,
+    "originalPrice": null,
+    "extraText": "",
+    "reviews": 0,
+    "rating": 0,
+    "badge": "Sale",
+    "image": "/images/cat_living_room.png",
+    "colors": 0,
+    "categories": [
+      "Decor + Pillows"
+    ]
+  },
+  {
+    "id": "decor-pillows_mg2",
+    "name": "Block Series Span Planter",
+    "subtitle": "3 Colors, 2 Sizes",
+    "price": 192,
+    "originalPrice": null,
+    "extraText": "",
+    "reviews": 0,
+    "rating": 0,
+    "badge": null,
+    "image": "/images/cat_outdoor.png",
+    "colors": 3,
+    "categories": [
+      "Decor + Pillows"
+    ]
+  },
+  {
+    "id": "decor-pillows_mg3",
+    "name": "Velvet Square Pillow",
+    "subtitle": "16 Colors",
+    "price": 35,
+    "originalPrice": null,
+    "extraText": "",
+    "reviews": 0,
+    "rating": 0,
+    "badge": "Sale",
+    "image": "/images/cat_bedroom.png",
+    "colors": 16,
+    "categories": [
+      "Decor + Pillows",
+      "Decor + Pillows > Throw Pillows"
+    ]
+  },
+  {
+    "id": "decor-pillows_mg4",
+    "name": "Block Series Long Box Planter",
+    "subtitle": "Black, 16\" H x 38\" W x 15\" D",
+    "price": 150,
+    "originalPrice": null,
+    "extraText": "Free Fast Delivery",
+    "reviews": 2444,
+    "rating": 4.5,
+    "badge": null,
+    "image": "/images/cat_dining.png",
+    "colors": 3,
+    "sizes": 3,
+    "categories": [
+      "Decor + Pillows"
+    ]
+  },
+  {
+    "id": "decor-pillows_mg5",
+    "name": "Corten Steel Series Long Box Planter",
+    "subtitle": "16.25\" H x 60\" W x 15\" D",
+    "price": 283,
+    "originalPrice": 340,
+    "extraText": "Free Fast Delivery",
+    "reviews": 2277,
+    "rating": 4.5,
+    "badge": "Sale",
+    "image": "/images/hero.png",
+    "sizes": 5,
+    "categories": [
+      "Decor + Pillows"
+    ]
+  },
+  {
+    "id": "decor-pillows_mg6",
+    "name": "Waffle Weave 100% Cotton Blanket",
+    "subtitle": "White, Queen",
+    "price": 44,
+    "originalPrice": 56,
+    "extraText": "",
+    "reviews": 583,
+    "rating": 4.5,
+    "badge": null,
+    "image": "/images/cat_living_room.png",
+    "colors": 8,
+    "categories": [
+      "Decor + Pillows"
+    ]
+  },
+  {
+    "id": "decor-pillows_mg7",
+    "name": "Valetta Set Of 4 Wall Mounted Shelves (Set of 4)",
+    "subtitle": "Walnut",
+    "price": 145,
+    "originalPrice": 165,
+    "extraText": "$36.25 per item\nFree 3-Day Delivery",
+    "reviews": 101,
+    "rating": 5,
+    "badge": "Limited Time Only",
+    "image": "/images/cat_bedroom.png",
+    "colors": 4,
+    "categories": [
+      "Decor + Pillows"
+    ]
+  },
+  {
+    "id": "decor-pillows_mg8",
+    "name": "Waverly Wool Throw Pillow",
+    "subtitle": "Green, 20\" x 20\", Down",
+    "price": 51,
+    "originalPrice": null,
+    "extraText": "Free 3-Day Delivery",
+    "reviews": 86,
+    "rating": 4.5,
+    "badge": null,
+    "image": "/images/cat_dining.png",
+    "colors": 5,
+    "categories": [
+      "Decor + Pillows",
+      "Decor + Pillows > Throw Pillows"
+    ]
+  },
+  {
+    "id": "decor-pillows_mg9",
+    "name": "38\" Faux Snake Plant (Sansevieria) Succulent in Planter",
+    "subtitle": "Green",
+    "price": 119,
+    "originalPrice": null,
+    "extraText": "Free Fast Delivery",
+    "reviews": 299,
+    "rating": 4.5,
+    "badge": null,
+    "image": "/images/cat_outdoor.png",
+    "colors": 2,
+    "categories": [
+      "Decor + Pillows"
+    ]
+  },
+  {
+    "name": "Miller 56\" Upholstered Loveseat",
+    "category": "Blue Velvet",
+    "price": "$849",
+    "oldPrice": "$999",
+    "rating": "4.5",
+    "reviews": "346",
+    "image": "/images/hero.png",
+    "hoverImage": "/images/cat_living_room.png",
+    "colors": [
+      "#5d7a96",
+      "#5a684b",
+      "#ece8e2",
+      "#c4c0b6"
+    ],
+    "deliveryText": "Free Fast Delivery",
+    "categories": [
+      "Top-Rated Best Sellers",
+      "Furniture > Sofas"
+    ],
+    "id": "best-sellers_undefined"
+  },
+  {
+    "name": "Miller 2 - Piece Upholstered Chaise Sectional",
+    "category": "Olive Green Polyester Blend, Right Hand Facing",
+    "price": "$1,999",
+    "oldPrice": "$2,199",
+    "rating": "4.5",
+    "reviews": "1739",
+    "image": "/images/cat_living_room.png",
+    "hoverImage": "/images/cat_bedroom.png",
+    "badge": "Limited Time Only",
+    "colors": [
+      "#5a684b",
+      "#ece8e2",
+      "#5d7a96",
+      "#c4c0b6"
+    ],
+    "categories": [
+      "Top-Rated Best Sellers",
+      "Furniture > Sectionals"
+    ],
+    "id": "best-sellers_undefined"
+  },
+  {
+    "name": "Miller 84\" Upholstered Sofa",
+    "category": "Blue Velvet",
+    "price": "$1,199",
+    "oldPrice": "$1,299",
+    "rating": "4.5",
+    "reviews": "2469",
+    "image": "/images/cat_dining.png",
+    "hoverImage": "/images/cat_outdoor.png",
+    "colors": [
+      "#5d7a96",
+      "#ece8e2",
+      "#c4c0b6",
+      "#5a684b"
+    ],
+    "categories": [
+      "Top-Rated Best Sellers",
+      "Furniture > Sofas"
+    ],
+    "id": "best-sellers_undefined"
+  },
+  {
+    "name": "Miller Upholstered Armchair",
+    "category": "Blue Velvet",
+    "price": "$469",
+    "oldPrice": "$679",
+    "rating": "4.5",
+    "reviews": "1556",
+    "image": "/images/cat_outdoor.png",
+    "hoverImage": "/images/hero.png",
+    "badge": "Sale",
+    "colors": [
+      "#5d7a96",
+      "#c4c0b6",
+      "#5a684b",
+      "#ece8e2"
+    ],
+    "deliveryText": "Free Fast Delivery",
+    "categories": [
+      "Top-Rated Best Sellers",
+      "Furniture > Accent + Lounge Chairs"
+    ],
+    "id": "best-sellers_undefined"
+  },
+  {
+    "name": "Reeves 84\" Vegan Leather Sofa",
+    "category": "Olive Green Performance Faux Leather",
+    "price": "$850",
+    "oldPrice": "$978",
+    "rating": "4.5",
+    "reviews": "166",
+    "image": "/images/cat_bedroom.png",
+    "hoverImage": "/images/cat_living_room.png",
+    "badge": "Sale",
+    "colors": [
+      "#3b2f2f",
+      "#8b5a2b",
+      "#5a684b",
+      "#a0522d"
+    ],
+    "categories": [
+      "Top-Rated Best Sellers",
+      "Furniture > Sofas"
+    ],
+    "id": "best-sellers_undefined"
+  },
+  {
+    "name": "Mallory Area Rug",
+    "category": "Rectangle 8' x 9'",
+    "price": "$129",
+    "oldPrice": "$649",
+    "rating": "4.5",
+    "reviews": "276",
+    "image": "/images/cat_dining.png",
+    "hoverImage": "/images/hero.png",
+    "badge": "Limited Time Only",
+    "sizesText": "11 Sizes",
+    "deliveryText": "Free 3-Day Delivery",
+    "categories": [
+      "Top-Rated Best Sellers"
+    ],
+    "id": "best-sellers_undefined"
+  },
+  {
+    "name": "Farrah Stacking Patio Dining Armchair\n(Set of 2)",
+    "category": "Taupe",
+    "price": "$329 $164.50 per item",
+    "oldPrice": "$449",
+    "rating": "4.5",
+    "reviews": "138",
+    "image": "/images/hero.png",
+    "hoverImage": "/images/cat_outdoor.png",
+    "badge": "Limited Time Only",
+    "colors": [
+      "#ece8e2",
+      "#000",
+      "#1e3a8a",
+      "#5a684b",
+      "#4a4a4a"
+    ],
+    "deliveryText": "Free Fast Delivery",
+    "categories": [
+      "Top-Rated Best Sellers",
+      "Furniture > Accent + Lounge Chairs"
+    ],
+    "id": "best-sellers_undefined"
+  },
+  {
+    "name": "POLYWOOD x AllModern Folding Plastic Adirondack Chair",
+    "category": "Black",
+    "price": "$249",
+    "oldPrice": "$269",
+    "rating": "4.5",
+    "reviews": "55",
+    "image": "/images/cat_living_room.png",
+    "hoverImage": "/images/cat_dining.png",
+    "colors": [
+      "#fff",
+      "#000",
+      "#1e3a8a",
+      "#c19a6b",
+      "#8b0000",
+      "+8"
+    ],
+    "categories": [
+      "Top-Rated Best Sellers",
+      "Furniture > Accent + Lounge Chairs"
+    ],
+    "id": "best-sellers_undefined"
+  },
+  {
+    "name": "Farrah Stacking Patio Dining Side Chair\n(Set of 2)",
+    "category": "Olive Green",
+    "price": "$239 $119.50 per item",
+    "oldPrice": "$309",
+    "rating": "4.5",
+    "reviews": "194",
+    "image": "/images/cat_bedroom.png",
+    "hoverImage": "/images/hero.png",
+    "badge": "Sale",
+    "colors": [
+      "#5a684b",
+      "#ece8e2",
+      "#000",
+      "#1e3a8a",
+      "#4a4a4a"
+    ],
+    "deliveryText": "Free Fast Delivery",
+    "categories": [
+      "Top-Rated Best Sellers",
+      "Furniture > Accent + Lounge Chairs"
+    ],
+    "id": "best-sellers_undefined"
+  },
+  {
+    "name": "Sealy Cool 12\" Medium Memory Foam Mattress",
+    "price": 399,
+    "originalPrice": 507,
+    "colors": 6,
+    "image": "/images/cat_bedroom.png",
+    "rating": 4,
+    "reviews": 10721,
+    "subtext": "Queen",
+    "categories": [
+      "Bedding"
+    ],
+    "id": "bedding_undefined"
+  },
+  {
+    "name": "Sleep by Wayfair™ 6\"/8\"/10\"/12\" Firm Gel Memory Foam Mattress",
+    "price": 154,
+    "originalPrice": 162,
+    "colors": 5,
+    "image": "/images/cat_dining.png",
+    "rating": 4,
+    "reviews": 56404,
+    "subtext": "8\", Twin",
+    "categories": [
+      "Bedding"
+    ],
+    "id": "bedding_undefined"
+  },
+  {
+    "name": "Sleep by Wayfair™ Polyester Pillow (Set of 2)",
+    "price": 20,
+    "originalPrice": 24,
+    "sale": true,
+    "colors": 2,
+    "image": "/images/cat_outdoor.png",
+    "rating": 4,
+    "reviews": 4198,
+    "unit": "$10 per item",
+    "subtext": "Queen, Plush",
+    "categories": [
+      "Bedding",
+      "Decor + Pillows > Throw Pillows"
+    ],
+    "id": "bedding_undefined"
+  },
+  {
+    "name": "Edgar 100% Cotton Throw Pillow",
+    "price": 34,
+    "originalPrice": 39,
+    "sale": true,
+    "colors": 21,
+    "image": "/images/cat_living_room.png",
+    "rating": 4,
+    "reviews": 7691,
+    "subtext": "Pillow Cover Only - No Insert, Sea Foam, 18\"H x 18\"W",
+    "categories": [
+      "Bedding",
+      "Decor + Pillows > Throw Pillows"
+    ],
+    "id": "bedding_undefined"
+  },
+  {
+    "name": "Sealy Cool 12\" Medium Hybrid Mattress",
+    "price": 530,
+    "colors": 6,
+    "image": "/images/hero.png",
+    "rating": 4,
+    "reviews": 5218,
+    "subtext": "Queen",
+    "categories": [
+      "Bedding"
+    ],
+    "id": "bedding_undefined"
+  },
+  {
+    "name": "Sealy to Go 12\" Medium Memory Foam Mattress in a Box",
+    "price": 400,
+    "originalPrice": 470,
+    "colors": 6,
+    "image": "/images/cat_bedroom.png",
+    "rating": 4,
+    "reviews": 7840,
+    "subtext": "Queen",
+    "categories": [
+      "Bedding"
+    ],
+    "id": "bedding_undefined"
+  },
+  {
+    "name": "Bedsure Luxury Soft 100% Cotton Waffle Weave Plaid Duvet Cover",
+    "price": 86,
+    "originalPrice": 96,
+    "sale": true,
+    "colors": 5,
+    "image": "/images/cat_dining.png",
+    "rating": 4,
+    "reviews": 579,
+    "subtext": "King Duvet Cover + 2 King Shams, Beige",
+    "categories": [
+      "Bedding",
+      "Furniture > Beds"
+    ],
+    "id": "bedding_undefined"
+  },
+  {
+    "name": "Waffle Weave 100% Cotton Blanket",
+    "price": 44,
+    "originalPrice": 59,
+    "sale": true,
+    "colors": 7,
+    "image": "/images/cat_outdoor.png",
+    "rating": 4,
+    "reviews": 583,
+    "subtext": "White, Queen",
+    "categories": [
+      "Bedding"
+    ],
+    "id": "bedding_undefined"
+  },
+  {
+    "name": "Nora® Medium Cooling Gel Memory Foam Mattress with Cooling Cover",
+    "price": 390,
+    "originalPrice": 520,
+    "colors": 4,
+    "image": "/images/cat_living_room.png",
+    "rating": 4,
+    "reviews": 10726,
+    "subtext": "Queen, 12\"",
+    "categories": [
+      "Bedding"
+    ],
+    "id": "bedding_undefined"
+  },
+  {
+    "name": "Roshina Pillow Insert",
+    "price": 27,
+    "originalPrice": 35,
+    "badge": "Limited Time Only",
+    "colors": 13,
+    "image": "/images/hero.png",
+    "rating": 4,
+    "reviews": 1874,
+    "subtext": "20\" x 20\"",
+    "categories": [
+      "Bedding",
+      "Decor + Pillows > Throw Pillows"
+    ],
+    "id": "bedding_undefined"
+  },
+  {
+    "name": "Stonewashed Crinkle Cotton Box Stitch Quilt Set",
+    "price": 111,
+    "originalPrice": 120,
+    "colors": 8,
+    "image": "/images/cat_bedroom.png",
+    "rating": 4,
+    "reviews": 330,
+    "subtext": "Ivory White, King Quilt + 2 King Shams",
+    "categories": [
+      "Bedding"
+    ],
+    "id": "bedding_undefined"
+  },
+  {
+    "name": "Selma Cotton Throw Pillow",
+    "price": 45,
+    "colors": 6,
+    "image": "/images/cat_dining.png",
+    "rating": 4,
+    "reviews": 354,
+    "subtext": "Brick Red, 20\" x 20\"",
+    "categories": [
+      "Bedding",
+      "Decor + Pillows > Throw Pillows"
+    ],
+    "id": "bedding_undefined"
+  },
+  {
+    "name": "Adelaja 300 Thread Count Organic 100% Cotton Cool & Crisp Percale Weave Sheet Set",
+    "price": 60,
+    "originalPrice": 92,
+    "sale": true,
+    "colors": 6,
+    "image": "/images/cat_outdoor.png",
+    "rating": 4,
+    "reviews": 2071,
+    "subtext": "White, King",
+    "categories": [
+      "Bedding"
+    ],
+    "id": "bedding_undefined"
+  },
+  {
+    "name": "Chenille Chunky Knit Luxurious Soft Handmade Throw",
+    "price": 69,
+    "originalPrice": 77,
+    "sale": true,
+    "colors": 6,
+    "image": "/images/cat_living_room.png",
+    "rating": 4,
+    "reviews": 321,
+    "subtext": "Navy Blue",
+    "categories": [
+      "Bedding"
+    ],
+    "id": "bedding_undefined"
+  },
+  {
+    "name": "100% Cotton Lightweight Waffle Weave Summer Blanket",
+    "price": 65,
+    "originalPrice": 89,
+    "badge": "Limited Time Only",
+    "colors": 5,
+    "image": "/images/hero.png",
+    "rating": 4,
+    "reviews": 1300,
+    "subtext": "White, King",
+    "categories": [
+      "Bedding"
+    ],
+    "id": "bedding_undefined"
+  },
+  {
+    "name": "Double Box Stitch Velvet Quilt set",
+    "price": 80,
+    "colors": 7,
+    "image": "/images/cat_bedroom.png",
+    "rating": 4,
+    "reviews": 78,
+    "subtext": "Cream White, King Quilt + 2 King Shams",
+    "categories": [
+      "Bedding"
+    ],
+    "id": "bedding_undefined"
+  },
+  {
+    "name": "600 Fill Power All Season Down Comforter/Duvet Insert",
+    "price": 72,
+    "originalPrice": 86,
+    "colors": 5,
+    "image": "/images/cat_dining.png",
+    "rating": 4,
+    "reviews": 730,
+    "subtext": "White, Queen Down Comforter",
+    "categories": [
+      "Bedding"
+    ],
+    "id": "bedding_undefined"
+  },
+  {
+    "name": "Lombard Wool Throw Pillow",
+    "price": 27,
+    "originalPrice": 35,
+    "colors": 5,
+    "image": "/images/cat_outdoor.png",
+    "rating": 4,
+    "reviews": 115,
+    "subtext": "18\" x 18\", Denim/Orange, Pillow Cover Only - No Insert",
+    "categories": [
+      "Bedding",
+      "Decor + Pillows > Throw Pillows"
+    ],
+    "id": "bedding_undefined"
+  },
+  {
+    "name": "Brabantia Foldable Laundry Basket 10.6 Gallon (40L)",
+    "price": 55,
+    "colors": 2,
+    "image": "/images/cat_bedroom.png",
+    "rating": 4,
+    "reviews": 87,
+    "categories": [
+      "Bath"
+    ],
+    "id": "bath_undefined"
+  },
+  {
+    "name": "Brabantia Laundry Hamper, 9.2 Gallon (35L)",
+    "price": 75,
+    "originalPrice": 164,
+    "sale": true,
+    "image": "/images/cat_dining.png",
+    "rating": 4,
+    "reviews": 85,
+    "categories": [
+      "Bath"
+    ],
+    "id": "bath_undefined"
+  },
+  {
+    "name": "SONO Bathroom Accessory Tray",
+    "price": 30,
+    "image": "/images/cat_outdoor.png",
+    "rating": 5,
+    "reviews": 340,
+    "categories": [
+      "Bath"
+    ],
+    "id": "bath_undefined"
+  },
+  {
+    "name": "Thora Dots Mid-Century Shower Curtain",
+    "price": 75,
+    "originalPrice": 79,
+    "sale": true,
+    "image": "/images/cat_living_room.png",
+    "rating": 4,
+    "reviews": 210,
+    "categories": [
+      "Bath"
+    ],
+    "id": "bath_undefined"
+  },
+  {
+    "name": "Nine Stars 13.2 Gallon Stainless Steel Motion Sensor Trash Can",
+    "price": 49,
+    "originalPrice": 59,
+    "sale": true,
+    "colors": 4,
+    "image": "/images/hero.png",
+    "rating": 5,
+    "reviews": 18009,
+    "categories": [
+      "Bath"
+    ],
+    "id": "bath_undefined"
+  },
+  {
+    "name": "Nicoli Widespread Bathroom Faucet 3 Hole, 2-handle",
+    "price": 190,
+    "colors": 6,
+    "image": "/images/cat_bedroom.png",
+    "rating": 4,
+    "reviews": 1869,
+    "categories": [
+      "Bath"
+    ],
+    "id": "bath_undefined"
+  },
+  {
+    "name": "Cloe 2.5\" x 8\" Ceramic Tile (Set of 76)",
+    "price": 8.83,
+    "originalPrice": 12.03,
+    "sale": true,
+    "colors": 8,
+    "image": "/images/cat_dining.png",
+    "rating": 5,
+    "reviews": 924,
+    "unit": "/sq. ft.",
+    "subtext": "$94 per box",
+    "categories": [
+      "Bath"
+    ],
+    "id": "bath_undefined"
+  },
+  {
+    "name": "Rooks 3 Light Dimmable Vanity Light",
+    "price": 162,
+    "colors": 2,
+    "image": "/images/cat_outdoor.png",
+    "rating": 4,
+    "reviews": 785,
+    "categories": [
+      "Bath"
+    ],
+    "id": "bath_undefined"
+  },
+  {
+    "name": "Auburn Ribbon 24 in. x 48 in. Porcelain Ribbed Wood Look",
+    "price": 10.2,
+    "originalPrice": 11.01,
+    "sale": true,
+    "colors": 3,
+    "image": "/images/cat_living_room.png",
+    "rating": 4,
+    "reviews": 546,
+    "unit": "/sq. ft.",
+    "subtext": "$158 per box",
+    "categories": [
+      "Bath",
+      "Furniture > Beds"
+    ],
+    "id": "bath_undefined"
+  },
+  {
+    "name": "Childerley 2 Light Vanity",
+    "price": 108,
+    "colors": 2,
+    "image": "/images/hero.png",
+    "rating": 5,
+    "reviews": 452,
+    "categories": [
+      "Bath"
+    ],
+    "id": "bath_undefined"
+  },
+  {
+    "name": "Calheta Cotton Oversized Cabana Stripe Beach Towels",
+    "price": 26,
+    "originalPrice": 31,
+    "sale": true,
+    "badge": "Limited Time Only",
+    "colors": 6,
+    "image": "/images/cat_bedroom.png",
+    "rating": 4,
+    "reviews": 2374,
+    "categories": [
+      "Bath",
+      "Bath > Bath Towels"
+    ],
+    "id": "bath_undefined"
+  },
+  {
+    "name": "Radiant Inflex 4.43\" W x 17.62\" L Crackled Ceramic Subway",
+    "price": 12.4,
+    "originalPrice": 15.16,
+    "sale": true,
+    "colors": 4,
+    "image": "/images/cat_dining.png",
+    "rating": 4,
+    "reviews": 15,
+    "unit": "/sq. ft.",
+    "subtext": "$81 per box",
+    "categories": [
+      "Bath"
+    ],
+    "id": "bath_undefined"
+  }
+]

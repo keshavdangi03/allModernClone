@@ -270,7 +270,7 @@ export default function RugsPage() {
         </section>
 
         {/* Filtering and Sort Header */}
-        <FilterableProductLayout title="Rugs" itemCount={930} products={products} categoryName="Rugs"></FilterableProductLayout>
+        <FilterableProductLayout title="Rugs" itemCount={930} products={[]} categoryName="Rugs"></FilterableProductLayout>
 
         {/* SEO Text Section */}
         <section className="mx-auto max-w-[1400px] px-4 pb-12 pt-8 sm:px-6">

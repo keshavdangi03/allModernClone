@@ -1,30 +1,21 @@
 "use client";
 
-import React, { useState } from "react";
-import { useRouter } from "next/navigation";
+import React, { useState, useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { 
   Bold, Italic, Underline as UnderlineIcon, Strikethrough, 
   AlignLeft, AlignCenter, AlignRight, Type,
   Plus, X
 } from "lucide-react";
-import { categoryMenus } from "@/components/layout/navigation-data";
-
-const ALLMODERN_CATEGORIES = [
-  { id: "furniture", label: "Furniture" },
-  { id: "outdoor", label: "Outdoor" },
-  { id: "lighting", label: "Lighting" },
-  { id: "rugs", label: "Rugs" },
-  { id: "decor-pillows", label: "Decor & Pillows" },
-  { id: "wall-decor", label: "Wall Decor" },
-  { id: "bedding", label: "Bedding" },
-  { id: "bath", label: "Bath" },
-  { id: "kitchen-tabletop", label: "Kitchen & Tabletop" },
-  { id: "storage", label: "Storage" },
-  { id: "baby-kids", label: "Baby & Kids" },
-];
+import { categoryMenus as defaultCategoryMenus } from "@/components/layout/navigation-data";
 
 export default function AddProductPage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const editId = searchParams.get("id");
+
+  const [dynamicCategoryMenus, setDynamicCategoryMenus] = useState<any>(defaultCategoryMenus);
+
   const [title, setTitle] = useState("");
   const [slug, setSlug] = useState("");
   const [description, setDescription] = useState("");
@@ -38,6 +29,59 @@ export default function AddProductPage() {
   const [customAttributes, setCustomAttributes] = useState<{ id: number; value: string }[]>([]);
   const [additionalInfo, setAdditionalInfo] = useState<{ id: number; value: string }[]>([]);
   const [body, setBody] = useState("");
+
+  useEffect(() => {
+    // Load dynamic categories
+    const loadCategories = () => {
+      const savedCats = localStorage.getItem("allmodern_admin_categories");
+      if (savedCats) {
+        try {
+          const parsed = JSON.parse(savedCats);
+          const newCategoryMenus: any = {};
+          parsed.forEach((cat: any) => {
+            newCategoryMenus[cat.title] = {
+              image: cat.image,
+              badge: cat.badge,
+              sections: cat.sections
+            };
+          });
+          setDynamicCategoryMenus(newCategoryMenus);
+        } catch (e) {
+          console.error("Failed to parse categories", e);
+        }
+      }
+    };
+    loadCategories();
+
+    if (editId) {
+      const saved = localStorage.getItem("allmodern_admin_products");
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        const productToEdit = parsed.find((p: any) => String(p.id) === String(editId));
+        if (productToEdit) {
+          setTitle(productToEdit.name || "");
+          setSlug(productToEdit.slug || "");
+          setDescription(productToEdit.description || "");
+          setShortDescription(productToEdit.shortDescription || "");
+          
+          // Normalize legacy extracted tags to match the checkbox menu keys
+          const normalizedCats = (productToEdit.categories || []).map((c: string) => {
+            if (c === "Bathroom") return "Bath";
+            return c;
+          });
+          setSelectedCategories(normalizedCats);
+
+          setPrice(productToEdit.price?.toString() || "0");
+          setDiscountedPrice(productToEdit.discountedPrice?.toString() || "0");
+          setImages(productToEdit.images || (productToEdit.image ? [{ id: Date.now(), url: productToEdit.image }] : []));
+          setVariants(productToEdit.variants || []);
+          setCustomAttributes(productToEdit.customAttributes || []);
+          setAdditionalInfo(productToEdit.additionalInfo || []);
+          setBody(productToEdit.body || "");
+        }
+      }
+    }
+  }, [editId]);
 
   const addImage = () => {
     setImages((prev) => [...prev, { id: Date.now(), url: "" }]);
@@ -104,28 +148,34 @@ export default function AddProductPage() {
       body,
     };
 
+    if (editId) {
+      newProduct.id = parseInt(editId, 10) || editId as any;
+    }
+
     const saved = localStorage.getItem("allmodern_admin_products");
     let products = [];
     if (saved) {
       products = JSON.parse(saved);
     } else {
-      // Mock data initial state
-      products = [
-        { id: 1, name: "Miller 56\" Upholstered Loveseat", image: "/images/cat_living_room.png" },
-        { id: 2, name: "Bennett Upholstered Swivel Barrel Chair", image: "/images/cat_dining.png" },
-        { id: 3, name: "Miller 84\" Upholstered Sofa", image: "/images/hero.png" },
-        { id: 4, name: "Miller Upholstered Armchair", image: "/images/cat_living_room.png" },
-        { id: 5, name: "Bennett Vegan Leather Swivel Barrel Chair", image: "/images/cat_bedroom.png" },
-        { id: 6, name: "Miller 2 - Piece Upholstered Chaise Sectional", image: "/images/cat_outdoor.png" },
-        { id: 7, name: "Salma Colorful Enamel End Table", image: "/images/cat_dining.png" },
-        { id: 8, name: "Rustic Pine Wood Platform Bed", image: "/images/cat_bedroom.png" }
-      ];
+      // If saving a new product and storage is empty, initialize it empty
+      // The admin page will fetch catalog.json but if they are here first, we just push.
+      products = [];
     }
 
-    products.unshift(newProduct);
+    if (editId) {
+      const index = products.findIndex((p: any) => String(p.id) === String(editId));
+      if (index !== -1) {
+        products[index] = newProduct;
+      } else {
+        products.unshift(newProduct);
+      }
+    } else {
+      products.unshift(newProduct);
+    }
+    
     localStorage.setItem("allmodern_admin_products", JSON.stringify(products));
 
-    alert("Product saved successfully!");
+    alert(editId ? "Product updated successfully!" : "Product saved successfully!");
     router.push("/products");
   };
 
@@ -217,8 +267,20 @@ export default function AddProductPage() {
         {/* Categories */}
         <div>
           <label className="block text-sm font-medium text-gray-500 mb-2">Categories & Subcategories <span className="text-red-500">*</span></label>
+          
+          {/* Display currently selected tags */}
+          {selectedCategories.length > 0 && (
+            <div className="flex flex-wrap gap-2 mb-3">
+              {selectedCategories.map((cat, idx) => (
+                <span key={idx} className="bg-blue-50 text-blue-700 border border-blue-200 px-3 py-1.5 rounded-lg text-sm font-medium shadow-sm flex items-center gap-1">
+                  {cat}
+                </span>
+              ))}
+            </div>
+          )}
+
           <div className="border border-gray-200 p-4 rounded-xl max-h-96 overflow-y-auto bg-white space-y-6">
-            {Object.entries(categoryMenus).map(([mainCategory, data]) => (
+            {Object.entries(dynamicCategoryMenus).map(([mainCategory, data]: [string, any]) => (
               <div key={mainCategory} className="space-y-3">
                 <div className="font-bold text-gray-800 border-b pb-2 sticky top-0 bg-white z-10 flex items-center gap-2">
                   <input 
@@ -236,7 +298,7 @@ export default function AddProductPage() {
                   <span>{mainCategory} (Main Category)</span>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2 pl-2">
-                  {Array.from(new Set(data.sections.flatMap(s => s.links))).map((subCat) => {
+                  {(Array.from(new Set(data.sections?.flatMap((s: any) => s.links) || [])) as string[]).map((subCat) => {
                     const val = `${mainCategory} > ${subCat}`;
                     return (
                       <label key={val} className="flex items-start gap-2 cursor-pointer hover:bg-gray-50 p-1 rounded">
@@ -256,6 +318,7 @@ export default function AddProductPage() {
                       </label>
                     );
                   })}
+
                 </div>
               </div>
             ))}
@@ -393,12 +456,18 @@ export default function AddProductPage() {
         </div>
 
         {/* Submit */}
-        <div className="pt-4">
+        <div className="pt-4 flex items-center gap-3">
+          <button
+            onClick={() => router.push("/products")}
+            className="px-6 py-3 rounded-xl font-medium text-gray-700 bg-white border border-gray-300 hover:bg-gray-50 transition-colors"
+          >
+            Cancel
+          </button>
           <button
             onClick={handleSave}
             className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-xl text-sm font-medium transition-colors"
           >
-            Save Product
+            {editId ? "Update Product" : "Save Product"}
           </button>
         </div>
       </div>

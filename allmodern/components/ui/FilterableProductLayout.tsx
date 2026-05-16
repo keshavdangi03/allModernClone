@@ -21,7 +21,7 @@ export default function FilterableProductLayout({ title, itemCount, products = [
 
   // Dynamic Products State
   const [dynamicProducts, setDynamicProducts] = useState<Product[]>([]);
-  const [combinedProducts, setCombinedProducts] = useState<Product[]>(products);
+  const [combinedProducts, setCombinedProducts] = useState<Product[]>([]);
 
   // Filter/Sort/Pagination States
   const [sortBy, setSortBy] = useState("Recommended");
@@ -31,32 +31,66 @@ export default function FilterableProductLayout({ title, itemCount, products = [
 
   // 1. Fetch Dynamic Products
   useEffect(() => {
+    const loadProducts = (parsed: any[]) => {
+      const filtered = parsed.filter((p: any) => 
+        p.categories?.some((cat: string) => 
+          cat === categoryName || cat.startsWith(`${categoryName} >`) || cat === title || cat.startsWith(`${title} >`)
+        )
+      );
+      // Normalize dynamic products to match Product type
+      const normalized = filtered.map((p: any) => ({
+        ...p,
+        price: typeof p.price === 'string' ? parseFloat(p.price) : p.price,
+        originalPrice: p.discountedPrice ? parseFloat(p.discountedPrice) : p.originalPrice,
+        badge: p.discountedPrice ? "Sale" : p.badge
+      }));
+      setDynamicProducts(normalized);
+    };
+
     const saved = localStorage.getItem("allmodern_admin_products");
+    const isSeeded = localStorage.getItem("allmodern_catalog_seeded");
+    
+    let currentProducts: any[] = [];
     if (saved) {
       try {
-        const parsed = JSON.parse(saved);
-        const filtered = parsed.filter((p: any) => 
-          p.categories?.some((cat: string) => 
-            cat === categoryName || cat.startsWith(`${categoryName} >`) || cat === title || cat.startsWith(`${title} >`)
-          )
-        );
-        // Normalize dynamic products to match Product type
-        const normalized = filtered.map((p: any) => ({
-          ...p,
-          price: typeof p.price === 'string' ? parseFloat(p.price) : p.price,
-          originalPrice: p.discountedPrice ? parseFloat(p.discountedPrice) : null,
-          badge: p.discountedPrice ? "Sale" : null
-        }));
-        setDynamicProducts(normalized);
+        currentProducts = JSON.parse(saved);
+        // Purge old mock products (ID 1-8) that lack categories
+        const cleanProducts = currentProducts.filter(p => p.categories && p.categories.length > 0);
+        
+        if (cleanProducts.length !== currentProducts.length) {
+          currentProducts = cleanProducts;
+          localStorage.setItem("allmodern_admin_products", JSON.stringify(currentProducts));
+        }
+        
+        loadProducts(currentProducts);
       } catch (e) {
         console.error("Failed to parse local products", e);
       }
     }
+
+    if (!isSeeded || currentProducts.length < 20) {
+      // Fetch the global catalog if localStorage is missing or not seeded
+      fetch("/data/catalog.json")
+        .then(res => res.json())
+        .then(catalogData => {
+          // Merge to protect user-added items
+          const existingIds = new Set(currentProducts.map(p => String(p.id)));
+          const newItems = catalogData.filter((p: any) => !existingIds.has(String(p.id)));
+          
+          if (newItems.length > 0) {
+            const merged = [...currentProducts, ...newItems];
+            localStorage.setItem("allmodern_admin_products", JSON.stringify(merged));
+            loadProducts(merged);
+          }
+          localStorage.setItem("allmodern_catalog_seeded", "true");
+        })
+        .catch(err => console.error("Failed to load catalog.json", err));
+    }
   }, [categoryName, title]);
 
-  // 2. Combine static and dynamic
+  // 2. Combine static and dynamic (Static will soon be phased out)
   useEffect(() => {
-    setCombinedProducts([...dynamicProducts, ...products]);
+    setCombinedProducts([...dynamicProducts, ...(products || [])]);
   }, [dynamicProducts, products]);
 
   // 3. Apply Filters and Sort
@@ -67,7 +101,7 @@ export default function FilterableProductLayout({ title, itemCount, products = [
     if (isSaleOnly) {
       result = result.filter(p => 
         p.badge?.toLowerCase().includes("sale") || 
-        (p.originalPrice && p.price < p.originalPrice)
+        (p.originalPrice && Number(p.price) < Number(p.originalPrice))
       );
     }
 

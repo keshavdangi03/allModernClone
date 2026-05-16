@@ -4,17 +4,7 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { Pencil, Trash2, Plus, ArrowLeft, ArrowRight } from "lucide-react";
 
-// Mock data from allmodern clone components
-const initialProducts = [
-  { id: 1, name: "Miller 56\" Upholstered Loveseat", image: "/images/cat_living_room.png" },
-  { id: 2, name: "Bennett Upholstered Swivel Barrel Chair", image: "/images/cat_dining.png" },
-  { id: 3, name: "Miller 84\" Upholstered Sofa", image: "/images/hero.png" },
-  { id: 4, name: "Miller Upholstered Armchair", image: "/images/cat_living_room.png" },
-  { id: 5, name: "Bennett Vegan Leather Swivel Barrel Chair", image: "/images/cat_bedroom.png" },
-  { id: 6, name: "Miller 2 - Piece Upholstered Chaise Sectional", image: "/images/cat_outdoor.png" },
-  { id: 7, name: "Salma Colorful Enamel End Table", image: "/images/cat_dining.png" },
-  { id: 8, name: "Rustic Pine Wood Platform Bed", image: "/images/cat_bedroom.png" }, // Added to have enough for pagination
-];
+// Initial products are now fetched from /data/catalog.json
 
 export default function ProductsPage() {
   const [products, setProducts] = useState<any[]>([]);
@@ -22,14 +12,54 @@ export default function ProductsPage() {
   const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
-    const saved = localStorage.getItem("allmodern_admin_products");
-    if (saved) {
-      setProducts(JSON.parse(saved));
-    } else {
-      setProducts(initialProducts);
-      localStorage.setItem("allmodern_admin_products", JSON.stringify(initialProducts));
+    // Force re-seed to get subcategories
+    const isSubcategorySeeded = localStorage.getItem("allmodern_subcategory_seeded_v3");
+    if (!isSubcategorySeeded) {
+      localStorage.removeItem("allmodern_admin_products");
+      localStorage.removeItem("allmodern_catalog_seeded");
+      localStorage.setItem("allmodern_subcategory_seeded_v3", "true");
     }
-    setIsLoaded(true);
+
+    const saved = localStorage.getItem("allmodern_admin_products");
+    const isSeeded = localStorage.getItem("allmodern_catalog_seeded");
+    
+    let currentProducts: any[] = [];
+    if (saved) {
+      currentProducts = JSON.parse(saved);
+      // Purge old mock products (ID 1-8) that lack categories
+      const cleanProducts = currentProducts.filter(p => p.categories && p.categories.length > 0);
+      
+      if (cleanProducts.length !== currentProducts.length) {
+        currentProducts = cleanProducts;
+        localStorage.setItem("allmodern_admin_products", JSON.stringify(currentProducts));
+      }
+
+      setProducts(currentProducts);
+      setIsLoaded(true);
+    }
+
+    if (!isSeeded || currentProducts.length < 20) {
+      fetch("/data/catalog.json")
+        .then((res) => res.json())
+        .then((catalogData) => {
+          // Merge existing products with catalog (keep existing user additions)
+          // The catalog has IDs like "furniture_mg1", user items probably have numbers
+          const existingIds = new Set(currentProducts.map(p => String(p.id)));
+          const newItems = catalogData.filter((p: any) => !existingIds.has(String(p.id)));
+          
+          if (newItems.length > 0) {
+            const merged = [...currentProducts, ...newItems];
+            setProducts(merged);
+            localStorage.setItem("allmodern_admin_products", JSON.stringify(merged));
+          }
+          localStorage.setItem("allmodern_catalog_seeded", "true");
+          setIsLoaded(true);
+        })
+        .catch((err) => {
+          console.error("Failed to load catalog", err);
+          setIsLoaded(true);
+        });
+    }
   }, []);
 
   const itemsPerPage = 6;
@@ -88,12 +118,34 @@ export default function ProductsPage() {
                     onError={(e) => (e.currentTarget.style.display = 'none')}
                     onLoad={(e) => (e.currentTarget.style.display = 'block')}
                   />
+                  {/* Category Badges */}
+                  {product.categories && product.categories.length > 0 && (
+                    <div className="absolute top-2 left-2 flex flex-wrap gap-1 max-w-[90%] z-10 pointer-events-none">
+                      {product.categories.slice(0, 2).map((cat: string) => (
+                        <span 
+                          key={cat} 
+                          className="bg-white/95 backdrop-blur-sm text-[10px] font-semibold text-gray-700 px-2 py-1 rounded shadow-sm border border-gray-200 truncate max-w-[120px]"
+                          title={cat}
+                        >
+                          {cat.split(' > ').pop()}
+                        </span>
+                      ))}
+                      {product.categories.length > 2 && (
+                        <span className="bg-white/95 backdrop-blur-sm text-[10px] font-bold text-gray-700 px-2 py-1 rounded shadow-sm border border-gray-200">
+                          +{product.categories.length - 2}
+                        </span>
+                      )}
+                    </div>
+                  )}
                 </div>
                 <div className="flex items-center gap-2 mt-auto">
-                  <button className="flex-1 bg-blue-600 hover:bg-blue-700 text-white rounded-lg py-2.5 text-sm font-medium flex items-center justify-center gap-2 transition-colors">
+                  <Link 
+                    href={`/products/add?id=${product.id}`}
+                    className="flex-1 bg-blue-600 hover:bg-blue-700 text-white rounded-lg py-2.5 text-sm font-medium flex items-center justify-center gap-2 transition-colors"
+                  >
                     <Pencil size={16} />
                     Edit Product
-                  </button>
+                  </Link>
                   <button 
                     onClick={() => handleDelete(product.id)}
                     className="w-10 h-10 border border-gray-200 rounded-lg flex items-center justify-center text-gray-500 hover:text-red-600 hover:border-red-200 hover:bg-red-50 transition-colors shrink-0"

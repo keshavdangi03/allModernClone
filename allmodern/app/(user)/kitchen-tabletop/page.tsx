@@ -225,7 +225,7 @@ export default function KitchenTabletopPage() {
               </a>
             </div>
 
-            <FilterableProductLayout title="Kitchen + Tabletop" itemCount={3061} products={allProducts} categoryName="Kitchen + Tabletop"></FilterableProductLayout>
+            <FilterableProductLayout title="Kitchen + Tabletop" itemCount={3061} products={[]} categoryName="Kitchen + Tabletop"></FilterableProductLayout>
           </div>
 
           {/* Related Searches */}

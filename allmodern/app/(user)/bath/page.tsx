@@ -292,7 +292,7 @@ export default function BathPage() {
           </div>
 
           {/* Main Product Grid */}
-          <FilterableProductLayout title="Bathroom" itemCount={1516} products={allProducts} categoryName="Bathroom"></FilterableProductLayout>
+          <FilterableProductLayout title="Bathroom" itemCount={1516} products={[]} categoryName="Bathroom"></FilterableProductLayout>
 
           {/* Related Searches */}
           <section className="mt-8 bg-white p-6 md:p-8">
