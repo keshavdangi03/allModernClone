@@ -1,45 +1,13 @@
-"use client";
-
-import { useEffect, useState } from "react";
+import { getContentPage } from "@/lib/actions/content";
 
 const DEFAULT_CONTENT = {
   title: "Privacy Policy",
-  content: `1. Introduction
-Welcome to AllModern. We respect your privacy and are committed to protecting your personal data. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website or use our services.
-
-2. Information We Collect
-We may collect several types of information from and about users of our website, including:
-- Personal identifiers such as name, email address, postal address, phone number
-- Payment information (processed securely, never stored directly)
-- Usage data such as IP address, browser type, pages visited, and time spent
-- Cookies and similar tracking technologies
-
-3. How We Use Your Information
-We use the information we collect to:
-- Process and fulfill your orders
-- Send you transactional and promotional emails
-- Improve our website and services
-- Comply with legal obligations
-
-4. Sharing Your Information
-We do not sell your personal information. We may share it with trusted service providers who assist us in operating our website, conducting our business, or serving you.
-
-5. Your Rights
-You have the right to access, correct, or delete your personal data at any time. To exercise these rights, please contact our support team.
-
-6. Contact Us
-If you have questions about this Privacy Policy, contact us at privacy@allmodern.com.`,
+  content: `1. Introduction\nWelcome to AllModern. We respect your privacy and are committed to protecting your personal data. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website or use our services.\n\n2. Information We Collect\nWe may collect several types of information from and about users of our website, including:\n- Personal identifiers such as name, email address, postal address, phone number\n- Payment information (processed securely, never stored directly)\n- Usage data such as IP address, browser type, pages visited, and time spent\n- Cookies and similar tracking technologies\n\n3. How We Use Your Information\nWe use the information we collect to:\n- Process and fulfill your orders\n- Send you transactional and promotional emails\n- Improve our website and services\n- Comply with legal obligations\n\n4. Sharing Your Information\nWe do not sell your personal information. We may share it with trusted service providers who assist us in operating our website, conducting our business, or serving you.\n\n5. Your Rights\nYou have the right to access, correct, or delete your personal data at any time. To exercise these rights, please contact our support team.\n\n6. Contact Us\nIf you have questions about this Privacy Policy, contact us at privacy@allmodern.com.`,
 };
 
-export default function PrivacyPolicyPage() {
-  const [data, setData] = useState(DEFAULT_CONTENT);
-
-  useEffect(() => {
-    const saved = localStorage.getItem("allmodern_privacy_policy");
-    if (saved) {
-      try { setData(JSON.parse(saved)); } catch {}
-    }
-  }, []);
+export default async function PrivacyPolicyPage() {
+  const dbData = await getContentPage("privacy");
+  const data = dbData || DEFAULT_CONTENT;
 
   return (
     <main className="bg-white min-h-screen">

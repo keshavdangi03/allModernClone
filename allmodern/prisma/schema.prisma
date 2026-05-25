@@ -1,0 +1,115 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Category {
+  id        String   @id // like "furniture", "new"
+  title     String
+  image     String?
+  badge     String?
+  color     String?
+  sections  String   // Stored as JSON string
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model SeoSettings {
+  id          String   @id @default("default") // Only one row
+  title       String
+  description String
+  keywords    String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model HeaderSettings {
+  id           String   @id @default("default") // Only one row
+  promoBarText String
+  promoBarLink String
+  supportEmail String
+  supportPhone String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model HeroBanner {
+  id        String   @id @default(cuid())
+  title     String
+  subtitle  String
+  image     String
+  ctaText   String
+  ctaLink   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model HeroSlider {
+  id        String   @id @default(cuid())
+  name      String
+  image     String
+  link      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Countdown {
+  id        String   @id @default("default") // Only one row
+  enabled   Boolean  @default(false)
+  endDate   String
+  title     String
+  color     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model ContentPage {
+  id        String   @id // "privacy" or "terms"
+  title     String
+  subtitle  String?
+  content   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Testimonial {
+  id          String   @id @default(cuid())
+  name        String
+  designation String
+  rating      Int
+  comment     String
+  avatar      String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Product {
+  id               String   @id
+  name             String
+  subtitle         String?
+  price            Float?
+  discountedPrice  Float?
+  priceStr         String?
+  originalPrice    Float?
+  origPriceStr     String?
+  extraText        String?
+  reviews          Int?
+  rating           Float?
+  badge            String?
+  image            String
+  categories       String[]
+  slug             String   @unique
+  description      String?  @db.Text
+  shortDescription String?  @db.Text
+  images           Json?
+  variants         Json?
+  customAttributes Json?
+  additionalInfo   Json?
+  body             String?  @db.Text
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+}
+

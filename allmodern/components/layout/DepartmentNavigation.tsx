@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 import { departmentNavItems, desktopMegaMenus, categoryMenus } from "@/components/layout/navigation-data";
+import { getCategories } from "@/lib/actions/categories";
 
 export default function DepartmentNavigation() {
   const [activeMega, setActiveMega] = useState<string | null>(null);
@@ -15,19 +16,16 @@ export default function DepartmentNavigation() {
   const [dynamicMegaMenus, setDynamicMegaMenus] = useState<any>(desktopMegaMenus);
 
   useEffect(() => {
-    const loadCategories = () => {
-      const saved = localStorage.getItem("allmodern_admin_categories");
-      if (saved) {
-        try {
-          const parsed = JSON.parse(saved);
+    const loadCategories = async () => {
+      try {
+        const parsed = await getCategories();
+        if (parsed && parsed.length > 0) {
           const newCategoryMenus: any = {};
           const newMegaMenus: any = {};
           const newDepartmentNavItems: any[] = [];
           
           parsed.forEach((cat: any) => {
-            // Skip duplicates
             if (newDepartmentNavItems.find((n) => n.label === cat.title)) return;
-            // Look up the canonical href from static nav data (fixes old IDs like "Furniture" → /furniture)
             const canonical = departmentNavItems.find(
               (n) => n.label.toLowerCase() === cat.title.toLowerCase()
             );
@@ -49,7 +47,6 @@ export default function DepartmentNavigation() {
             };
           });
           
-          // Fallbacks for critical categories if they are missing from localStorage
           if (!newDepartmentNavItems.find(n => n.label.toLowerCase() === "new")) {
             newDepartmentNavItems.unshift({ label: "New", href: "/new", color: "" });
             newCategoryMenus["New"] = categoryMenus["New"] || { image: "", badge: "", sections: [] };
@@ -61,16 +58,14 @@ export default function DepartmentNavigation() {
           
           setDynamicDepartmentNavItems(newDepartmentNavItems);
           setDynamicCategoryMenus(newCategoryMenus);
-          setDynamicMegaMenus(newMegaMenus);
-        } catch (e) {
-          console.error("Failed to parse categories", e);
+          setDynamicMegaMenus({ ...desktopMegaMenus, ...newMegaMenus });
         }
+      } catch (e) {
+        console.error("Failed to parse categories", e);
       }
     };
     
     loadCategories();
-    window.addEventListener("storage", loadCategories);
-    return () => window.removeEventListener("storage", loadCategories);
   }, []);
 
   const activeMenu = activeMega ? dynamicMegaMenus[activeMega] : null;

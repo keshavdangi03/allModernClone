@@ -8,6 +8,8 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Search, CircleUserRound, ShoppingCart, Menu, X, ChevronRight, ChevronDown, ArrowRight } from "lucide-react";
 import DepartmentNavigation from "@/components/layout/DepartmentNavigation";
 import { headerLinks, departmentNavItems, categoryMenus } from "@/components/layout/navigation-data";
+import { getCategories } from "@/lib/actions/categories";
+import { getHeaderSettings } from "@/lib/actions/settings";
 
 const collectionsMenu = {
   links: [
@@ -44,6 +46,7 @@ export default function Header() {
 
   const [dynamicCategoryMenus, setDynamicCategoryMenus] = useState<any>(categoryMenus);
   const [dynamicDepartmentNavItems, setDynamicDepartmentNavItems] = useState<any[]>(departmentNavItems);
+  const [headerSettings, setHeaderSettings] = useState<any>(null);
 
   const openTopMenu = (label: string) => {
     if (topMenuCloseTimeoutRef.current) {
@@ -84,16 +87,14 @@ export default function Header() {
     // eslint-disable-next-line
     setIsAuthenticated(localStorage.getItem("allmodern-auth") === "true");
 
-    const loadCategories = () => {
-      const saved = localStorage.getItem("allmodern_admin_categories");
-      if (saved) {
-        try {
-          const parsed = JSON.parse(saved);
+    const loadCategories = async () => {
+      try {
+        const parsed = await getCategories();
+        if (parsed && parsed.length > 0) {
           const newCategoryMenus: any = {};
           const newDepartmentNavItems: any[] = [];
           parsed.forEach((cat: any) => {
             if (newDepartmentNavItems.find((n) => n.label === cat.title)) return;
-            // Canonicalize href from static nav (fixes old IDs like "Furniture" → /furniture)
             const canonical = departmentNavItems.find(
               (n) => n.label.toLowerCase() === cat.title.toLowerCase()
             );
@@ -119,14 +120,23 @@ export default function Header() {
 
           setDynamicDepartmentNavItems(newDepartmentNavItems);
           setDynamicCategoryMenus(newCategoryMenus);
-        } catch (e) {
-          console.error("Failed to parse categories", e);
         }
+      } catch (e) {
+        console.error("Failed to fetch categories", e);
       }
     };
     
+    const loadHeaderSettings = async () => {
+      try {
+        const settings = await getHeaderSettings();
+        if (settings) {
+          setHeaderSettings(settings);
+        }
+      } catch (e) {}
+    };
+
     loadCategories();
-    window.addEventListener("storage", loadCategories);
+    loadHeaderSettings();
 
     const handleOutsideClick = (event: MouseEvent) => {
       if (profileMenuRef.current && !profileMenuRef.current.contains(event.target as Node)) {
@@ -143,7 +153,6 @@ export default function Header() {
 
     return () => {
       document.removeEventListener("mousedown", handleOutsideClick);
-      window.removeEventListener("storage", loadCategories);
       if (topMenuCloseTimeoutRef.current) {
         clearTimeout(topMenuCloseTimeoutRef.current);
       }
@@ -172,7 +181,9 @@ export default function Header() {
           <div className="hidden items-center text-[#a1a1a1] md:flex text-[11px] font-semibold tracking-wide">
             <a href="#" className="hover:text-white transition">Join the Trade Program</a>
             <span className="mx-2">|</span>
-            <a href="#" className="hover:text-white transition text-white font-bold">Furniture Over $35 Ships FREE*</a>
+            <a href={headerSettings?.promoBarLink || "#"} className="hover:text-white transition text-white font-bold">
+              {headerSettings?.promoBarText || "Furniture Over $35 Ships FREE*"}
+            </a>
           </div>
         </div>
       </div>

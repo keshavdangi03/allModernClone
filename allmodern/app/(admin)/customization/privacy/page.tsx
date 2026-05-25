@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { Bold, Italic, Underline, Strikethrough, AlignLeft, AlignCenter, AlignRight, AlignJustify } from "lucide-react";
+import { getContentPage, updateContentPage } from "@/lib/actions/content";
 
 const DEFAULT_CONTENT = {
   title: "Privacy Policy",
@@ -14,19 +15,18 @@ export default function PrivacyPolicyPage() {
   const [saved, setSaved] = useState(false);
 
   useEffect(() => {
-    const s = localStorage.getItem("allmodern_privacy_policy");
-    if (s) {
-      try {
-        const d = JSON.parse(s);
-        setTitle(d.title || DEFAULT_CONTENT.title);
-        setContent(d.content || DEFAULT_CONTENT.content);
-      } catch {}
+    async function load() {
+      const data = await getContentPage("privacy");
+      if (data) {
+        setTitle(data.title || DEFAULT_CONTENT.title);
+        setContent(data.content || DEFAULT_CONTENT.content);
+      }
     }
+    load();
   }, []);
 
-  const handleSave = () => {
-    localStorage.setItem("allmodern_privacy_policy", JSON.stringify({ title, content }));
-    window.dispatchEvent(new Event("storage"));
+  const handleSave = async () => {
+    await updateContentPage("privacy", { title, subtitle: null, content });
     setSaved(true);
     setTimeout(() => setSaved(false), 2500);
   };

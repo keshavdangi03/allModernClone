@@ -1,45 +1,59 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Plus, Trash2, ArrowLeft } from "lucide-react";
-import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
+import { 
+  Save, Undo, Pencil, Plus, Trash2,
+  Bold, Italic, Underline as UnderlineIcon, Strikethrough, 
+  AlignLeft, AlignCenter, AlignRight, Image as ImageIcon, X
+} from "lucide-react";
+import { addCategory, updateCategory } from "@/lib/actions/categories";
 
-export default function AddCategoryPage() {
+function AddCategoryForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const editId = searchParams.get("id");
 
+  const [activeTab, setActiveTab] = useState("general");
+
+  // General fields
   const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [metaTitle, setMetaTitle] = useState("");
+  const [metaDescription, setMetaDescription] = useState("");
+  const [metaKeywords, setMetaKeywords] = useState("");
+
+  // Data fields
   const [slug, setSlug] = useState("");
   const [image, setImage] = useState("");
   const [badge, setBadge] = useState("");
   const [color, setColor] = useState("");
-  
-  // Dynamic sections builder
   const [sections, setSections] = useState<{ title: string; links: string[] }[]>([]);
 
   useEffect(() => {
     if (editId) {
-      const saved = localStorage.getItem("allmodern_admin_categories");
-      if (saved) {
-        const parsed = JSON.parse(saved);
-        const cat = parsed.find((c: any) => c.id === editId);
-        if (cat) {
-          setTitle(cat.title || "");
-          setSlug(cat.id || "");
-          setImage(cat.image || "");
-          setBadge(cat.badge || "");
-          setColor(cat.color || "");
-          setSections(cat.sections || []);
-        }
-      }
+      // Use fetch instead of getCategories to prevent server action issues
+      fetch("/api/admin/categories")
+        .then(res => res.json())
+        .then((cats) => {
+          const cat = cats.find((c: any) => c.id === editId);
+          if (cat) {
+            setTitle(cat.title || "");
+            setMetaTitle(cat.title || "");
+            setSlug(cat.id || "");
+            setImage(cat.image || "");
+            setBadge(cat.badge || "");
+            setColor(cat.color || "");
+            setSections(cat.sections || []);
+          }
+        }).catch(console.error);
     }
   }, [editId]);
 
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newTitle = e.target.value;
     setTitle(newTitle);
+    if (!metaTitle) setMetaTitle(newTitle);
     if (!editId) {
       setSlug(
         newTitle
@@ -84,14 +98,11 @@ export default function AddCategoryPage() {
     setSections(updated);
   };
 
-  const handleSave = () => {
-    if (!title || !slug) {
-      alert("Please fill in required fields (Title, Slug).");
+  const handleSave = async () => {
+    if (!title || !slug || !metaTitle) {
+      alert("Please fill in required fields (Category Name, Meta Tag Title, Slug).");
       return;
     }
-
-    const saved = localStorage.getItem("allmodern_admin_categories");
-    let cats = saved ? JSON.parse(saved) : [];
 
     // Filter out empty links
     const cleanSections = sections.map(s => ({
@@ -108,203 +119,253 @@ export default function AddCategoryPage() {
       sections: cleanSections,
     };
 
-    if (editId) {
-      const idx = cats.findIndex((c: any) => c.id === editId);
-      if (idx >= 0) {
-        cats[idx] = newCat;
+    try {
+      if (editId) {
+        await updateCategory(editId, newCat);
       } else {
-        cats.push(newCat);
+        await addCategory(newCat);
       }
-    } else {
-      cats.push(newCat);
+      router.push("/categories");
+    } catch (e: any) {
+      console.error(e);
+      alert("Error saving category: " + e.message);
     }
-
-    localStorage.setItem("allmodern_admin_categories", JSON.stringify(cats));
-    alert("Category saved successfully!");
-    router.push("/categories");
   };
 
-  return (
-    <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden mx-auto max-w-4xl mb-20">
-      {/* Header */}
-      <div className="p-6 border-b border-gray-50 flex items-center justify-between">
-        <div className="flex items-center gap-4">
-          <Link href="/categories" className="text-gray-400 hover:text-gray-600 transition-colors">
-            <ArrowLeft size={20} />
-          </Link>
-          <h2 className="text-lg font-bold text-[#1f2937]">{editId ? "Edit Category" : "Add Category"}</h2>
-        </div>
+  const RichTextToolbar = () => (
+    <div className="flex items-center gap-1 border-b border-[#e4e4e4] p-2 bg-[#f5f5f5] shrink-0 text-gray-600 text-sm">
+      <button className="p-1 hover:bg-[#e4e4e4] rounded transition-colors" title="Source">Source</button>
+      <div className="w-px h-4 bg-gray-300 mx-1"></div>
+      <button className="p-1 hover:bg-[#e4e4e4] rounded transition-colors"><Bold size={14} /></button>
+      <button className="p-1 hover:bg-[#e4e4e4] rounded transition-colors"><Italic size={14} /></button>
+      <button className="p-1 hover:bg-[#e4e4e4] rounded transition-colors"><UnderlineIcon size={14} /></button>
+      <button className="p-1 hover:bg-[#e4e4e4] rounded transition-colors"><Strikethrough size={14} /></button>
+      <div className="w-px h-4 bg-gray-300 mx-1"></div>
+      <button className="p-1 hover:bg-[#e4e4e4] rounded transition-colors"><AlignLeft size={14} /></button>
+      <button className="p-1 hover:bg-[#e4e4e4] rounded transition-colors"><AlignCenter size={14} /></button>
+      <button className="p-1 hover:bg-[#e4e4e4] rounded transition-colors"><AlignRight size={14} /></button>
+      <div className="w-px h-4 bg-gray-300 mx-1"></div>
+      <select className="bg-transparent border border-gray-300 rounded px-1 py-0.5 outline-none">
+        <option>Format</option>
+      </select>
+      <select className="bg-transparent border border-gray-300 rounded px-1 py-0.5 outline-none ml-1">
+        <option>Font</option>
+      </select>
+      <select className="bg-transparent border border-gray-300 rounded px-1 py-0.5 outline-none ml-1">
+        <option>Size</option>
+      </select>
+    </div>
+  );
+
+  const tabs = ["General", "Data", "SEO", "Design"];
+
+  const InputRow = ({ label, required, children, helper, id }: { label: string, required?: boolean, children: React.ReactNode, helper?: string, id?: string }) => (
+    <div className="flex items-start gap-4 border-b border-[#e4e4e4] py-4 last:border-b-0" id={id}>
+      <label className="w-1/6 text-right pt-2 font-semibold text-gray-700">
+        {required && <span className="text-red-500 font-bold">* </span>}
+        {label}
+      </label>
+      <div className="w-5/6 relative">
+        {children}
+        {helper && <div className="text-xs text-gray-400 mt-1.5">{helper}</div>}
       </div>
+    </div>
+  );
 
-      {/* Form Content */}
-      <div className="p-8 space-y-8">
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* Title */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Title <span className="text-red-500">*</span></label>
-            <input
-              type="text"
-              value={title}
-              onChange={handleTitleChange}
-              placeholder="e.g. Furniture"
-              className="w-full px-4 py-3 text-sm border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-500 bg-white"
-            />
-          </div>
-
-          {/* Slug */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Slug <span className="text-red-500">*</span></label>
-            <input
-              type="text"
-              value={slug}
-              onChange={(e) => setSlug(e.target.value)}
-              disabled={!!editId}
-              className="w-full px-4 py-3 text-sm border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-500 bg-white disabled:bg-gray-50 disabled:text-gray-500"
-            />
-          </div>
-
-          {/* Image URL */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Image URL</label>
-            <input
-              type="text"
-              value={image}
-              onChange={(e) => setImage(e.target.value)}
-              placeholder="/images/cat_living_room.png"
-              className="w-full px-4 py-3 text-sm border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-500 bg-white"
-            />
-          </div>
-
-          {/* Nav Label Color */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Nav Label Color
-              <span className="ml-2 text-xs text-gray-400 font-normal">Optional — leave blank for default</span>
-            </label>
-            <div className="flex items-center gap-3">
-              <input
-                type="color"
-                value={color || "#1e293b"}
-                onChange={(e) => setColor(e.target.value)}
-                className="h-10 w-16 rounded-lg border border-gray-200 cursor-pointer"
-              />
-              <input
-                type="text"
-                value={color}
-                onChange={(e) => setColor(e.target.value)}
-                placeholder="#e43216  or  leave blank"
-                className="flex-1 px-4 py-3 text-sm border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-500 bg-white font-mono"
-              />
-              {color && (
-                <button type="button" onClick={() => setColor("")} className="text-xs text-gray-400 hover:text-gray-600 underline whitespace-nowrap">Clear</button>
-              )}
-            </div>
-            {color && (
-              <div className="mt-2 flex items-center gap-2 text-xs text-gray-500">
-                <span>Preview:</span>
-                <span className="font-semibold text-sm" style={{ color }}>{title || "Category Name"}</span>
-              </div>
-            )}
-          </div>
-
-          {/* Badge */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Badge Text (Optional)</label>
-            <input
-              type="text"
-              value={badge}
-              onChange={(e) => setBadge(e.target.value)}
-              placeholder="e.g. New Arrivals"
-              className="w-full px-4 py-3 text-sm border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-500 bg-white"
-            />
-          </div>
-        </div>
-
-        <hr className="border-gray-100" />
-
-        {/* Subcategories Builder */}
-        <div>
-          <div className="flex items-center justify-between mb-4">
-            <div>
-              <h3 className="text-lg font-bold text-gray-800">Sections & Subcategories</h3>
-              <p className="text-sm text-gray-500">Build the dropdown menu for this category.</p>
-            </div>
-            <button
-              onClick={handleAddSection}
-              className="flex items-center gap-2 px-4 py-2 bg-gray-900 text-white text-sm font-medium rounded-lg hover:bg-gray-800 transition-colors"
-            >
-              <Plus size={16} /> Add Section
-            </button>
-          </div>
-
-          <div className="space-y-6">
-            {sections.map((section, sIdx) => (
-              <div key={sIdx} className="border border-gray-200 rounded-xl p-6 bg-gray-50 relative">
-                <button 
-                  onClick={() => handleRemoveSection(sIdx)}
-                  className="absolute top-4 right-4 text-gray-400 hover:text-red-500"
-                >
-                  <Trash2 size={18} />
-                </button>
-                
-                <div className="mb-4">
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">Section Title</label>
-                  <input
-                    type="text"
-                    value={section.title}
-                    onChange={(e) => handleSectionTitleChange(sIdx, e.target.value)}
-                    placeholder="e.g. Living Room"
-                    className="w-full max-w-md px-4 py-2.5 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-500 bg-white"
-                  />
-                </div>
-
-                <div className="space-y-3">
-                  <label className="block text-sm font-medium text-gray-600">Subcategory Links</label>
-                  {section.links.map((link, lIdx) => (
-                    <div key={lIdx} className="flex items-center gap-2">
-                      <input
-                        type="text"
-                        value={link}
-                        onChange={(e) => handleLinkChange(sIdx, lIdx, e.target.value)}
-                        placeholder="e.g. Sofas"
-                        className="w-full max-w-sm px-4 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-500 bg-white"
-                      />
-                      <button 
-                        onClick={() => handleRemoveLink(sIdx, lIdx)}
-                        className="p-2 text-gray-400 hover:text-red-500 rounded-md hover:bg-red-50"
-                      >
-                        <Trash2 size={16} />
-                      </button>
-                    </div>
-                  ))}
-                  <button
-                    onClick={() => handleAddLink(sIdx)}
-                    className="flex items-center gap-1 text-sm font-medium text-blue-600 hover:text-blue-700 mt-2"
-                  >
-                    <Plus size={14} /> Add Link
-                  </button>
-                </div>
-              </div>
-            ))}
-            
-            {sections.length === 0 && (
-              <div className="text-center py-8 border-2 border-dashed border-gray-200 rounded-xl text-gray-500 text-sm">
-                No sections added yet. Click "Add Section" to start building your mega menu.
-              </div>
-            )}
-          </div>
-        </div>
-
-        {/* Submit */}
-        <div className="pt-6 border-t border-gray-100 flex justify-end">
-          <button
+  return (
+    <div className="flex flex-col min-h-[600px] text-sm text-gray-700">
+      {/* Header */}
+      <div className="flex items-center justify-between mb-4">
+        <h1 className="text-2xl font-normal text-gray-700">{editId ? "Edit Category" : "Add Category"}</h1>
+        <div className="flex items-center gap-1">
+          <button 
             onClick={handleSave}
-            className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-xl text-sm font-bold transition-colors shadow-sm"
+            className="bg-[#1e91cf] hover:bg-[#1978ab] text-white p-2 rounded flex items-center justify-center transition-colors"
+            title="Save"
           >
-            {editId ? "Update Category" : "Save Category"}
+            <Save size={16} />
+          </button>
+          <button 
+            onClick={() => router.push("/categories")}
+            className="bg-[#f3f7f9] hover:bg-[#e4ecef] border border-[#d2e2e7] text-gray-600 p-2 rounded flex items-center justify-center transition-colors"
+            title="Cancel"
+          >
+            <Undo size={16} />
           </button>
         </div>
       </div>
+
+      <div className="bg-white border border-[#e4e4e4] rounded shadow-sm mb-20">
+        <div className="border-b border-[#e4e4e4] p-3 bg-gray-50 flex items-center gap-2 text-gray-600 font-medium">
+          <Pencil size={16} />
+          {editId ? "Edit Category" : "Add Category"}
+        </div>
+        
+        <div className="p-4">
+          {/* Tabs */}
+          <div className="flex flex-wrap border-b border-[#e4e4e4] mb-4">
+            {tabs.map((tab) => {
+              const tabId = tab.toLowerCase().replace(" ", "-");
+              return (
+                <button
+                  key={tabId}
+                  onClick={() => setActiveTab(tabId)}
+                  className={`px-4 py-2 border-t border-x rounded-t -mb-px mr-1 ${
+                    activeTab === tabId
+                      ? "bg-white border-[#e4e4e4] text-gray-700 font-medium"
+                      : "bg-[#f5f5f5] border-transparent text-[#1e91cf] hover:bg-gray-100"
+                  }`}
+                >
+                  {tab}
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Tab Content: General */}
+          {activeTab === "general" && (
+            <div className="max-w-7xl">
+              <div className="flex items-center gap-2 mb-4 border-b border-[#e4e4e4] pb-2">
+                <span className="text-xl">🇬🇧</span>
+                <span className="font-medium">English</span>
+              </div>
+
+              <InputRow label="Category Name" required>
+                <input type="text" placeholder="Category Name" value={title} onChange={handleTitleChange} className="w-full border border-[#cccccc] px-3 py-2 rounded-sm focus:border-[#66afe9] focus:outline-none focus:ring-1 focus:ring-[#66afe9]" />
+              </InputRow>
+
+              <InputRow label="Description">
+                <div className="border border-[#cccccc] rounded-sm focus-within:border-[#66afe9] focus-within:ring-1 focus-within:ring-[#66afe9]">
+                  <RichTextToolbar />
+                  <textarea rows={10} value={description} onChange={(e) => setDescription(e.target.value)} className="w-full px-3 py-2 focus:outline-none resize-y min-h-[150px] font-sans"></textarea>
+                  {description.length === 0 && (
+                     <div className="bg-[#f2dede] border border-[#ebccd1] text-[#a94442] p-2 m-2 text-xs relative">
+                       This CKEditor 4.22.1 version is not secure. Consider upgrading to the latest one, 4.25.1-lts.
+                       <button className="absolute right-2 top-2 text-[#a94442] hover:text-[#843534]"><X size={12} /></button>
+                     </div>
+                  )}
+                </div>
+              </InputRow>
+
+              <InputRow label="Meta Tag Title" required>
+                <input type="text" placeholder="Meta Tag Title" value={metaTitle} onChange={(e) => setMetaTitle(e.target.value)} className="w-full border border-[#cccccc] px-3 py-2 rounded-sm focus:border-[#66afe9] focus:outline-none focus:ring-1 focus:ring-[#66afe9]" />
+              </InputRow>
+
+              <InputRow label="Meta Tag Description">
+                <textarea rows={4} placeholder="Meta Tag Description" value={metaDescription} onChange={(e) => setMetaDescription(e.target.value)} className="w-full border border-[#cccccc] px-3 py-2 rounded-sm focus:border-[#66afe9] focus:outline-none focus:ring-1 focus:ring-[#66afe9] resize-y"></textarea>
+              </InputRow>
+
+              <InputRow label="Meta Tag Keywords">
+                <textarea rows={4} placeholder="Meta Tag Keywords" value={metaKeywords} onChange={(e) => setMetaKeywords(e.target.value)} className="w-full border border-[#cccccc] px-3 py-2 rounded-sm focus:border-[#66afe9] focus:outline-none focus:ring-1 focus:ring-[#66afe9] resize-y"></textarea>
+              </InputRow>
+            </div>
+          )}
+
+          {/* Tab Content: Data */}
+          {activeTab === "data" && (
+            <div className="max-w-7xl">
+              <InputRow label="Slug (ID)" required helper="Used for URLs">
+                <input type="text" value={slug} onChange={(e) => setSlug(e.target.value)} disabled={!!editId} placeholder="e.g. furniture" className="w-full border border-[#cccccc] px-3 py-2 rounded-sm focus:border-[#66afe9] focus:outline-none focus:ring-1 focus:ring-[#66afe9] disabled:bg-gray-100 disabled:text-gray-500" />
+              </InputRow>
+              
+              <InputRow label="Image URL">
+                <div className="flex gap-4">
+                  <div className="flex-1">
+                    <input type="text" value={image} onChange={(e) => setImage(e.target.value)} placeholder="/images/cat_living_room.png" className="w-full border border-[#cccccc] px-3 py-2 rounded-sm focus:border-[#66afe9] focus:outline-none focus:ring-1 focus:ring-[#66afe9]" />
+                  </div>
+                  <div className="w-16 h-16 border border-[#cccccc] flex items-center justify-center bg-gray-50 shrink-0">
+                    {image ? (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img src={image} alt="preview" className="max-w-full max-h-full object-contain" onError={(e) => (e.currentTarget.style.display = 'none')} />
+                    ) : (
+                      <ImageIcon size={24} className="text-gray-400" />
+                    )}
+                  </div>
+                </div>
+              </InputRow>
+
+              <InputRow label="Nav Label Color" helper="Leave blank for default">
+                <div className="flex items-center gap-3">
+                  <input type="color" value={color || "#1e293b"} onChange={(e) => setColor(e.target.value)} className="h-9 w-12 border border-[#cccccc] cursor-pointer" />
+                  <input type="text" value={color} onChange={(e) => setColor(e.target.value)} placeholder="#e43216" className="w-32 border border-[#cccccc] px-3 py-2 rounded-sm focus:border-[#66afe9] focus:outline-none focus:ring-1 focus:ring-[#66afe9] font-mono" />
+                  {color && (
+                    <button type="button" onClick={() => setColor("")} className="text-xs text-[#1e91cf] underline">Clear</button>
+                  )}
+                  {color && (
+                    <span className="ml-4 font-semibold text-sm" style={{ color }}>Preview: {title || "Category"}</span>
+                  )}
+                </div>
+              </InputRow>
+
+              <InputRow label="Badge Text" helper="Optional (e.g. New Arrivals)">
+                <input type="text" value={badge} onChange={(e) => setBadge(e.target.value)} placeholder="e.g. New Arrivals" className="w-full border border-[#cccccc] px-3 py-2 rounded-sm focus:border-[#66afe9] focus:outline-none focus:ring-1 focus:ring-[#66afe9]" />
+              </InputRow>
+
+              <div className="mt-8 border border-[#cccccc]">
+                <div className="bg-[#f5f5f5] border-b border-[#cccccc] p-3 font-semibold text-gray-700 flex justify-between items-center">
+                  <span>Mega Menu Sections & Subcategories</span>
+                  <button onClick={handleAddSection} className="bg-[#1e91cf] hover:bg-[#1978ab] text-white p-1.5 rounded transition-colors" title="Add Section">
+                    <Plus size={16} />
+                  </button>
+                </div>
+                <div className="p-4 space-y-6">
+                  {sections.map((section, sIdx) => (
+                    <div key={sIdx} className="border border-[#cccccc] p-4 relative bg-[#fdfdfd]">
+                      <button onClick={() => handleRemoveSection(sIdx)} className="absolute top-4 right-4 text-[#f56b6b] hover:text-[#e45c5c]" title="Remove Section">
+                        <Trash2 size={16} />
+                      </button>
+                      
+                      <InputRow label="Section Title">
+                        <input type="text" value={section.title} onChange={(e) => handleSectionTitleChange(sIdx, e.target.value)} placeholder="e.g. Living Room" className="w-full max-w-md border border-[#cccccc] px-3 py-2 rounded-sm focus:border-[#66afe9] focus:outline-none focus:ring-1 focus:ring-[#66afe9]" />
+                      </InputRow>
+                      
+                      <div className="mt-4">
+                        <label className="block text-right w-1/6 font-semibold text-gray-700 pt-2 float-left pr-4">Links</label>
+                        <div className="w-5/6 ml-[16.666667%] space-y-2">
+                          {section.links.map((link, lIdx) => (
+                            <div key={lIdx} className="flex items-center gap-2">
+                              <input type="text" value={link} onChange={(e) => handleLinkChange(sIdx, lIdx, e.target.value)} placeholder="e.g. Sofas" className="w-full max-w-sm border border-[#cccccc] px-3 py-2 rounded-sm focus:border-[#66afe9] focus:outline-none focus:ring-1 focus:ring-[#66afe9]" />
+                              <button onClick={() => handleRemoveLink(sIdx, lIdx)} className="bg-[#f56b6b] hover:bg-[#e45c5c] text-white p-2 rounded" title="Remove Link">
+                                <Trash2 size={14} />
+                              </button>
+                            </div>
+                          ))}
+                          <button onClick={() => handleAddLink(sIdx)} className="bg-[#1e91cf] hover:bg-[#1978ab] text-white px-3 py-1.5 rounded text-xs flex items-center gap-1 mt-2">
+                            <Plus size={12} /> Add Link
+                          </button>
+                        </div>
+                        <div className="clear-both"></div>
+                      </div>
+                    </div>
+                  ))}
+                  
+                  {sections.length === 0 && (
+                    <div className="text-center p-8 text-gray-500">
+                      No sections added.
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Placeholders for SEO and Design */}
+          {["seo", "design"].includes(activeTab) && (
+            <div className="p-8 text-center text-gray-500">
+              This tab is currently under construction and data will be implemented here soon.
+            </div>
+          )}
+
+        </div>
+      </div>
     </div>
+  );
+}
+
+export default function AddCategoryPage() {
+  return (
+    <React.Suspense fallback={<div className="p-8 text-center text-gray-500">Loading...</div>}>
+      <AddCategoryForm />
+    </React.Suspense>
   );
 }

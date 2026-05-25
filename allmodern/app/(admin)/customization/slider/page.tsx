@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { Plus, Pencil, Trash2, ArrowLeft } from "lucide-react";
+import { getHeroSliders, addHeroSlider, updateHeroSlider, deleteHeroSlider } from "@/lib/actions/content";
 
 const DEFAULT_SLIDERS = [
   { id: "1", name: "Modern Living Room Collection", image: "/images/cat_living_room.png", link: "/furniture" },
@@ -17,30 +18,36 @@ export default function HeroSlidersPage() {
   const [saved, setSaved] = useState(false);
 
   useEffect(() => {
-    const s = localStorage.getItem("allmodern_hero_slider");
-    if (s) { try { setSliders(JSON.parse(s)); } catch {} }
-    else { setSliders(DEFAULT_SLIDERS); localStorage.setItem("allmodern_hero_slider", JSON.stringify(DEFAULT_SLIDERS)); }
+    async function load() {
+      const data = await getHeroSliders();
+      setSliders(data);
+    }
+    load();
   }, []);
 
-  const persist = (updated: any[]) => {
-    setSliders(updated);
-    localStorage.setItem("allmodern_hero_slider", JSON.stringify(updated));
-    window.dispatchEvent(new Event("storage"));
-  };
-
-  const handleDelete = (id: string) => {
-    if (confirm("Delete this slider?")) persist(sliders.filter(s => s.id !== id));
+  const handleDelete = async (id: string) => {
+    if (confirm("Delete this slider?")) {
+      await deleteHeroSlider(id);
+      setSliders(sliders.filter(s => s.id !== id));
+      setSaved(true);
+      setTimeout(() => setSaved(false), 2000);
+    }
   };
 
   const openAdd = () => { setForm({ name: "", image: "", link: "" }); setEditingId(null); setShowForm(true); };
   const openEdit = (s: any) => { setForm({ name: s.name, image: s.image, link: s.link || "" }); setEditingId(s.id); setShowForm(true); };
 
-  const handleSave = () => {
+  const handleSave = async () => {
     if (!form.name || !form.image) { alert("Name and Image URL are required."); return; }
-    const updated = editingId
-      ? sliders.map(s => s.id === editingId ? { ...s, ...form } : s)
-      : [...sliders, { id: Date.now().toString(), ...form }];
-    persist(updated);
+    
+    if (editingId) {
+      await updateHeroSlider(editingId, form);
+      setSliders(sliders.map(s => s.id === editingId ? { ...s, ...form } : s));
+    } else {
+      const added = await addHeroSlider(form);
+      setSliders([...sliders, added]);
+    }
+    
     setShowForm(false);
     setSaved(true);
     setTimeout(() => setSaved(false), 2000);

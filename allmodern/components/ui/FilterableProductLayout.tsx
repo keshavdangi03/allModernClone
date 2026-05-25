@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect, useMemo } from "react";
+import { getProducts } from "@/lib/actions/products";
 import SortFilterBar from "./SortFilterBar";
 import DesktopFilterSidebar from "./DesktopFilterSidebar";
 import CategoryProductCard, { Product } from "./CategoryProductCard";
@@ -29,63 +30,25 @@ export default function FilterableProductLayout({ title, itemCount, products = [
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 12;
 
-  // 1. Fetch Dynamic Products
+  // 1. Fetch Dynamic Products from PostgreSQL
   useEffect(() => {
-    const loadProducts = (parsed: any[]) => {
-      const filtered = parsed.filter((p: any) => 
-        p.categories?.some((cat: string) => 
-          cat === categoryName || cat.startsWith(`${categoryName} >`) || cat === title || cat.startsWith(`${title} >`)
-        )
-      );
-      // Normalize dynamic products to match Product type
-      const normalized = filtered.map((p: any) => ({
-        ...p,
-        price: typeof p.price === 'string' ? parseFloat(p.price) : p.price,
-        originalPrice: p.discountedPrice ? parseFloat(p.discountedPrice) : p.originalPrice,
-        badge: p.discountedPrice ? "Sale" : p.badge
-      }));
-      setDynamicProducts(normalized);
-    };
-
-    const saved = localStorage.getItem("allmodern_admin_products");
-    const isSeeded = localStorage.getItem("allmodern_catalog_seeded");
-    
-    let currentProducts: any[] = [];
-    if (saved) {
-      try {
-        currentProducts = JSON.parse(saved);
-        // Purge old mock products (ID 1-8) that lack categories
-        const cleanProducts = currentProducts.filter(p => p.categories && p.categories.length > 0);
-        
-        if (cleanProducts.length !== currentProducts.length) {
-          currentProducts = cleanProducts;
-          localStorage.setItem("allmodern_admin_products", JSON.stringify(currentProducts));
-        }
-        
-        loadProducts(currentProducts);
-      } catch (e) {
-        console.error("Failed to parse local products", e);
-      }
-    }
-
-    if (!isSeeded || currentProducts.length < 20) {
-      // Fetch the global catalog if localStorage is missing or not seeded
-      fetch("/data/catalog.json")
-        .then(res => res.json())
-        .then(catalogData => {
-          // Merge to protect user-added items
-          const existingIds = new Set(currentProducts.map(p => String(p.id)));
-          const newItems = catalogData.filter((p: any) => !existingIds.has(String(p.id)));
-          
-          if (newItems.length > 0) {
-            const merged = [...currentProducts, ...newItems];
-            localStorage.setItem("allmodern_admin_products", JSON.stringify(merged));
-            loadProducts(merged);
-          }
-          localStorage.setItem("allmodern_catalog_seeded", "true");
-        })
-        .catch(err => console.error("Failed to load catalog.json", err));
-    }
+    getProducts()
+      .then((allProducts) => {
+        const filtered = allProducts.filter((p: any) => 
+          p.categories?.some((cat: string) => 
+            cat === categoryName || cat.startsWith(`${categoryName} >`) || cat === title || cat.startsWith(`${title} >`)
+          )
+        );
+        // Normalize dynamic products to match Product type
+        const normalized = filtered.map((p: any) => ({
+          ...p,
+          price: typeof p.price === 'string' ? parseFloat(p.price) : p.price,
+          originalPrice: p.discountedPrice ? parseFloat(p.discountedPrice) : p.originalPrice,
+          badge: p.discountedPrice ? "Sale" : p.badge
+        }));
+        setDynamicProducts(normalized);
+      })
+      .catch((err) => console.error("Failed to get products from database", err));
   }, [categoryName, title]);
 
   // 2. Combine static and dynamic (Static will soon be phased out)

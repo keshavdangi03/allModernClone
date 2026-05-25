@@ -1,24 +1,8 @@
-"use client";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { getHeroBanners } from "@/lib/actions/content";
 
-export default function Hero() {
-  const [heroData, setHeroData] = useState<any[]>([]);
-  const [loaded, setLoaded] = useState(false);
-
-  useEffect(() => {
-    const saved = localStorage.getItem("allmodern_hero_banners");
-    if (saved) {
-      try { setHeroData(JSON.parse(saved)); } catch {}
-    }
-    setLoaded(true);
-    const onStorage = () => {
-      const s = localStorage.getItem("allmodern_hero_banners");
-      if (s) try { setHeroData(JSON.parse(s)); } catch {}
-    };
-    window.addEventListener("storage", onStorage);
-    return () => window.removeEventListener("storage", onStorage);
-  }, []);
+export default async function Hero() {
+  const heroData = await getHeroBanners();
 
   // Use first banner or fallback
   const banner = heroData[0];

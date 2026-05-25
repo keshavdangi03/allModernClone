@@ -2,7 +2,8 @@
 
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
-import { Plus, Pencil, Trash2, X, ArrowLeft } from "lucide-react";
+import { Plus, Pencil, Trash2, ArrowLeft } from "lucide-react";
+import { getHeroBanners, addHeroBanner, updateHeroBanner, deleteHeroBanner } from "@/lib/actions/content";
 
 const DEFAULT_BANNERS = [
   { id: "1", title: "Designed for Staycations", subtitle: "", image: "/images/hero.png", ctaText: "Shop Now", ctaLink: "#" },
@@ -16,19 +17,20 @@ export default function HeroBannersPage() {
   const [saved, setSaved] = useState(false);
 
   useEffect(() => {
-    const s = localStorage.getItem("allmodern_hero_banners");
-    if (s) { try { setBanners(JSON.parse(s)); } catch {} }
-    else { setBanners(DEFAULT_BANNERS); localStorage.setItem("allmodern_hero_banners", JSON.stringify(DEFAULT_BANNERS)); }
+    async function load() {
+      const data = await getHeroBanners();
+      setBanners(data);
+    }
+    load();
   }, []);
 
-  const persist = (updated: any[]) => {
-    setBanners(updated);
-    localStorage.setItem("allmodern_hero_banners", JSON.stringify(updated));
-    window.dispatchEvent(new Event("storage"));
-  };
-
-  const handleDelete = (id: string) => {
-    if (confirm("Delete this banner?")) persist(banners.filter(b => b.id !== id));
+  const handleDelete = async (id: string) => {
+    if (confirm("Delete this banner?")) {
+      await deleteHeroBanner(id);
+      setBanners(banners.filter(b => b.id !== id));
+      setSaved(true);
+      setTimeout(() => setSaved(false), 2000);
+    }
   };
 
   const openAdd = () => {
@@ -43,15 +45,17 @@ export default function HeroBannersPage() {
     setShowForm(true);
   };
 
-  const handleSave = () => {
+  const handleSave = async () => {
     if (!form.title || !form.image) { alert("Title and Image URL are required."); return; }
-    let updated;
+    
     if (editingId) {
-      updated = banners.map(b => b.id === editingId ? { ...b, ...form } : b);
+      await updateHeroBanner(editingId, form);
+      setBanners(banners.map(b => b.id === editingId ? { ...b, ...form } : b));
     } else {
-      updated = [...banners, { id: Date.now().toString(), ...form }];
+      const added = await addHeroBanner(form);
+      setBanners([...banners, added]);
     }
-    persist(updated);
+    
     setShowForm(false);
     setSaved(true);
     setTimeout(() => setSaved(false), 2000);

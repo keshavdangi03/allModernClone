@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Clock } from "lucide-react";
+import { getCountdown } from "@/lib/actions/settings";
 
 function useCountdown(targetDate: string) {
   const [timeLeft, setTimeLeft] = useState({ hours: "00", minutes: "00", seconds: "00", expired: false });
@@ -27,19 +28,17 @@ export default function CountdownBanner() {
   const [countdown, setCountdown] = useState<any>(null);
 
   useEffect(() => {
-    const load = () => {
-      const s = localStorage.getItem("allmodern_countdown");
-      if (s) {
-        try {
-          const list = JSON.parse(s);
-          const active = list.find((c: any) => c.enabled);
-          setCountdown(active || null);
-        } catch {}
+    async function load() {
+      const data = await getCountdown();
+      if (data && data.enabled) {
+        setCountdown({
+          ...data,
+          subtitle: "Up to 60% Off", // Hardcoded fallback subtitle since not in schema initially
+          bgColor: data.color
+        });
       }
-    };
+    }
     load();
-    window.addEventListener("storage", load);
-    return () => window.removeEventListener("storage", load);
   }, []);
 
   const timeLeft = useCountdown(countdown?.endDate || "");

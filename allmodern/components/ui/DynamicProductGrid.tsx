@@ -2,26 +2,22 @@
 
 import { useEffect, useState } from "react";
 import { Heart } from "lucide-react";
+import { getProducts } from "@/lib/actions/products";
 
 export default function DynamicProductGrid({ category }: { category: string }) {
   const [products, setProducts] = useState<any[]>([]);
 
   useEffect(() => {
-    const saved = localStorage.getItem("allmodern_admin_products");
-    if (saved) {
-      try {
-        const parsed = JSON.parse(saved);
-        // Ensure this only runs on the client to avoid hydration mismatch
-        const filtered = parsed.filter((p: any) => 
+    getProducts()
+      .then((allProducts) => {
+        const filtered = allProducts.filter((p: any) => 
           p.categories?.some((cat: string) => 
             cat === category || cat.startsWith(`${category} >`)
           )
         );
         setProducts(filtered);
-      } catch (e) {
-        console.error("Failed to parse local products", e);
-      }
-    }
+      })
+      .catch((e) => console.error("Failed to fetch products for grid", e));
   }, [category]);
 
   if (products.length === 0) return null;

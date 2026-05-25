@@ -1,26 +1,9 @@
-"use client";
-import { useEffect, useState } from "react";
 import Image from "next/image";
 import { Star } from "lucide-react";
+import { getTestimonials } from "@/lib/actions/content";
 
-const DEFAULT_TESTIMONIALS = [
-  { id: "1", name: "Sarah M.", designation: "Verified Buyer", rating: 5, comment: "Absolutely love my new sofa! The quality is exceptional and it arrived faster than expected. The modern design fits perfectly in my living room.", image: "/images/cat_living_room.png" },
-  { id: "2", name: "James K.", designation: "Verified Buyer", rating: 5, comment: "Great experience from start to finish. The furniture is well-made and the delivery team was professional. Will definitely shop here again.", image: "/images/cat_bedroom.png" },
-  { id: "3", name: "Emily R.", designation: "Verified Buyer", rating: 4, comment: "Beautiful dining set that looks even better in person. Assembly was straightforward and the instructions were clear.", image: "/images/cat_dining.png" },
-];
-
-export default function TestimonialsSection() {
-  const [testimonials, setTestimonials] = useState(DEFAULT_TESTIMONIALS);
-
-  useEffect(() => {
-    const load = () => {
-      const s = localStorage.getItem("allmodern_testimonials");
-      if (s) { try { setTestimonials(JSON.parse(s)); } catch {} }
-    };
-    load();
-    window.addEventListener("storage", load);
-    return () => window.removeEventListener("storage", load);
-  }, []);
+export default async function TestimonialsSection() {
+  const testimonials = await getTestimonials();
 
   if (!testimonials.length) return null;
 
@@ -44,8 +27,8 @@ export default function TestimonialsSection() {
               {/* Author */}
               <div className="flex items-center gap-3 pt-2 border-t border-slate-100">
                 <div className="w-10 h-10 rounded-full overflow-hidden bg-slate-200 relative shrink-0">
-                  {t.image ? (
-                    <Image src={t.image} alt={t.name} fill className="object-cover" />
+                  {t.avatar ? (
+                    <Image src={t.avatar} alt={t.name} fill className="object-cover" />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center text-slate-500 font-bold text-sm">{t.name[0]}</div>
                   )}

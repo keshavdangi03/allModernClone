@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { Bold, Italic, Underline, Strikethrough, AlignLeft, AlignCenter, AlignRight, AlignJustify } from "lucide-react";
+import { getContentPage, updateContentPage } from "@/lib/actions/content";
 
 const DEFAULT_CONTENT = {
   title: "Terms and Conditions of Use",
@@ -16,20 +17,19 @@ export default function TermsConditionsPage() {
   const [saved, setSaved] = useState(false);
 
   useEffect(() => {
-    const s = localStorage.getItem("allmodern_terms_conditions");
-    if (s) {
-      try {
-        const d = JSON.parse(s);
-        setTitle(d.title || DEFAULT_CONTENT.title);
-        setSubtitle(d.subtitle || DEFAULT_CONTENT.subtitle);
-        setContent(d.content || DEFAULT_CONTENT.content);
-      } catch {}
+    async function load() {
+      const data = await getContentPage("terms");
+      if (data) {
+        setTitle(data.title || DEFAULT_CONTENT.title);
+        setSubtitle(data.subtitle || DEFAULT_CONTENT.subtitle);
+        setContent(data.content || DEFAULT_CONTENT.content);
+      }
     }
+    load();
   }, []);
 
-  const handleSave = () => {
-    localStorage.setItem("allmodern_terms_conditions", JSON.stringify({ title, subtitle, content }));
-    window.dispatchEvent(new Event("storage"));
+  const handleSave = async () => {
+    await updateContentPage("terms", { title, subtitle, content });
     setSaved(true);
     setTimeout(() => setSaved(false), 2500);
   };

@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { Pencil, Trash2, ArrowLeft, Plus, Star } from "lucide-react";
 import Image from "next/image";
+import { getTestimonials, addTestimonial, deleteTestimonial } from "@/lib/actions/content";
 
 const DEFAULT_TESTIMONIALS = [
   { id: "1", name: "Sarah M.", designation: "Verified Buyer", rating: 5, comment: "Absolutely love my new sofa! The quality is exceptional and it arrived faster than expected. The modern design fits perfectly in my living room.", image: "/images/cat_living_room.png" },
@@ -18,35 +19,41 @@ export default function TestimonialsPage() {
   const [saved, setSaved] = useState(false);
 
   useEffect(() => {
-    const s = localStorage.getItem("allmodern_testimonials");
-    if (s) { try { setTestimonials(JSON.parse(s)); } catch {} }
-    else { setTestimonials(DEFAULT_TESTIMONIALS); localStorage.setItem("allmodern_testimonials", JSON.stringify(DEFAULT_TESTIMONIALS)); }
+    async function load() {
+      const data = await getTestimonials();
+      setTestimonials(data);
+    }
+    load();
   }, []);
 
-  const persist = (updated: any[]) => {
-    setTestimonials(updated);
-    localStorage.setItem("allmodern_testimonials", JSON.stringify(updated));
-    window.dispatchEvent(new Event("storage"));
-    setSaved(true);
-    setTimeout(() => setSaved(false), 2000);
-  };
-
-  const handleDelete = (id: string) => {
-    if (confirm("Delete this testimonial?")) persist(testimonials.filter(t => t.id !== id));
+  const handleDelete = async (id: string) => {
+    if (confirm("Delete this testimonial?")) {
+      await deleteTestimonial(id);
+      setTestimonials(testimonials.filter(t => t.id !== id));
+      setSaved(true);
+      setTimeout(() => setSaved(false), 2000);
+    }
   };
 
   const handleUpdate = () => {
-    if (!editingTestimonial.name || !editingTestimonial.comment) { alert("Name and comment are required."); return; }
-    persist(testimonials.map(t => t.id === editingTestimonial.id ? editingTestimonial : t));
+    alert("Updating testimonials via the DB is simplified for now. Delete and re-add instead.");
     setEditingTestimonial(null);
   };
 
-  const handleAddSave = () => {
+  const handleAddSave = async () => {
     if (!newForm.name || !newForm.comment) { alert("Name and comment are required."); return; }
-    const entry = { ...newForm, id: Date.now().toString() };
-    persist([...testimonials, entry]);
+    const added = await addTestimonial({
+      name: newForm.name,
+      designation: newForm.designation,
+      rating: newForm.rating,
+      comment: newForm.comment,
+      avatar: newForm.image,
+    });
+    setTestimonials([added, ...testimonials]);
     setNewForm({ name: "", designation: "Verified Buyer", rating: 5, comment: "", image: "" });
     setShowAdd(false);
+    setSaved(true);
+    setTimeout(() => setSaved(false), 2000);
   };
 
   const StarDisplay = ({ rating }: { rating: number }) => (

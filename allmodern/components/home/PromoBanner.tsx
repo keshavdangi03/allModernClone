@@ -1,31 +1,16 @@
-"use client";
-import { useEffect, useState } from "react";
+import { getHeaderSettings } from "@/lib/actions/settings";
 
 const DEFAULTS = {
   promoBarText: "Up to 60% Off | 48-Hour Markdowns",
   promoBarLink: "/sale",
 };
 
-export default function PromoBanner() {
-  const [promo, setPromo] = useState(DEFAULTS);
-
-  useEffect(() => {
-    const load = () => {
-      const s = localStorage.getItem("allmodern_header_settings");
-      if (s) {
-        try {
-          const d = JSON.parse(s);
-          setPromo({
-            promoBarText: d.promoBarText || DEFAULTS.promoBarText,
-            promoBarLink: d.promoBarLink || DEFAULTS.promoBarLink,
-          });
-        } catch {}
-      }
-    };
-    load();
-    window.addEventListener("storage", load);
-    return () => window.removeEventListener("storage", load);
-  }, []);
+export default async function PromoBanner() {
+  const dbSettings = await getHeaderSettings();
+  const promo = {
+    promoBarText: dbSettings?.promoBarText || DEFAULTS.promoBarText,
+    promoBarLink: dbSettings?.promoBarLink || DEFAULTS.promoBarLink,
+  };
 
   return (
     <section className="bg-[#ea3e15] text-white">

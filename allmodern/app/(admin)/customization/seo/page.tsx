@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import { getSeoSettings, updateSeoSettings } from "@/lib/actions/settings";
 
 const DEFAULTS = {
   metaTitle: "AllModern - Shop Modern Furniture & Décor",
@@ -15,21 +16,23 @@ export default function SeoSettingsPage() {
   const [saved, setSaved] = useState(false);
 
   useEffect(() => {
-    const s = localStorage.getItem("allmodern_seo_settings");
-    if (s) {
-      try {
-        const d = JSON.parse(s);
-        setMetaTitle(d.metaTitle || DEFAULTS.metaTitle);
-        setMetaDescription(d.metaDescription || DEFAULTS.metaDescription);
-        setMetaKeywords(d.metaKeywords || DEFAULTS.metaKeywords);
-      } catch {}
+    async function load() {
+      const data = await getSeoSettings();
+      if (data) {
+        setMetaTitle(data.title || DEFAULTS.metaTitle);
+        setMetaDescription(data.description || DEFAULTS.metaDescription);
+        setMetaKeywords(data.keywords || DEFAULTS.metaKeywords);
+      }
     }
+    load();
   }, []);
 
-  const handleSave = () => {
-    const data = { metaTitle, metaDescription, metaKeywords };
-    localStorage.setItem("allmodern_seo_settings", JSON.stringify(data));
-    window.dispatchEvent(new Event("storage"));
+  const handleSave = async () => {
+    await updateSeoSettings({ 
+      title: metaTitle, 
+      description: metaDescription, 
+      keywords: metaKeywords 
+    });
     setSaved(true);
     setTimeout(() => setSaved(false), 2500);
   };

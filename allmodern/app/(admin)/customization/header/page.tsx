@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import { getHeaderSettings, updateHeaderSettings } from "@/lib/actions/settings";
 
 const DEFAULTS = {
   promoBarText: "Furniture Over $35 Ships FREE*",
@@ -17,22 +18,25 @@ export default function HeaderSettingsPage() {
   const [saved, setSaved] = useState(false);
 
   useEffect(() => {
-    const s = localStorage.getItem("allmodern_header_settings");
-    if (s) {
-      try {
-        const d = JSON.parse(s);
-        setPromoBarText(d.promoBarText || DEFAULTS.promoBarText);
-        setPromoBarLink(d.promoBarLink || DEFAULTS.promoBarLink);
-        setSupportEmail(d.supportEmail || DEFAULTS.supportEmail);
-        setSupportPhone(d.supportPhone || DEFAULTS.supportPhone);
-      } catch {}
+    async function load() {
+      const data = await getHeaderSettings();
+      if (data) {
+        setPromoBarText(data.promoBarText || DEFAULTS.promoBarText);
+        setPromoBarLink(data.promoBarLink || DEFAULTS.promoBarLink);
+        setSupportEmail(data.supportEmail || DEFAULTS.supportEmail);
+        setSupportPhone(data.supportPhone || DEFAULTS.supportPhone);
+      }
     }
+    load();
   }, []);
 
-  const handleSave = () => {
-    const data = { promoBarText, promoBarLink, supportEmail, supportPhone };
-    localStorage.setItem("allmodern_header_settings", JSON.stringify(data));
-    window.dispatchEvent(new Event("storage"));
+  const handleSave = async () => {
+    await updateHeaderSettings({ 
+      promoBarText, 
+      promoBarLink, 
+      supportEmail, 
+      supportPhone 
+    });
     setSaved(true);
     setTimeout(() => setSaved(false), 2500);
   };
