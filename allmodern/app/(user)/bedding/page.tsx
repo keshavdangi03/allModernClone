@@ -1,5 +1,29 @@
 import Image from "next/image";
 import FilterableProductLayout from "@/components/ui/FilterableProductLayout";
+import { Metadata } from "next";
+
+import { prisma } from "@/lib/prisma";
+
+export async function generateMetadata(): Promise<Metadata> {
+  try {
+    const category = await prisma.category.findUnique({
+      where: { id: "bedding" }
+    });
+    if (category) {
+      return {
+        title: `${category.metaTitle || category.title} | AllModern`,
+        description: category.metaDescription || undefined,
+        keywords: category.metaKeywords || undefined,
+      };
+    }
+  } catch (error) {
+    console.error("Error generating metadata for bedding category:", error);
+  }
+  return {
+    title: "Modern Bedding | AllModern",
+    description: "Class, luxury and comfort. Whether looking to complete your space with the perfect modern and contemporary bedding set...",
+  };
+}
 
 
 
@@ -40,7 +64,14 @@ const relatedSearches = [
   "Minimalist", "Bedding Sets + Accessories", "Blue Bedding Sets", "Sheets + Pillowcases"
 ];
 
-export default function BeddingPage() {
+export default async function BeddingPage() {
+  const category = await prisma.category.findUnique({
+    where: { id: "bedding" }
+  }).catch(() => null);
+
+  const headingText = category?.title || "Modern and Contemporary Bedding";
+  const bodyText = category?.description || "Class, luxury and comfort. Whether looking to complete your space with the perfect modern and contemporary bedding set with a decorative modern throw pillow or looking to add modern flair with modern bedding essentials, Allmodern offers a great variety in stylish and sophisticated bedding + bath pieces to suit your every need. From mattresses and sheets, duvets and coverlets to modern bedroom accents and decorative throw pillows, let us help you perfect your modern bedding + bath selection. Modern bedding + bath all in one place at an amazing price!";
+
   return (
     <>
 
@@ -78,10 +109,14 @@ export default function BeddingPage() {
 
           {/* SEO Text Section */}
           <div className="mb-12">
-            <h3 className="text-[20px] font-bold text-slate-900 mb-3">Modern and Contemporary Bedding</h3>
-            <p className="text-[13px] text-slate-600 leading-relaxed">
-              Class, luxury and comfort. Whether looking to complete your space with the perfect modern and contemporary bedding set with a decorative modern throw pillow or looking to add modern flair with modern bedding essentials, Allmodern offers a great variety in stylish and sophisticated bedding + bath pieces to suit your every need. From mattresses and sheets, duvets and coverlets to modern bedroom accents and decorative throw pillows, let us help you perfect your modern bedding + bath selection. Modern bedding + bath all in one place at an amazing price!
-            </p>
+            <h3 className="text-[20px] font-bold text-slate-900 mb-3">{headingText}</h3>
+            <div className="text-[13px] text-slate-600 leading-relaxed font-sans space-y-4">
+              {category?.description ? (
+                <div dangerouslySetInnerHTML={{ __html: bodyText }} />
+              ) : (
+                <p>{bodyText}</p>
+              )}
+            </div>
           </div>
 
           {/* Related Searches */}

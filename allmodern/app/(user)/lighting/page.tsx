@@ -1,7 +1,31 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ChevronDown, Heart } from "lucide-react";
+import { Metadata } from "next";
+
 import FilterableProductLayout from "@/components/ui/FilterableProductLayout";
+import { prisma } from "@/lib/prisma";
+
+export async function generateMetadata(): Promise<Metadata> {
+  try {
+    const category = await prisma.category.findUnique({
+      where: { id: "lighting" }
+    });
+    if (category) {
+      return {
+        title: `${category.metaTitle || category.title} | AllModern`,
+        description: category.metaDescription || undefined,
+        keywords: category.metaKeywords || undefined,
+      };
+    }
+  } catch (error) {
+    console.error("Error generating metadata for lighting category:", error);
+  }
+  return {
+    title: "Modern & Contemporary Lighting | AllModern",
+    description: "Every home needs lighting options for different times of the day. The best lighting gives you the ability to change the intensity based on the mood...",
+  };
+}
 
 const topCategories = [
   { title: "Ceiling Lights", image: "/images/cat_living_room.png" },
@@ -39,7 +63,24 @@ function StarRating({ rating }: { rating: number }) {
   );
 }
 
-export default function LightingPage() {
+export default async function LightingPage() {
+  const category = await prisma.category.findUnique({
+    where: { id: "lighting" }
+  }).catch(() => null);
+
+  const headingText = category?.title || "Modern & Contemporary Lighting";
+  const bodyText = category?.description || `
+    <p>
+      Every home needs lighting options for different times of the day. The best lighting gives you the ability to change the intensity based on the mood you want to cultivate in your home. If you&apos;re passionate about modern d&eacute;cor, then chances are that you&apos;ll also want to find modern &amp; contemporary lighting for your entire home. There is a variety of contemporary lights, including room lighting, lighting fixtures, and location lighting. Modern &amp; contemporary lighting has features that are characteristic of modern design, including clean, geometric lines and perfectly shaped circles and ovals. The best modern &amp; contemporary lighting enhances the rest of your d&eacute;cor and helps you establish a cohesive look across your home.
+    </p>
+    <p>
+      Modern &amp; contemporary lighting best for a bedroom ranges from ceiling lights to lamps for your bedside tables. Your bedroom most likely needs different lighting sources depending on the time of day. In the morning, most people get ready for the day in their bedrooms. Having a proper ceiling light like a flush mount or a ceiling fan, will provide the perfect amount of light so you&apos;re not stuck getting dressed in the dark. At the end of the day, however, chances are you&apos;ll want to read or relax before bed. You can incorporate modern bedside lamps to provide dim lighting that won&apos;t strain your eyes before bed, allowing for a good night&apos;s sleep. If you want to create a dramatic and decorative statement in your bedroom, then modern wall sconces might be the perfect addition.
+    </p>
+    <p>
+      Aside from bedroom lighting, you&apos;ll also want to make sure that you have appropriate lighting for your dining room and kitchen. Modern &amp; contemporary lighting best suited for the kitchen ranges from track lighting to recessed lighting. The best modern kitchen light fixtures emit enough light so that you can see the food you&apos;re preparing, and cook it to perfection. Modern pendant light fixtures are popular in homes where the kitchen gracefully spills into the dining area. Try adding some pendants above your kitchen island to add some flair into your open-concept kitchen, and hang a sputnik chandelier above your dining room table for a bold and modern look. This will make for the perfect space for you to relax and pop open a bottle of wine with your guests.
+    </p>
+  `;
+
   return (
     <>
       <main className="bg-white">
@@ -79,17 +120,13 @@ export default function LightingPage() {
 
         {/* SEO Text */}
         <section className="mx-auto max-w-[1400px] px-4 pb-20 pt-8 sm:px-6">
-          <h2 className="mb-4 text-xl font-bold text-slate-950">Modern & Contemporary Lighting</h2>
-          <div className="space-y-4 text-[13px] leading-relaxed text-slate-700">
-            <p>
-              Every home needs lighting options for different times of the day. The best lighting gives you the ability to change the intensity based on the mood you want to cultivate in your home. If you&apos;re passionate about modern d&eacute;cor, then chances are that you&apos;ll also want to find modern &amp; contemporary lighting for your entire home. There is a variety of contemporary lights, including room lighting, lighting fixtures, and location lighting. Modern &amp; contemporary lighting has features that are characteristic of modern design, including clean, geometric lines and perfectly shaped circles and ovals. The best modern &amp; contemporary lighting enhances the rest of your d&eacute;cor and helps you establish a cohesive look across your home.
-            </p>
-            <p>
-              Modern &amp; contemporary lighting best for a bedroom ranges from ceiling lights to lamps for your bedside tables. Your bedroom most likely needs different lighting sources depending on the time of day. In the morning, most people get ready for the day in their bedrooms. Having a proper ceiling light like a flush mount or a ceiling fan, will provide the perfect amount of light so you&apos;re not stuck getting dressed in the dark. At the end of the day, however, chances are you&apos;ll want to read or relax before bed. You can incorporate modern bedside lamps to provide dim lighting that won&apos;t strain your eyes before bed, allowing for a good night&apos;s sleep. If you want to create a dramatic and decorative statement in your bedroom, then modern wall sconces might be the perfect addition.
-            </p>
-            <p>
-              Aside from bedroom lighting, you&apos;ll also want to make sure that you have appropriate lighting for your dining room and kitchen. Modern &amp; contemporary lighting best suited for the kitchen ranges from track lighting to recessed lighting. The best modern kitchen light fixtures emit enough light so that you can see the food you&apos;re preparing, and cook it to perfection. Modern pendant light fixtures are popular in homes where the kitchen gracefully spills into the dining area. Try adding some pendants above your kitchen island to add some flair into your open-concept kitchen, and hang a sputnik chandelier above your dining room table for a bold and modern look. This will make for the perfect space for you to relax and pop open a bottle of wine with your guests.
-            </p>
+          <h2 className="mb-4 text-xl font-bold text-slate-950">{headingText}</h2>
+          <div className="space-y-4 text-[13px] leading-relaxed text-slate-700 font-sans">
+            {category?.description ? (
+              <div dangerouslySetInnerHTML={{ __html: bodyText }} />
+            ) : (
+              <div dangerouslySetInnerHTML={{ __html: bodyText }} />
+            )}
           </div>
         </section>
 

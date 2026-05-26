@@ -308,7 +308,7 @@ export default function Header() {
                         </>
                       )}
                       <div className="mt-4 text-[14px] text-[#333333]">
-                        <Link href="/account" onClick={() => setProfileOpen(false)} className="block py-1.5 hover:underline">
+                        <Link href={isAuthenticated ? "/my_account" : "/account"} onClick={() => setProfileOpen(false)} className="block py-1.5 hover:underline">
                           My Account
                         </Link>
                         <a href="#" className="block py-1.5 hover:underline">My Orders</a>

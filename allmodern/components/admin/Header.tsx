@@ -2,11 +2,12 @@
 
 import React from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { Home, User, ChevronDown } from "lucide-react";
 
 export default function Header() {
   const pathname = usePathname();
+  const router = useRouter();
   
   // Create a readable title from the pathname
   const generateTitle = () => {
@@ -14,6 +15,13 @@ export default function Header() {
     const lastSegment = segments[segments.length - 1] || "Dashboard";
     // capitalize
     return lastSegment.charAt(0).toUpperCase() + lastSegment.slice(1);
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("allmodern-auth");
+    localStorage.removeItem("allmodern-auth-email");
+    localStorage.removeItem("allmodern-auth-role");
+    router.push("/account");
   };
 
   return (
@@ -43,7 +51,10 @@ export default function Header() {
               <Link href="/admin/settings/account" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-blue-600">
                 Profile
               </Link>
-              <button className="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50">
+              <button 
+                onClick={handleLogout}
+                className="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50"
+              >
                 Logout
               </button>
             </div>

@@ -1,37 +1,44 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Trash2, ArrowLeft, ArrowRight } from "lucide-react";
-
-const allCustomersData = [
-  { id: "#de3qam", date: "Thu Apr 09 2026", name: "1231", email: "123123231123123@gm.com" },
-  { id: "#93dyu4", date: "Wed Dec 17 2025", name: "ALI hasan", email: "alihasan331229@gmail.com" },
-  { id: "#nwd6a4", date: "Sun Jan 04 2026", name: "ARIS corleone", email: "ariscorleone04@gmail.com" },
-  { id: "#h25tl9", date: "Fri Nov 14 2025", name: "Aaditya Verma", email: "aaditya220055@gmail.com" },
-  { id: "#uzs36w", date: "Wed Apr 22 2026", name: "Aaron Santana", email: "santanavaldelomaraa@gmail.com" },
-  { id: "#aa9vys", date: "Sun Oct 19 2025", name: "Abdallah DHOUIB", email: "abdallahdhouib7@gmail.com" },
-  { id: "#gsqvck", date: "Sun Sep 28 2025", name: "Abdull", email: "dexabdull@gmail.com" },
-  { id: "#64ht3x", date: "Wed Jan 14 2026", name: "Abhay", email: "a@gmail.com" },
-  { id: "#j04k9c", date: "Sun Sep 28 2025", name: "Abhay Gupta (Hacky)", email: "abhayhacks007@gmail.com" },
-  { id: "#wideqo", date: "Sun Sep 28 2025", name: "Abhishek Bhatia", email: "abhishek.bhatia@aqlix.com" },
-  // Extra data for pagination
-  { id: "#abc123d", date: "Mon Feb 10 2026", name: "Alex Johnson", email: "alexj@example.com" },
-  { id: "#def456e", date: "Tue Mar 15 2026", name: "Amanda Smith", email: "amanda.s@example.com" },
-  { id: "#ghi789f", date: "Wed Apr 20 2026", name: "Brian Clark", email: "brian.clark@example.com" },
-  { id: "#jkl012g", date: "Thu May 25 2026", name: "Catherine Doe", email: "catherine.doe@example.com" },
-  { id: "#mno345h", date: "Fri Jun 30 2026", name: "David Evans", email: "david.evans@example.com" },
-];
+import { getAllUsers, deleteUser } from "@/lib/actions/auth";
 
 export default function CustomersPage() {
+  const [customers, setCustomers] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [selectedCustomer, setSelectedCustomer] = useState<any>(null);
 
   // Pagination State
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 7;
-  const totalPages = Math.ceil(allCustomersData.length / itemsPerPage);
 
-  const paginatedCustomers = allCustomersData.slice(
+  const loadCustomers = async () => {
+    setLoading(true);
+    try {
+      const res = await getAllUsers();
+      if (res.success && res.users) {
+        setCustomers(res.users);
+      } else {
+        setError(res.error || "Failed to load customers.");
+      }
+    } catch (err) {
+      setError("An unexpected error occurred.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    loadCustomers();
+  }, []);
+
+  const totalPages = Math.ceil(customers.length / itemsPerPage) || 1;
+
+  const paginatedCustomers = customers.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
@@ -46,8 +53,16 @@ export default function CustomersPage() {
     setTimeout(() => setSelectedCustomer(null), 200);
   };
 
-  const handleDelete = () => {
-    // In a real app, make API call here to delete `selectedCustomer`
+  const handleDelete = async () => {
+    if (!selectedCustomer) return;
+    try {
+      const res = await deleteUser(selectedCustomer.id);
+      if (res.success) {
+        setCustomers(customers.filter(c => c.id !== selectedCustomer.id));
+      }
+    } catch (e) {
+      console.error(e);
+    }
     closeDeleteModal();
   };
 
@@ -57,45 +72,80 @@ export default function CustomersPage() {
     }
   };
 
+  const getCleanName = (email: string) => {
+    const parts = email.split("@");
+    if (parts[0]) {
+      return parts[0].charAt(0).toUpperCase() + parts[0].slice(1);
+    }
+    return "Curator";
+  };
+
+  if (loading) {
+    return (
+      <div className="flex h-[400px] items-center justify-center bg-white rounded-2xl border border-gray-100">
+        <div className="text-center">
+          <div className="h-8 w-8 animate-spin rounded-full border-4 border-blue-600 border-t-transparent mx-auto"></div>
+          <p className="mt-4 text-sm text-gray-500 font-medium">Loading customers...</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="space-y-6">
       <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden flex flex-col min-h-[600px]">
         {/* Header Section */}
         <div className="p-6 border-b border-gray-50 flex items-center justify-between shrink-0">
-          <h2 className="text-lg font-bold text-gray-800">Customers</h2>
+          <h2 className="text-lg font-bold text-gray-800">Customers ({customers.length})</h2>
         </div>
 
         {/* Table Section */}
         <div className="overflow-x-auto flex-1">
-          <table className="w-full text-left border-collapse min-w-[900px]">
-            <thead>
-              <tr className="bg-white border-b border-gray-50">
-                <th className="py-4 px-6 text-sm font-semibold text-gray-500 w-32">Id</th>
-                <th className="py-4 px-6 text-sm font-semibold text-gray-500 w-48">Joining Date</th>
-                <th className="py-4 px-6 text-sm font-semibold text-gray-500 w-64">Name</th>
-                <th className="py-4 px-6 text-sm font-semibold text-gray-500">Email</th>
-                <th className="py-4 px-6 text-sm font-semibold text-gray-500 text-right w-24">Actions</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-gray-50">
-              {paginatedCustomers.map((customer, index) => (
-                <tr key={index} className="hover:bg-gray-50/50 transition-colors">
-                  <td className="py-4 px-6 text-sm font-medium text-gray-500">{customer.id}</td>
-                  <td className="py-4 px-6 text-sm text-gray-500">{customer.date}</td>
-                  <td className="py-4 px-6 text-sm text-gray-600">{customer.name}</td>
-                  <td className="py-4 px-6 text-sm text-gray-500">{customer.email}</td>
-                  <td className="py-4 px-6 text-right">
-                    <button 
-                      onClick={() => openDeleteModal(customer)}
-                      className="p-1.5 text-gray-400 hover:text-red-500 border border-gray-200 rounded-lg hover:bg-red-50 transition-colors"
-                    >
-                      <Trash2 size={16} />
-                    </button>
-                  </td>
+          {customers.length === 0 ? (
+            <div className="py-20 text-center text-sm text-gray-400 font-medium">
+              No registered customers found in the database.
+            </div>
+          ) : (
+            <table className="w-full text-left border-collapse min-w-[900px]">
+              <thead>
+                <tr className="bg-white border-b border-gray-50">
+                  <th className="py-4 px-6 text-sm font-semibold text-gray-500 w-32">Id</th>
+                  <th className="py-4 px-6 text-sm font-semibold text-gray-500 w-48">Joining Date</th>
+                  <th className="py-4 px-6 text-sm font-semibold text-gray-500 w-64">Name</th>
+                  <th className="py-4 px-6 text-sm font-semibold text-gray-500">Email</th>
+                  <th className="py-4 px-6 text-sm font-semibold text-gray-500 text-right w-24">Actions</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody className="divide-y divide-gray-50">
+                {paginatedCustomers.map((customer, index) => (
+                  <tr key={customer.id || index} className="hover:bg-gray-50/50 transition-colors">
+                    <td className="py-4 px-6 text-sm font-medium text-gray-500 max-w-[120px] truncate" title={customer.id}>{(currentPage - 1) * itemsPerPage + index + 1}</td>
+                    <td className="py-4 px-6 text-sm text-gray-500">
+                      {new Date(customer.createdAt).toLocaleDateString(undefined, {
+                        year: 'numeric', month: 'short', day: 'numeric'
+                      })}
+                    </td>
+                    <td className="py-4 px-6 text-sm text-gray-600 font-medium">{getCleanName(customer.email)}</td>
+                    <td className="py-4 px-6 text-sm text-gray-500">{customer.email}</td>
+                    <td className="py-4 px-6 text-right">
+                      {customer.role !== "admin" ? (
+                        <button 
+                          onClick={() => openDeleteModal(customer)}
+                          className="p-1.5 text-gray-400 hover:text-red-500 border border-gray-200 rounded-lg hover:bg-red-50 transition-colors"
+                        >
+                          <Trash2 size={16} />
+                        </button>
+                      ) : (
+                        <span className="text-[10px] font-bold text-blue-600 bg-blue-50 border border-blue-200 px-2 py-0.5 rounded uppercase">
+                          Admin
+                        </span>
+                      )}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )}
         </div>
 
         {/* Pagination Section */}
@@ -131,7 +181,7 @@ export default function CustomersPage() {
           <button
             onClick={() => goToPage(currentPage + 1)}
             disabled={currentPage === totalPages}
-            className="flex items-center gap-2 px-4 py-2 border border-gray-200 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors ml-2"
+            className="flex items-center gap-2 px-4 py-2 border border-gray-200 rounded-lg text-sm font-medium text-gray-750 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors ml-2"
           >
             Next
             <ArrowRight size={16} />

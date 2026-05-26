@@ -1,8 +1,31 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ChevronDown, Heart } from "lucide-react";
+import { Metadata } from "next";
 
 import FilterableProductLayout from "@/components/ui/FilterableProductLayout";
+import { prisma } from "@/lib/prisma";
+
+export async function generateMetadata(): Promise<Metadata> {
+  try {
+    const category = await prisma.category.findUnique({
+      where: { id: "furniture" }
+    });
+    if (category) {
+      return {
+        title: `${category.metaTitle || category.title} | AllModern`,
+        description: category.metaDescription || undefined,
+        keywords: category.metaKeywords || undefined,
+      };
+    }
+  } catch (error) {
+    console.error("Error generating metadata for furniture category:", error);
+  }
+  return {
+    title: "Modern Furniture | AllModern",
+    description: "Infuse personality into your home with modern furniture. Your furniture should reflect your style...",
+  };
+}
 
 const topCategories = [
   { title: "Living Room Furniture", image: "/images/cat_living_room.png" },
@@ -82,7 +105,30 @@ function StarRating({ rating }: { rating: number }) {
   );
 }
 
-export default function FurniturePage() {
+export default async function FurniturePage() {
+  const category = await prisma.category.findUnique({
+    where: { id: "furniture" }
+  }).catch(() => null);
+
+  const headingText = category?.title || "Furniture";
+  const bodyText = category?.description || `
+    <p>
+      Infuse personality into your home with modern furniture. Your furniture should reflect your style. From the living room to the patio, find the modern furniture that creates your dream home inside and out. Whether your style tends to be more industrial or bohemian, bring your vision to life with modern and contemporary furniture:
+    </p>
+    <p>
+      Modern Living Room Furniture: Sofas, TV stands, coffee tables and recliners are all crucial pieces of modern living room furniture. Whether you&apos;re looking to upgrade an old sofa or are redesigning the entire space, browse hundreds of products across multiple styles to find the pieces that feel true to you. Not sure which styles or materials fit best in your home? There are a few quick reference points that can help you decide. For instance, including a lot of wood-based furniture will give your living room a farmhouse look. The tv stand and coffee table are a couple of quick ways to infuse that rustic look into your modern living room. Metal-based stands and bookcases can help achieve an industrial look or minimalist vibe. Whichever pieces you choose, your modern living room furniture should reflect your personal style.
+    </p>
+    <p>
+      Contemporary Office Furniture: Your home office should be the most productive room in your house. Contemporary office furniture brings a creative aesthetic to this space that inspires your best work. From the desk to a bookcase, find modern office furniture for any style. An underrated decor item and functional piece of contemporary office furniture is a desktop organizer. Organizers are a great way to add hints of style to the desk area, while keeping the space clean. Brighten up your desk with a gold letter box, or keep the space sleek with a black file sorter. If you&apos;re looking to upgrade more than just a few pieces of decor in the home office, the desk and office chairs are typically the first items that come to mind. From a modest writing desk to a more robust computer desk, choose the one that makes the most sense for your space. If you have a more confined office area and only work there a few times throughout the week, a smaller writing desk may be the choice for you. If you work from home often, a computer desk may be a more effective piece of furniture for you.
+    </p>
+    <p>
+      Modern Bedroom Furniture: There is nothing quite like retreating to your bedroom after a long day. Make this space the most relaxing room in your home with modern bedroom furniture. Whether you&apos;re changing up your style or just want to replace a few pieces, find modern bedroom furniture that speaks to you. A modern metal-based bed frame will bring a minimalist, industrial vibe to your bedroom. Upholstered headboards add a hint of elegance to this space, while maintaining a contemporary look. Whichever style you gravitate towards, upgrade your home with modern bedroom furniture.
+    </p>
+    <p>
+      Modern furniture adds elegance to your home. Whether you&apos;re moving into a new house or simply looking to upgrade a few pieces, shop hundreds of products to find the furniture that fits your style.
+    </p>
+  `;
+
   return (
     <>
       <main className="bg-white">
@@ -277,23 +323,13 @@ export default function FurniturePage() {
         <FilterableProductLayout title="Furniture" itemCount={3810} products={[]} categoryName="Furniture"></FilterableProductLayout>
       {/* SEO Text */}
         <section className="mx-auto max-w-[1400px] px-4 pb-20 pt-8 sm:px-6">
-          <h2 className="mb-4 text-[19px] font-bold text-slate-950">Furniture</h2>
-          <div className="space-y-4 text-[13px] leading-relaxed text-slate-700">
-            <p>
-              Infuse personality into your home with modern furniture. Your furniture should reflect your style. From the living room to the patio, find the modern furniture that creates your dream home inside and out. Whether your style tends to be more industrial or bohemian, bring your vision to life with modern and contemporary furniture:
-            </p>
-            <p>
-              Modern Living Room Furniture: Sofas, TV stands, coffee tables and recliners are all crucial pieces of modern living room furniture. Whether you&apos;re looking to upgrade an old sofa or are redesigning the entire space, browse hundreds of products across multiple styles to find the pieces that feel true to you. Not sure which styles or materials fit best in your home? There are a few quick reference points that can help you decide. For instance, including a lot of wood-based furniture will give your living room a farmhouse look. The tv stand and coffee table are a couple of quick ways to infuse that rustic look into your modern living room. Metal-based stands and bookcases can help achieve an industrial look or minimalist vibe. Whichever pieces you choose, your modern living room furniture should reflect your personal style.
-            </p>
-            <p>
-              Contemporary Office Furniture: Your home office should be the most productive room in your house. Contemporary office furniture brings a creative aesthetic to this space that inspires your best work. From the desk to a bookcase, find modern office furniture for any style. An underrated decor item and functional piece of contemporary office furniture is a desktop organizer. Organizers are a great way to add hints of style to the desk area, while keeping the space clean. Brighten up your desk with a gold letter box, or keep the space sleek with a black file sorter. If you&apos;re looking to upgrade more than just a few pieces of decor in the home office, the desk and office chairs are typically the first items that come to mind. From a modest writing desk to a more robust computer desk, choose the one that makes the most sense for your space. If you have a more confined office area and only work there a few times throughout the week, a smaller writing desk may be the choice for you. If you work from home often, a computer desk may be a more effective piece of furniture for you.
-            </p>
-            <p>
-              Modern Bedroom Furniture: There is nothing quite like retreating to your bedroom after a long day. Make this space the most relaxing room in your home with modern bedroom furniture. Whether you&apos;re changing up your style or just want to replace a few pieces, find modern bedroom furniture that speaks to you. A modern metal-based bed frame will bring a minimalist, industrial vibe to your bedroom. An upholstered headboard adds a hint of elegance to this space, while maintaining a contemporary look. Whichever style you gravitate towards, upgrade your home with modern bedroom furniture.
-            </p>
-            <p>
-              Modern furniture adds elegance to your home. Whether you&apos;re moving into a new house or simply looking to upgrade a few pieces, shop hundreds of products to find the furniture that fits your style.
-            </p>
+          <h2 className="mb-4 text-[19px] font-bold text-slate-950">{headingText}</h2>
+          <div className="space-y-4 text-[13px] leading-relaxed text-slate-700 font-sans">
+            {category?.description ? (
+              <div dangerouslySetInnerHTML={{ __html: bodyText }} />
+            ) : (
+              <div dangerouslySetInnerHTML={{ __html: bodyText }} />
+            )}
           </div>
         </section>
 

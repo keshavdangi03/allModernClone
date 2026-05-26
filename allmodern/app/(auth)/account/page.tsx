@@ -1,14 +1,28 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Lock } from "lucide-react";
+import { checkEmailExists, registerUser, loginUser } from "@/lib/actions/auth";
 
 type AccountStep = "email" | "password" | "phone" | "code";
 
 export default function AccountPage() {
   const router = useRouter();
+  
+  useEffect(() => {
+    const isAuthenticated = localStorage.getItem("allmodern-auth") === "true";
+    const role = localStorage.getItem("allmodern-auth-role");
+    if (isAuthenticated) {
+      if (role === "admin") {
+        router.push("/dashboard");
+      } else {
+        router.push("/my_account");
+      }
+    }
+  }, [router]);
+
   const [step, setStep] = useState<AccountStep>("email");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -20,24 +34,92 @@ export default function AccountPage() {
   const [phoneFocused, setPhoneFocused] = useState(false);
   const [codeFocused, setCodeFocused] = useState(false);
 
-  const completeLogin = () => {
-    localStorage.setItem("allmodern-auth", "true");
-    localStorage.setItem("allmodern-auth-email", email.trim());
-    router.push("/");
-  };
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [flowMode, setFlowMode] = useState<"login" | "register">("register");
 
-  const handleContinueFromEmail = () => {
+  const handleContinueFromEmail = async () => {
     if (!email.trim()) {
       return;
     }
-    setStep("password");
+    setLoading(true);
+    setError("");
+    try {
+      const exists = await checkEmailExists(email);
+      setFlowMode(exists ? "login" : "register");
+      setStep("password");
+    } catch (err: any) {
+      setError(err?.message || "Failed to verify email. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const handleCreateAccount = () => {
+  const handlePasswordSubmit = async () => {
     if (!password.trim()) {
       return;
     }
-    setStep("phone");
+    if (password.trim().length < 8 && flowMode === "register") {
+      setError("Password must be at least 8 characters long.");
+      return;
+    }
+    
+    setError("");
+    if (flowMode === "login") {
+      setLoading(true);
+      try {
+        const res = await loginUser({ email, password });
+        if (res.success) {
+          localStorage.setItem("allmodern-auth", "true");
+          localStorage.setItem("allmodern-auth-email", email.trim());
+          localStorage.setItem("allmodern-auth-role", res.role || "user");
+          
+          if (res.role === "admin") {
+            router.push("/dashboard");
+          } else {
+            router.push("/my_account");
+          }
+        } else {
+          setError(res.error || "Incorrect password. Please try again.");
+        }
+      } catch (err: any) {
+        setError("Failed to sign in. Please try again.");
+      } finally {
+        setLoading(false);
+      }
+    } else {
+      setStep("phone");
+    }
+  };
+
+  const completeRegistration = async (phoneVal?: string) => {
+    setLoading(true);
+    setError("");
+    try {
+      const res = await registerUser({
+        email,
+        password,
+        phone: phoneVal,
+      });
+      if (res.success) {
+        localStorage.setItem("allmodern-auth", "true");
+        localStorage.setItem("allmodern-auth-email", email.trim());
+        const role = email.trim().toLowerCase() === "admin@admin.np" ? "admin" : "user";
+        localStorage.setItem("allmodern-auth-role", role);
+        
+        if (role === "admin") {
+          router.push("/dashboard");
+        } else {
+          router.push("/my_account");
+        }
+      } else {
+        setError(res.error || "Failed to create account. Please try again.");
+      }
+    } catch (err: any) {
+      setError("Registration failed. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleSendCode = () => {
@@ -121,13 +203,19 @@ export default function AccountPage() {
                 emailFocused,
                 setEmailFocused
               )}
-              <Link href="/dashboard"><button
+              {error && (
+                <div className="text-[13px] font-medium text-red-600 text-left bg-red-50 border border-red-200 p-2.5 rounded">
+                  {error}
+                </div>
+              )}
+              <button
                 type="button"
+                disabled={loading}
                 onClick={handleContinueFromEmail}
-                className="h-[48px] w-full bg-[#1f1d24] text-[15px] font-medium text-white transition hover:bg-[#111]"
+                className="h-[48px] w-full bg-[#1f1d24] text-[15px] font-medium text-white transition hover:bg-[#111] disabled:opacity-55 flex items-center justify-center gap-2"
               >
-                Continue
-              </button></Link>
+                {loading ? "Checking..." : "Continue"}
+              </button>
             </div>
 
             <div className="my-5 flex items-center gap-3">
@@ -163,12 +251,15 @@ export default function AccountPage() {
         {step === "password" ? (
           <>
             <h1 className="text-[22px] font-bold leading-[1.35] text-[#111111] sm:text-[24px]">
-              Create a Password
+              {flowMode === "login" ? "Enter your password to sign in" : "Create a Password"}
             </h1>
             <p className="mt-2 text-[14px] text-[#333333]">{email}</p>
             <button
               type="button"
-              onClick={() => setStep("email")}
+              onClick={() => {
+                setStep("email");
+                setError("");
+              }}
               className="mt-1 text-[14px] underline underline-offset-2 hover:text-black"
             >
               Use a Different Email
@@ -176,7 +267,7 @@ export default function AccountPage() {
 
             <div className="relative mt-6">
               {floatingInput(
-                "Minimum 8 characters",
+                flowMode === "login" ? "Password" : "Minimum 8 characters",
                 showPassword ? "text" : "password",
                 password,
                 (e) => setPassword(e.target.value),
@@ -192,16 +283,23 @@ export default function AccountPage() {
               )}
             </div>
 
+            {error && (
+              <div className="mt-4 text-[13px] font-medium text-red-600 text-left bg-red-50 border border-red-200 p-2.5 rounded">
+                {error}
+              </div>
+            )}
+
             <button
               type="button"
-              onClick={handleCreateAccount}
-              className="mt-4 h-[48px] w-full bg-[#1f1d24] text-[15px] font-medium text-white transition hover:bg-[#111]"
+              disabled={loading}
+              onClick={handlePasswordSubmit}
+              className="mt-4 h-[48px] w-full bg-[#1f1d24] text-[15px] font-medium text-white transition hover:bg-[#111] disabled:opacity-55 flex items-center justify-center gap-2"
             >
-              Create Account
+              {loading ? "Processing..." : flowMode === "login" ? "Sign In" : "Continue"}
             </button>
 
             <p className="mt-5 text-[13px] leading-[1.5] text-[#333333]">
-              By creating an account, you agree to our{" "}
+              By {flowMode === "login" ? "signing in" : "creating an account"}, you agree to our{" "}
               <a href="#" className="underline underline-offset-2">
                 privacy policy
               </a>{" "}
@@ -211,16 +309,22 @@ export default function AccountPage() {
               </a>
               .
             </p>
-            <p className="mt-4 text-[14px]">
-              Have an account?{" "}
-              <button
-                type="button"
-                className="underline underline-offset-2"
-                onClick={() => setStep("email")}
-              >
-                Sign In
-              </button>
-            </p>
+            {flowMode === "register" && (
+              <p className="mt-4 text-[14px]">
+                Have an account?{" "}
+                <button
+                  type="button"
+                  className="underline underline-offset-2 font-semibold"
+                  onClick={() => {
+                    setStep("email");
+                    setFlowMode("login");
+                    setError("");
+                  }}
+                >
+                  Sign In
+                </button>
+              </p>
+            )}
           </>
         ) : null}
 
@@ -244,10 +348,17 @@ export default function AccountPage() {
               )}
             </div>
 
+            {error && (
+              <div className="mt-4 text-[13px] font-medium text-red-600 text-left bg-red-50 border border-red-200 p-2.5 rounded">
+                {error}
+              </div>
+            )}
+
             <button
               type="button"
+              disabled={loading}
               onClick={handleSendCode}
-              className="mt-4 h-[48px] w-full bg-[#1f1d24] text-[15px] font-medium text-white transition hover:bg-[#111]"
+              className="mt-4 h-[48px] w-full bg-[#1f1d24] text-[15px] font-medium text-white transition hover:bg-[#111] disabled:opacity-55"
             >
               Send Code
             </button>
@@ -267,10 +378,11 @@ export default function AccountPage() {
 
             <button
               type="button"
-              onClick={completeLogin}
-              className="mt-4 text-[14px] underline underline-offset-2"
+              disabled={loading}
+              onClick={() => completeRegistration()}
+              className="mt-4 text-[14px] underline underline-offset-2 disabled:opacity-55 block mx-auto text-center hover:text-black font-semibold"
             >
-              No Thanks
+              {loading ? "Registering..." : "No Thanks"}
             </button>
           </>
         ) : null}
@@ -293,17 +405,25 @@ export default function AccountPage() {
               )}
             </div>
 
+            {error && (
+              <div className="mt-4 text-[13px] font-medium text-red-600 text-left bg-red-50 border border-red-200 p-2.5 rounded">
+                {error}
+              </div>
+            )}
+
             <button
               type="button"
-              onClick={completeLogin}
-              className="mt-4 h-[48px] w-full bg-[#8f9098] text-[15px] font-medium text-white transition hover:bg-[#777]"
+              disabled={loading}
+              onClick={() => completeRegistration(phone)}
+              className="mt-4 h-[48px] w-full bg-[#1f1d24] text-[15px] font-medium text-white transition hover:bg-black disabled:opacity-55 flex items-center justify-center gap-2"
             >
-              Sign In
+              {loading ? "Signing In..." : "Sign In"}
             </button>
 
             <button
               type="button"
-              className="mt-4 text-[13px] underline underline-offset-2"
+              disabled={loading}
+              className="mt-4 text-[13px] underline underline-offset-2 disabled:opacity-55 block mx-auto hover:text-black font-medium"
               onClick={() => setStep("phone")}
             >
               Didn&apos;t get a code? Resend Code
@@ -311,8 +431,9 @@ export default function AccountPage() {
 
             <button
               type="button"
-              className="mt-3 block w-full text-center text-[14px] underline underline-offset-2"
-              onClick={completeLogin}
+              disabled={loading}
+              className="mt-3 block w-full text-center text-[14px] underline underline-offset-2 disabled:opacity-55 hover:text-black font-semibold"
+              onClick={() => completeRegistration(phone)}
             >
               Maybe Later
             </button>

@@ -3,26 +3,7 @@
 import React, { useState } from "react";
 import { Eye, Pencil, X, ArrowLeft, ArrowRight } from "lucide-react";
 
-const allOrdersData = [
-  { id: "#fmhn7g1p", name: "IAL Ra h", email: "fas@ff.nn", date: "Fri May 01 2026", status: "Pending", paymentMethod: "cod", total: "$812", statusColor: "text-orange-500 bg-orange-50" },
-  { id: "#v4c1buca", name: "Md Rakib Hosen", email: "teams.ialbh@gmail.com", date: "Fri May 01 2026", status: "Pending", paymentMethod: "cod", total: "$777", statusColor: "text-orange-500 bg-orange-50" },
-  { id: "#h57i7q83", name: "Nathan Julcah", email: "ljulcahuanca17@gmail.com", date: "Thu Apr 30 2026", status: "Processing", paymentMethod: "cod", total: "$1,634", statusColor: "text-purple-500 bg-purple-50" },
-  { id: "#hzeyomq5", name: "Aminul Islam", email: "sadiaakter9406@gmail.com", date: "Mon Apr 27 2026", status: "Pending", paymentMethod: "cod", total: "$888", statusColor: "text-orange-500 bg-orange-50" },
-  { id: "#e84b0953", name: "Anisur Rahman", email: "fbadssetuppro@gmail.com", date: "Thu Apr 23 2026", status: "Delivered", paymentMethod: "cod", total: "$500", statusColor: "text-emerald-500 bg-emerald-50" },
-  { id: "#xzu1s06j", name: "user", email: "user@gmail.com", date: "Tue Mar 31 2026", status: "Delivered", paymentMethod: "cod", total: "$777", statusColor: "text-emerald-500 bg-emerald-50" },
-  { id: "#s8t6u1k8", name: "user", email: "user@gmail.com", date: "Fri Apr 17 2026", status: "Delivered", paymentMethod: "cod", total: "$500", statusColor: "text-emerald-500 bg-emerald-50" },
-  // Page 2 mock data from user screenshot
-  { id: "#otkyhbqi", name: "Sun Apr 05 2026", email: "ererere rererere", date: "dfdf@fdd.df", status: "Pending", paymentMethod: "cod", total: "$400", statusColor: "text-orange-500 bg-orange-50" },
-  { id: "#ky0ut2n4", name: "Thu Apr 02 2026", email: "Admin", date: "admin@gmail.com", status: "Processing", paymentMethod: "cod", total: "$120", statusColor: "text-purple-500 bg-purple-50" },
-  { id: "#uktrzimz", name: "Sun Jan 04 2026", email: "user", date: "user@gmail.com", status: "Processing", paymentMethod: "cod", total: "$340", statusColor: "text-purple-500 bg-purple-50" },
-  { id: "#4volk1cx", name: "Fri Jan 09 2026", email: "user", date: "user@gmail.com", status: "Cancel", paymentMethod: "cod", total: "$50", statusColor: "text-red-500 bg-red-50" },
-  { id: "#bgc0p06o", name: "Wed Apr 01 2026", email: "Pakpoom Wianthaisong", date: "max555max2012@gmail.com", status: "Pending", paymentMethod: "cod", total: "$990", statusColor: "text-orange-500 bg-orange-50" },
-  { id: "#u2398vqe", name: "Tue Mar 31 2026", email: "233 dfdf", date: "sd@dkd.com", status: "Pending", paymentMethod: "cod", total: "$230", statusColor: "text-orange-500 bg-orange-50" },
-  // Additional mock data for more pages
-  { id: "#a1b2c3d4", name: "John Doe", email: "john@example.com", date: "Mon Mar 30 2026", status: "Delivered", paymentMethod: "stripe", total: "$150", statusColor: "text-emerald-500 bg-emerald-50" },
-  { id: "#e5f6g7h8", name: "Jane Smith", email: "jane@example.com", date: "Sun Mar 29 2026", status: "Processing", paymentMethod: "paypal", total: "$450", statusColor: "text-purple-500 bg-purple-50" },
-  { id: "#i9j0k1l2", name: "Bob Wilson", email: "bob@example.com", date: "Sat Mar 28 2026", status: "Pending", paymentMethod: "cod", total: "$80", statusColor: "text-orange-500 bg-orange-50" },
-];
+const allOrdersData: any[] = [];
 
 const mockOrderDetails = {
   products: [
@@ -103,37 +84,45 @@ export default function OrdersPage() {
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-50">
-              {paginatedOrders.map((order, index) => (
-                <tr key={index} className="hover:bg-gray-50/50 transition-colors">
-                  <td className="py-4 px-6 text-sm font-medium text-gray-800">{order.id}</td>
-                  <td className="py-4 px-6 text-sm text-gray-600">{order.name}</td>
-                  <td className="py-4 px-6 text-sm text-gray-500">{order.email}</td>
-                  <td className="py-4 px-6 text-sm text-gray-500">{order.date}</td>
-                  <td className="py-4 px-6">
-                    <span className={`inline-flex px-3 py-1 text-xs font-medium rounded-full ${order.statusColor}`}>
-                      {order.status}
-                    </span>
-                  </td>
-                  <td className="py-4 px-6 text-sm text-gray-500">{order.paymentMethod}</td>
-                  <td className="py-4 px-6 text-sm font-medium text-gray-800">{order.total}</td>
-                  <td className="py-4 px-6 text-right">
-                    <div className="flex items-center justify-end gap-2">
-                      <button 
-                        onClick={() => openViewModal(order)}
-                        className="p-1.5 text-gray-400 hover:text-blue-600 border border-gray-200 rounded-lg hover:bg-blue-50 transition-colors"
-                      >
-                        <Eye size={16} />
-                      </button>
-                      <button 
-                        onClick={() => openEditModal(order)}
-                        className="p-1.5 text-gray-400 hover:text-blue-600 border border-gray-200 rounded-lg hover:bg-blue-50 transition-colors"
-                      >
-                        <Pencil size={16} />
-                      </button>
-                    </div>
+              {paginatedOrders.length === 0 ? (
+                <tr>
+                  <td colSpan={8} className="py-12 text-center text-sm text-gray-400 font-medium bg-white">
+                    No orders placed yet.
                   </td>
                 </tr>
-              ))}
+              ) : (
+                paginatedOrders.map((order, index) => (
+                  <tr key={index} className="hover:bg-gray-50/50 transition-colors">
+                    <td className="py-4 px-6 text-sm font-medium text-gray-800">{order.id}</td>
+                    <td className="py-4 px-6 text-sm text-gray-600">{order.name}</td>
+                    <td className="py-4 px-6 text-sm text-gray-500">{order.email}</td>
+                    <td className="py-4 px-6 text-sm text-gray-500">{order.date}</td>
+                    <td className="py-4 px-6">
+                      <span className={`inline-flex px-3 py-1 text-xs font-medium rounded-full ${order.statusColor}`}>
+                        {order.status}
+                      </span>
+                    </td>
+                    <td className="py-4 px-6 text-sm text-gray-500">{order.paymentMethod}</td>
+                    <td className="py-4 px-6 text-sm font-medium text-gray-800">{order.total}</td>
+                    <td className="py-4 px-6 text-right">
+                      <div className="flex items-center justify-end gap-2">
+                        <button 
+                          onClick={() => openViewModal(order)}
+                          className="p-1.5 text-gray-400 hover:text-blue-600 border border-gray-200 rounded-lg hover:bg-blue-50 transition-colors"
+                        >
+                          <Eye size={16} />
+                        </button>
+                        <button 
+                          onClick={() => openEditModal(order)}
+                          className="p-1.5 text-gray-400 hover:text-blue-600 border border-gray-200 rounded-lg hover:bg-blue-50 transition-colors"
+                        >
+                          <Pencil size={16} />
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))
+              )}
             </tbody>
           </table>
         </div>

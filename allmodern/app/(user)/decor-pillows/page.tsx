@@ -1,7 +1,31 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ChevronDown, Heart, ArrowRight } from "lucide-react";
+import { Metadata } from "next";
+
 import FilterableProductLayout from "@/components/ui/FilterableProductLayout";
+import { prisma } from "@/lib/prisma";
+
+export async function generateMetadata(): Promise<Metadata> {
+  try {
+    const category = await prisma.category.findUnique({
+      where: { id: "decor-pillows" }
+    });
+    if (category) {
+      return {
+        title: `${category.metaTitle || category.title} | AllModern`,
+        description: category.metaDescription || undefined,
+        keywords: category.metaKeywords || undefined,
+      };
+    }
+  } catch (error) {
+    console.error("Error generating metadata for decor-pillows category:", error);
+  }
+  return {
+    title: "Modern Decor + Pillows | AllModern",
+    description: "Nothing dresses up your home quite like decor and pillows. If your space is filled with dark and dull furniture...",
+  };
+}
 
 const topCategories = [
   { title: "Home Decor", image: "/images/cat_living_room.png" },
@@ -99,7 +123,14 @@ function StarRating({ rating }: { rating: number }) {
   );
 }
 
-export default function DecorPillowsPage() {
+export default async function DecorPillowsPage() {
+  const category = await prisma.category.findUnique({
+    where: { id: "decor-pillows" }
+  }).catch(() => null);
+
+  const headingText = category?.title || "Decor + Pillows";
+  const bodyText = category?.description || "Nothing dresses up your home quite like decor and pillows. If your space is filled with dark and dull furniture, consider adding some colorful throw pillows to brighten up the look! This is a quick fix that can make a big difference, and really impress your guests. Another simple decoration tip is to add eye-catching geometric prints to add some more life into your room. Bringing new decor and pillows into a room, can transform your space and make it feel like a brand new room. So if you&apos;re looking to make some changes to liven up your home or apartment without breaking the bank, shop our wide variety of decor and pillows to create a space you&apos;ll love.";
+
   return (
     <>
       <main className="bg-white">
@@ -305,10 +336,14 @@ export default function DecorPillowsPage() {
 
         {/* SEO Text Block */}
         <section className="mx-auto max-w-[1400px] px-4 pb-8 sm:px-6">
-          <h3 className="text-xl font-bold text-slate-950 mb-3">Decor + Pillows</h3>
-          <p className="text-[13px] leading-relaxed text-slate-700">
-            Nothing dresses up your home quite like decor and pillows. If your space is filled with dark and dull furniture, consider adding some colorful throw pillows to brighten up the look! This is a quick fix that can make a big difference, and really impress your guests. Another simple decoration tip is to add eye-catching geometric prints to add some more life into your room. Bringing new decor and pillows into a room, can transform your space and make it feel like a brand new room. So if you&apos;re looking to make some changes to liven up your home or apartment without breaking the bank, shop our wide variety of decor and pillows to create a space you&apos;ll love.
-          </p>
+          <h3 className="text-xl font-bold text-slate-950 mb-3">{headingText}</h3>
+          <div className="text-[13px] leading-relaxed text-slate-700 font-sans space-y-4">
+            {category?.description ? (
+              <div dangerouslySetInnerHTML={{ __html: bodyText }} />
+            ) : (
+              <p>{bodyText}</p>
+            )}
+          </div>
         </section>
 
         {/* Related Searches */}

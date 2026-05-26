@@ -7,14 +7,18 @@ datasource db {
 }
 
 model Category {
-  id        String   @id // like "furniture", "new"
-  title     String
-  image     String?
-  badge     String?
-  color     String?
-  sections  String   // Stored as JSON string
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id              String   @id // like "furniture", "new"
+  title           String
+  description     String?  @db.Text
+  image           String?
+  badge           String?
+  color           String?
+  sections        String   // Stored as JSON string
+  metaTitle       String?
+  metaDescription String?  @db.Text
+  metaKeywords    String?  @db.Text
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
 }
 
 model SeoSettings {
@@ -113,3 +117,12 @@ model Product {
   updatedAt        DateTime @updatedAt
 }
 
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  phone     String?
+  role      String   @default("user") // "user" or "admin"
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

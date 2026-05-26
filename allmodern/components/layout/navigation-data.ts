@@ -56,7 +56,7 @@ export const departmentNavItems: DepartmentNavItem[] = [
   { label: "Sale", href: "/sale" },
 ];
 
-export const categoryMenus: Record<string, { image: string; badge: string; sections: MenuGroup[] }> = {
+export const categoryMenus: Record<string, { image: string; badge: string; description?: string; sections: MenuGroup[] }> = {
   New: {
     image: "/images/cat_outdoor.png",
     badge: "New Arrivals",
@@ -88,6 +88,15 @@ export const categoryMenus: Record<string, { image: string; badge: string; secti
   Furniture: {
     image: "/images/cat_living_room.png",
     badge: "Furniture",
+    description: `Infuse personality into your home with modern furniture. Your furniture should reflect your style. From the living room to the patio, find the modern furniture that creates your dream home inside and out. Whether your style tends to be more industrial or bohemian, bring your vision to life with modern and contemporary furniture:
+
+Modern Living Room Furniture: Sofas, TV stands, coffee tables and recliners are all crucial pieces of modern living room furniture. Whether you're looking to upgrade an old sofa or are redesigning the entire space, browse hundreds of products across multiple styles to find the pieces that feel true to you. Not sure which styles or materials fit best in your home? There are a few quick reference points that can help you decide. For instance, including a lot of wood-based furniture will give your living room a farmhouse look. The tv stand and coffee table are a couple of quick ways to infuse that rustic look into your modern living room. Metal-based stands and bookcases can help achieve an industrial look or minimalist vibe. Whichever pieces you choose, your modern living room furniture should reflect your personal style.
+
+Contemporary Office Furniture: Your home office should be the most productive room in your house. Contemporary office furniture brings a creative aesthetic to this space that inspires your best work. From the desk to a bookcase, find modern office furniture for any style. An underrated decor item and functional piece of contemporary office furniture is a desktop organizer. Organizers are a great way to add hints of style to the desk area, while keeping the space clean. Brighten up your desk with a gold letter box, or keep the space sleek with a black file sorter. If you're looking to upgrade more than just a few pieces of decor in the home office, the desk and office chairs are typically the first items that come to mind. From a modest writing desk to a more robust computer desk, choose the one that makes the most sense for your space. If you have a more confined office area and only work there a few times throughout the week, a smaller writing desk may be the choice for you. If you work from home often, a computer desk may be a more effective piece of furniture for you.
+
+Modern Bedroom Furniture: There is nothing quite like retreating to your bedroom after a long day. Make this space the most relaxing room in your home with modern bedroom furniture. Whether you're changing up your style or just want to replace a few pieces, find modern bedroom furniture that speaks to you. A modern metal-based bed frame will bring a minimalist, industrial vibe to your bedroom. Upholstered headboards add a hint of elegance to this space, while maintaining a contemporary look. Whichever style you gravitate towards, upgrade your home with modern bedroom furniture.
+
+Modern furniture adds elegance to your home. Whether you're moving into a new house or simply looking to upgrade a few pieces, shop hundreds of products to find the furniture that fits your style.`,
     sections: [
       {
         title: "Living Room",
@@ -141,6 +150,7 @@ export const categoryMenus: Record<string, { image: string; badge: string; secti
   Outdoor: {
     image: "/images/cat_outdoor.png",
     badge: "Outdoor",
+    description: "Modern outdoor furniture gives you the ability to truly enjoy the spring, summer, and fall. You can celebrate the warm months out on your patio with friends, family, and guests if you have the right patio furniture. Modern outdoor patio furniture combines your love for the great outdoors, entertaining, and modern design in one simple and sophisticated package. Modern outdoor furniture, like tables, chairs, chaise lounges, and sofas are a great way to relax in style and comfort. If you have a pool, then you can place outdoor lounge chairs around the perimeter so that you can cool off whenever you get too warm while sunbathing. The best modern outdoor furniture combines high-quality materials and simple, sophisticated design to create a modern patio where you'll be proud to entertain your guests.",
     sections: [
       {
         title: "Outdoor Furniture",
@@ -176,6 +186,11 @@ export const categoryMenus: Record<string, { image: string; badge: string; secti
   Lighting: {
     image: "/images/cat_dining.png",
     badge: "Lighting",
+    description: `Every home needs lighting options for different times of the day. The best lighting gives you the ability to change the intensity based on the mood you want to cultivate in your home. If you're passionate about modern d&eacute;cor, then chances are that you'll also want to find modern &amp; contemporary lighting for your entire home. There is a variety of contemporary lights, including room lighting, lighting fixtures, and location lighting. Modern &amp; contemporary lighting has features that are characteristic of modern design, including clean, geometric lines and perfectly shaped circles and ovals. The best modern &amp; contemporary lighting enhances the rest of your d&eacute;cor and helps you establish a cohesive look across your home.
+
+Modern &amp; contemporary lighting best for a bedroom ranges from ceiling lights to lamps for your bedside tables. Your bedroom most likely needs different lighting sources depending on the time of day. In the morning, most people get ready for the day in their bedrooms. Having a proper ceiling light like a flush mount or a ceiling fan, will provide the perfect amount of light so you're not stuck getting dressed in the dark. At the end of the day, however, chances are you'll want to read or relax before bed. You can incorporate modern bedside lamps to provide dim lighting that won't strain your eyes before bed, allowing for a good night's sleep. If you want to create a dramatic and decorative statement in your bedroom, then modern wall sconces might be the perfect addition.
+
+Aside from bedroom lighting, you'll also want to make sure that you have appropriate lighting for your dining room and kitchen. Modern &amp; contemporary lighting best suited for the kitchen ranges from track lighting to recessed lighting. The best modern kitchen light fixtures emit enough light so that you can see the food you're preparing, and cook it to perfection. Modern pendant light fixtures are popular in homes where the kitchen gracefully spills into the dining area. Try adding some pendants above your kitchen island to add some flair into your open-concept kitchen, and hang a sputnik chandelier above your dining room table for a bold and modern look. This will make for the perfect space for you to relax and pop open a bottle of wine with your guests.`,
     sections: [
       {
         title: "Interior Lighting",
@@ -202,6 +217,7 @@ export const categoryMenus: Record<string, { image: string; badge: string; secti
   "Decor + Pillows": {
     image: "/images/hero.png",
     badge: "Decor + Pillows",
+    description: "Nothing dresses up your home quite like decor and pillows. If your space is filled with dark and dull furniture, consider adding some colorful throw pillows to brighten up the look! This is a quick fix that can make a big difference, and really impress your guests. Another simple decoration tip is to add eye-catching geometric prints to add some more life into your room. Bringing new decor and pillows into a room, can transform your space and make it feel like a brand new room. So if you're looking to make some changes to liven up your home or apartment without breaking the bank, shop our wide variety of decor and pillows to create a space you'll love.",
     sections: [
       {
         title: "Home Decor",
@@ -284,6 +300,7 @@ export const categoryMenus: Record<string, { image: string; badge: string; secti
   Rugs: {
     image: "/images/cat_living_room.png",
     badge: "Rugs",
+    description: "A modern rug is an essential accent piece for any living room, bedroom or dining room. Contemporary rugs can help define the theme and color palette of a room, protect floors, and absorb the noise of day to day life. A modern rug can protect your floors from everyday wear and tear, and support your feet with comfortable padding, not chilly hardwood or tile flooring. Designer area rugs can also add a sophisticated splash of color and pattern to your bedroom or living room. When shopping for a rug, make sure to consider the size of the rug (5 x 8 is the most common rug size), the weave and material of the rug, and most importantly, its design. If you're looking to complement a modern aesthetic, look for a modern rug with bold patterns, like chevron or stripes, or abstract designs that make a statement.",
     sections: [
       {
         title: "By Room",
@@ -310,6 +327,7 @@ export const categoryMenus: Record<string, { image: string; badge: string; secti
   Bedding: {
     image: "/images/cat_bedroom.png",
     badge: "Bedding",
+    description: "Class, luxury and comfort. Whether looking to complete your space with the perfect modern and contemporary bedding set with a decorative modern throw pillow or looking to add modern flair with modern bedding essentials, Allmodern offers a great variety in stylish and sophisticated bedding + bath pieces to suit your every need. From mattresses and sheets, duvets and coverlets to modern bedroom accents and decorative throw pillows, let us help you perfect your modern bedding + bath selection. Modern bedding + bath all in one place at an amazing price!",
     sections: [
       {
         title: "Bed Basics",

@@ -3,6 +3,7 @@ import { PrismaPg } from "@prisma/adapter-pg";
 import { Pool } from "pg";
 import fs from "fs";
 import path from "path";
+import crypto from "crypto";
 import { departmentNavItems, categoryMenus } from "../components/layout/navigation-data";
 
 const connectionString = process.env.DATABASE_URL || "postgresql://neondb_owner:npg_mi7elKWvxhq9@ep-bitter-leaf-ao1doyw9-pooler.c-2.ap-southeast-1.aws.neon.tech/neondb?sslmode=require";
@@ -163,6 +164,30 @@ async function seed() {
       }
     } else {
       console.log(`Products already exist (${productCount}), skipping product seeding.`);
+    }
+
+    // Seeding Admin User
+    const adminEmail = "admin@admin.np";
+    const adminUser = await prisma.user.findUnique({
+      where: { email: adminEmail }
+    });
+    if (!adminUser) {
+      console.log("Seeding superuser admin...");
+      const salt = crypto.randomBytes(16).toString("hex");
+      const hash = crypto.pbkdf2Sync("admin123", salt, 1000, 64, "sha512").toString("hex");
+      const hashedPassword = `${salt}:${hash}`;
+      
+      await prisma.user.create({
+        data: {
+          email: adminEmail,
+          password: hashedPassword,
+          phone: "9876543210",
+          role: "admin"
+        }
+      });
+      console.log("Seeded superuser admin (admin@admin.np / admin123).");
+    } else {
+      console.log("Superuser admin already exists, skipping.");
     }
 
     console.log("PostgreSQL Database Seeding Completed Successfully.");

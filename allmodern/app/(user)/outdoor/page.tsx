@@ -1,8 +1,31 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ChevronDown, Heart } from "lucide-react";
+import { Metadata } from "next";
 
 import FilterableProductLayout from "@/components/ui/FilterableProductLayout";
+import { prisma } from "@/lib/prisma";
+
+export async function generateMetadata(): Promise<Metadata> {
+  try {
+    const category = await prisma.category.findUnique({
+      where: { id: "outdoor" }
+    });
+    if (category) {
+      return {
+        title: `${category.metaTitle || category.title} | AllModern`,
+        description: category.metaDescription || undefined,
+        keywords: category.metaKeywords || undefined,
+      };
+    }
+  } catch (error) {
+    console.error("Error generating metadata for outdoor category:", error);
+  }
+  return {
+    title: "Modern Patio Furniture + Decor | AllModern",
+    description: "Modern outdoor furniture gives you the ability to truly enjoy the spring, summer, and fall...",
+  };
+}
 
 const topCategories = [
   { title: "Outdoor Lounge Furniture", image: "/images/cat_living_room.png" },
@@ -86,7 +109,14 @@ function StarRating({ rating }: { rating: number }) {
   );
 }
 
-export default function OutdoorPage() {
+export default async function OutdoorPage() {
+  const category = await prisma.category.findUnique({
+    where: { id: "outdoor" }
+  }).catch(() => null);
+
+  const headingText = category?.title || "Modern Patio Furniture + Decor";
+  const bodyText = category?.description || `Modern outdoor furniture gives you the ability to truly enjoy the spring, summer, and fall. You can celebrate the warm months out on your patio with friends, family, and guests if you have the right patio furniture. Modern outdoor patio furniture combines your love for the great outdoors, entertaining, and modern design in one simple and sophisticated package. Modern outdoor furniture, like tables, chairs, chaise lounges, and sofas are a great way to relax in style and comfort. If you have a pool, then you can place outdoor lounge chairs around the perimeter so that you can cool off whenever you get too warm while sunbathing. The best modern outdoor furniture combines high-quality materials and simple, sophisticated design to create a modern patio where you'll be proud to entertain your guests.`;
+
   return (
     <>
       <main className="bg-white">
@@ -281,11 +311,13 @@ export default function OutdoorPage() {
 
         {/* SEO Text */}
         <section className="mx-auto max-w-[1400px] px-4 pb-20 pt-8 sm:px-6">
-          <h2 className="mb-4 text-[19px] font-bold text-slate-950">Modern Patio Furniture + Decor</h2>
+          <h2 className="mb-4 text-[19px] font-bold text-slate-950">{headingText}</h2>
           <div className="space-y-4 text-[13px] leading-relaxed text-slate-700">
-            <p>
-              Modern outdoor furniture gives you the ability to truly enjoy the spring, summer, and fall. You can celebrate the warm months out on your patio with friends, family, and guests if you have the right patio furniture. Modern outdoor patio furniture combines your love for the great outdoors, entertaining, and modern design in one simple and sophisticated package. Modern outdoor furniture, like tables, chairs, chaise lounges, and sofas are a great way to relax in style and comfort. If you have a pool, then you can place outdoor lounge chairs around the perimeter so that you can cool off whenever you get too warm while sunbathing. The best modern outdoor furniture combines high-quality materials and simple, sophisticated design to create a modern patio where you&apos;ll be proud to entertain your guests.
-            </p>
+            {category?.description ? (
+              <div dangerouslySetInnerHTML={{ __html: bodyText }} />
+            ) : (
+              <p>{bodyText}</p>
+            )}
           </div>
         </section>
 

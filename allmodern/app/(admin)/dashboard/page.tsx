@@ -9,39 +9,26 @@ import {
 import Link from "next/link";
 
 const summaryData = [
-  { title: "Total order", value: "187", icon: <Package size={24} className="text-emerald-500" />, bgColor: "bg-emerald-50", iconBg: "bg-emerald-100" },
-  { title: "Pending Orders", value: "117", icon: <Clock size={24} className="text-orange-500" />, bgColor: "bg-orange-50", iconBg: "bg-orange-100" },
-  { title: "Processing Orders", value: "21", icon: <Truck size={24} className="text-purple-500" />, bgColor: "bg-purple-50", iconBg: "bg-purple-100" },
-  { title: "Delivered Orders", value: "37", icon: <CheckCircle size={24} className="text-blue-500" />, bgColor: "bg-blue-50", iconBg: "bg-blue-100" },
+  { title: "Total order", value: "0", icon: <Package size={24} className="text-emerald-500" />, bgColor: "bg-emerald-50", iconBg: "bg-emerald-100" },
+  { title: "Pending Orders", value: "0", icon: <Clock size={24} className="text-orange-500" />, bgColor: "bg-orange-50", iconBg: "bg-orange-100" },
+  { title: "Processing Orders", value: "0", icon: <Truck size={24} className="text-purple-500" />, bgColor: "bg-purple-50", iconBg: "bg-purple-100" },
+  { title: "Delivered Orders", value: "0", icon: <CheckCircle size={24} className="text-blue-500" />, bgColor: "bg-blue-50", iconBg: "bg-blue-100" },
 ];
 
 const analyticsData = [
-  { name: 'Sep', sales: 14000 },
-  { name: 'Oct', sales: 4000 },
+  { name: 'Sep', sales: 0 },
+  { name: 'Oct', sales: 0 },
   { name: 'Nov', sales: 0 },
-  { name: 'Dec', sales: 13800 },
-  { name: 'Jan', sales: 4800 },
-  { name: 'Feb', sales: 2000 },
-  { name: 'Mar', sales: 2200 },
-  { name: 'Apr', sales: 2400 },
+  { name: 'Dec', sales: 0 },
+  { name: 'Jan', sales: 0 },
+  { name: 'Feb', sales: 0 },
+  { name: 'Mar', sales: 0 },
+  { name: 'Apr', sales: 0 },
 ];
 
-const bestSellingData = [
-  { name: 'Games & Videos', value: 300, color: '#3b82f6' },
-  { name: 'Health & Sports', value: 200, color: '#60a5fa' },
-  { name: 'Televisions', value: 150, color: '#93c5fd' },
-  { name: 'Mobile & Tablets', value: 400, color: '#4f46e5' },
-  { name: 'Laptop & PC', value: 250, color: '#818cf8' },
-  { name: 'Home Appliances', value: 100, color: '#c7d2fe' },
-];
+const bestSellingData: any[] = [];
 
-const recentOrders = [
-  { id: "#fmhn7g1p", date: "Fri May 01 2026", status: "Pending", total: "$812", statusColor: "text-orange-500 bg-orange-50" },
-  { id: "#v4c1buca", date: "Fri May 01 2026", status: "Pending", total: "$777", statusColor: "text-orange-500 bg-orange-50" },
-  { id: "#h57i7q83", date: "Thu Apr 30 2026", status: "Processing", total: "$1,634", statusColor: "text-purple-500 bg-purple-50" },
-  { id: "#hzeyomq5", date: "Mon Apr 27 2026", status: "Pending", total: "$888", statusColor: "text-orange-500 bg-orange-50" },
-  { id: "#e84b0953", date: "Thu Apr 23 2026", status: "Delivered", total: "$500", statusColor: "text-emerald-500 bg-emerald-50" },
-];
+const recentOrders: any[] = [];
 
 export default function Dashboard() {
   const [chartType, setChartType] = useState('Sales');
@@ -164,18 +151,26 @@ export default function Dashboard() {
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-50">
-              {recentOrders.map((order, index) => (
-                <tr key={index} className="hover:bg-gray-50/50 transition-colors">
-                  <td className="py-4 px-6 text-sm font-medium text-gray-800">{order.id}</td>
-                  <td className="py-4 px-6 text-sm text-gray-500">{order.date}</td>
-                  <td className="py-4 px-6">
-                    <span className={`inline-flex px-3 py-1 text-xs font-medium rounded-full ${order.statusColor}`}>
-                      {order.status}
-                    </span>
+              {recentOrders.length === 0 ? (
+                <tr>
+                  <td colSpan={4} className="py-8 text-center text-sm text-gray-400 font-medium">
+                    No recent orders found.
                   </td>
-                  <td className="py-4 px-6 text-sm font-medium text-gray-800">{order.total}</td>
                 </tr>
-              ))}
+              ) : (
+                recentOrders.map((order, index) => (
+                  <tr key={index} className="hover:bg-gray-50/50 transition-colors">
+                    <td className="py-4 px-6 text-sm font-medium text-gray-800">{order.id}</td>
+                    <td className="py-4 px-6 text-sm text-gray-500">{order.date}</td>
+                    <td className="py-4 px-6">
+                      <span className={`inline-flex px-3 py-1 text-xs font-medium rounded-full ${order.statusColor}`}>
+                        {order.status}
+                      </span>
+                    </td>
+                    <td className="py-4 px-6 text-sm font-medium text-gray-800">{order.total}</td>
+                  </tr>
+                ))
+              )}
             </tbody>
           </table>
         </div>

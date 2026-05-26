@@ -39,7 +39,10 @@ function AddCategoryForm() {
           const cat = cats.find((c: any) => c.id === editId);
           if (cat) {
             setTitle(cat.title || "");
-            setMetaTitle(cat.title || "");
+            setDescription(cat.description || "");
+            setMetaTitle(cat.metaTitle || cat.title || "");
+            setMetaDescription(cat.metaDescription || "");
+            setMetaKeywords(cat.metaKeywords || "");
             setSlug(cat.id || "");
             setImage(cat.image || "");
             setBadge(cat.badge || "");
@@ -113,10 +116,14 @@ function AddCategoryForm() {
     const newCat = {
       id: slug,
       title,
+      description,
       image,
       badge,
       color,
       sections: cleanSections,
+      metaTitle,
+      metaDescription,
+      metaKeywords,
     };
 
     try {
@@ -238,12 +245,6 @@ function AddCategoryForm() {
                 <div className="border border-[#cccccc] rounded-sm focus-within:border-[#66afe9] focus-within:ring-1 focus-within:ring-[#66afe9]">
                   <RichTextToolbar />
                   <textarea rows={10} value={description} onChange={(e) => setDescription(e.target.value)} className="w-full px-3 py-2 focus:outline-none resize-y min-h-[150px] font-sans"></textarea>
-                  {description.length === 0 && (
-                     <div className="bg-[#f2dede] border border-[#ebccd1] text-[#a94442] p-2 m-2 text-xs relative">
-                       This CKEditor 4.22.1 version is not secure. Consider upgrading to the latest one, 4.25.1-lts.
-                       <button className="absolute right-2 top-2 text-[#a94442] hover:text-[#843534]"><X size={12} /></button>
-                     </div>
-                  )}
                 </div>
               </InputRow>
 

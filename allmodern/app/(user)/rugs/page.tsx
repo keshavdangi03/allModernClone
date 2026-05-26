@@ -1,7 +1,30 @@
 import Image from "next/image";
 import Link from "next/link";
+import { Metadata } from "next";
 
 import FilterableProductLayout from "@/components/ui/FilterableProductLayout";
+import { prisma } from "@/lib/prisma";
+
+export async function generateMetadata(): Promise<Metadata> {
+  try {
+    const category = await prisma.category.findUnique({
+      where: { id: "rugs" }
+    });
+    if (category) {
+      return {
+        title: `${category.metaTitle || category.title} | AllModern`,
+        description: category.metaDescription || undefined,
+        keywords: category.metaKeywords || undefined,
+      };
+    }
+  } catch (error) {
+    console.error("Error generating metadata for rugs category:", error);
+  }
+  return {
+    title: "Modern Rugs | AllModern",
+    description: "A modern rug is an essential accent piece for any living room, bedroom or dining room...",
+  };
+}
 import SortFilterBar from "@/components/ui/SortFilterBar";
 import { ChevronDown, Heart, ArrowRight } from "lucide-react";
 
@@ -224,7 +247,14 @@ function StarRating({ rating }: { rating: number }) {
   );
 }
 
-export default function RugsPage() {
+export default async function RugsPage() {
+  const category = await prisma.category.findUnique({
+    where: { id: "rugs" }
+  }).catch(() => null);
+
+  const headingText = category?.title || "Rugs";
+  const bodyText = category?.description || "A modern rug is an essential accent piece for any living room, bedroom or dining room. Contemporary rugs can help define the theme and color palette of a room, protect floors, and absorb the noise of day to day life. A modern rug can protect your floors from everyday wear and tear, and support your feet with comfortable padding, not chilly hardwood or tile flooring. Designer area rugs can also add a sophisticated splash of color and pattern to your bedroom or living room. When shopping for a rug, make sure to consider the size of the rug (5 x 8 is the most common rug size), the weave and material of the rug, and most importantly, its design. If you&apos;re looking to complement a modern aesthetic, look for a modern rug with bold patterns, like chevron or stripes, or abstract designs that make a statement.";
+
   return (
     <>
 
@@ -274,13 +304,14 @@ export default function RugsPage() {
 
         {/* SEO Text Section */}
         <section className="mx-auto max-w-[1400px] px-4 pb-12 pt-8 sm:px-6">
-          <h3 className="text-xl font-bold text-slate-950">Rugs</h3>
-          <p className="mt-4 text-[13px] leading-6 text-slate-700">
-            A modern rug is an essential accent piece for any living room, bedroom or dining room. Contemporary rugs can help define the theme and color palette of a room, protect floors, and absorb the noise of day to day life. A modern rug can protect your floors from everyday wear and tear, and support your feet with comfortable padding, not chilly hardwood or tile flooring. Designer area rugs can also add a sophisticated splash of color and pattern to your bedroom or living room. When shopping for a rug, make sure to consider the size of the rug (5 x 8 is the most common rug size), the weave and material of the rug, and most importantly, its design. If you&apos;re looking to complement a modern aesthetic, look for a modern rug with bold patterns, like chevron or stripes, or abstract designs that make a statement.
-          </p>
-          <button className="mt-3 text-[13px] text-slate-900 underline underline-offset-2 hover:text-slate-600">
-            Read More
-          </button>
+          <h3 className="text-xl font-bold text-slate-950">{headingText}</h3>
+          <div className="mt-4 text-[13px] leading-6 text-slate-700 font-sans space-y-4">
+            {category?.description ? (
+              <div dangerouslySetInnerHTML={{ __html: bodyText }} />
+            ) : (
+              <p>{bodyText}</p>
+            )}
+          </div>
         </section>
 
         {/* Related Searches */}
