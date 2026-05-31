@@ -191,3 +191,63 @@ export async function deleteUser(id: string): Promise<{ success: boolean; error?
     return { success: false, error: error?.message || "Failed to delete user" };
   }
 }
+
+/**
+ * Updates a user's role in the database.
+ */
+export async function updateUserRole(id: string, role: string): Promise<{ success: boolean; error?: string }> {
+  try {
+    const normalizedRole = role.trim().toLowerCase();
+    await prisma.user.update({
+      where: { id },
+      data: {
+        role: normalizedRole,
+      },
+    });
+    return { success: true };
+  } catch (error: any) {
+    console.error("Error in updateUserRole Server Action:", error);
+    return { success: false, error: error?.message || "Failed to update user role" };
+  }
+}
+
+/**
+ * Changes a user's password securely by verifying the old password.
+ */
+export async function changeUserPassword(data: {
+  email: string;
+  oldPassword?: string;
+  newPassword: string;
+}): Promise<{ success: boolean; error?: string }> {
+  try {
+    const normalizedEmail = data.email.trim().toLowerCase();
+    const user = await prisma.user.findUnique({
+      where: { email: normalizedEmail },
+    });
+
+    if (!user) {
+      return { success: false, error: "User not found" };
+    }
+
+    if (data.oldPassword) {
+      const isValid = verifyPassword(data.oldPassword, user.password);
+      if (!isValid) {
+        return { success: false, error: "Incorrect old password" };
+      }
+    }
+
+    const newHashed = hashPassword(data.newPassword);
+    await prisma.user.update({
+      where: { email: normalizedEmail },
+      data: {
+        password: newHashed,
+      },
+    });
+
+    return { success: true };
+  } catch (error: any) {
+    console.error("Error in changeUserPassword Server Action:", error);
+    return { success: false, error: error?.message || "Failed to change password" };
+  }
+}
+

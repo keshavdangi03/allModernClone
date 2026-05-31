@@ -2,6 +2,29 @@ import Image from "next/image";
 import Link from "next/link";
 import { ChevronDown, Heart, ArrowRight } from "lucide-react";
 import FilterableProductLayout from "@/components/ui/FilterableProductLayout";
+import { Metadata } from "next";
+import { prisma } from "@/lib/prisma";
+
+export async function generateMetadata(): Promise<Metadata> {
+  try {
+    const category = await prisma.category.findUnique({
+      where: { id: "wall-decor" }
+    });
+    if (category) {
+      return {
+        title: `${category.metaTitle || category.title} | AllModern`,
+        description: category.metaDescription || undefined,
+        keywords: category.metaKeywords || undefined,
+      };
+    }
+  } catch (error) {
+    console.error("Error generating metadata for wall-decor category:", error);
+  }
+  return {
+    title: "Modern Wall Decor + Mirrors | AllModern",
+    description: "Shop AllModern for everything to fit your modern lifestyle.",
+  };
+}
 
 const topCategories = [
   { title: "Wall Art", image: "/images/cat_living_room.png" },
@@ -77,7 +100,14 @@ function StarRating({ rating }: { rating: number }) {
   );
 }
 
-export default function WallDecorPage() {
+export default async function WallDecorPage() {
+  const category = await prisma.category.findUnique({
+    where: { id: "wall-decor" }
+  }).catch(() => null);
+
+  const headingText = category?.title || "Wall Decor + Mirrors";
+  const bodyText = category?.description || "Enhance your walls with modern mirrors, shelves, wall art, and accent decor to make your room feel unique and custom-tailored to your lifestyle.";
+
   return (
     <>
 
@@ -213,6 +243,18 @@ export default function WallDecorPage() {
 
         {/* MAIN CATEGORY SECTION: WALL DECOR + MIRRORS */}
         <FilterableProductLayout title="Wall Decor + Mirrors" itemCount={1774} products={[]} categoryName="Wall Decor + Mirrors"></FilterableProductLayout>
+
+        {/* SEO Text Block */}
+        <section className="mx-auto max-w-[1400px] px-4 pb-8 sm:px-6">
+          <h3 className="text-xl font-bold text-slate-950 mb-3">{headingText}</h3>
+          <div className="text-[13px] leading-relaxed text-slate-700 font-sans space-y-4">
+            {category?.description ? (
+              <div dangerouslySetInnerHTML={{ __html: bodyText }} />
+            ) : (
+              <p>{bodyText}</p>
+            )}
+          </div>
+        </section>
 
         {/* Related Searches */}
         <section className="mx-auto max-w-[1400px] px-4 pb-12 sm:px-6">

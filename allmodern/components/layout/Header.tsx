@@ -5,11 +5,12 @@ import Link from "next/link";
 import Image from "next/image";
 import { useRouter, usePathname } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
-import { Search, CircleUserRound, ShoppingCart, Menu, X, ChevronRight, ChevronDown, ArrowRight } from "lucide-react";
+import { Search, CircleUserRound, ShoppingCart, Menu, X, ChevronRight, ChevronDown, ArrowRight, Plus, Minus, Trash2 } from "lucide-react";
 import DepartmentNavigation from "@/components/layout/DepartmentNavigation";
 import { headerLinks, departmentNavItems, categoryMenus } from "@/components/layout/navigation-data";
 import { getCategories } from "@/lib/actions/categories";
 import { getHeaderSettings } from "@/lib/actions/settings";
+import { useCart } from "@/components/context/CartContext";
 
 const collectionsMenu = {
   links: [
@@ -33,7 +34,7 @@ export default function Header() {
   const router = useRouter();
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [cartOpen, setCartOpen] = useState(false);
+  const { cartOpen, setCartOpen, cartItems, cartCount, updateQuantity, removeItem } = useCart();
   const [profileOpen, setProfileOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -349,9 +350,11 @@ export default function Header() {
               aria-label="Open cart"
             >
               <ShoppingCart className="h-4 w-4" />
-              <span className="absolute -right-1.5 -top-1.5 inline-flex h-4 min-w-4 items-center justify-center rounded-full bg-[#e43216] px-1 text-[9px] font-bold text-white">
-                0
-              </span>
+              {cartCount > 0 && (
+                <span className="absolute -right-1.5 -top-1.5 inline-flex h-4 min-w-4 items-center justify-center rounded-full bg-[#e43216] px-1 text-[9px] font-bold text-white">
+                  {cartCount}
+                </span>
+              )}
             </button>
           </div>
         </div>
@@ -590,13 +593,13 @@ export default function Header() {
             exit={{ opacity: 0 }}
           >
             <motion.div
-              className="fixed right-0 top-0 bottom-0 h-screen w-full max-w-[520px] overflow-y-auto bg-white shadow-2xl"
+              className="fixed right-0 top-0 bottom-0 h-screen w-full max-w-[520px] bg-white shadow-2xl flex flex-col justify-between"
               initial={{ x: 360 }}
               animate={{ x: 0 }}
               exit={{ x: 360 }}
               transition={{ type: "spring", stiffness: 220, damping: 28 }}
             >
-              <div className="flex items-center justify-between border-b border-slate-200 px-7 py-6">
+              <div className="flex shrink-0 items-center justify-between border-b border-slate-200 px-7 py-6">
                 <div>
                   <h2 className="text-xl font-black text-slate-950">In Your Cart</h2>
                 </div>
@@ -609,20 +612,145 @@ export default function Header() {
                   <X className="h-5 w-5" />
                 </button>
               </div>
-              <div className="px-7 py-8">
-                <h3 className="text-xl font-black text-slate-950">Oh-no! Looks like your cart is empty.</h3>
-                <p className="mt-4 text-sm leading-6 text-slate-700">
-                  Here are some options to get you started:
-                </p>
-                <div className="mt-8 space-y-4 text-sm text-slate-900">
-                  <a href="#" className="block font-semibold text-slate-950 transition hover:text-orange-600">
-                    Sign In to view your saved items
-                  </a>
-                  <a href="#" className="block font-semibold text-slate-950 transition hover:text-orange-600">
-                    Start saving with Daily Sales
-                  </a>
-                </div>
+
+              <div className="flex-1 overflow-y-auto px-7 py-6">
+                {cartItems.length === 0 ? (
+                  <div className="py-8">
+                    <h3 className="text-xl font-black text-slate-950">Oh-no! Looks like your cart is empty.</h3>
+                    <p className="mt-4 text-sm leading-6 text-slate-700">
+                      Here are some options to get you started:
+                    </p>
+                    <div className="mt-8 space-y-4 text-sm text-slate-900">
+                      <Link
+                        href={isAuthenticated ? "/my_account" : "/account"}
+                        onClick={() => setCartOpen(false)}
+                        className="block font-semibold text-slate-950 transition hover:text-orange-600"
+                      >
+                        Sign In to view your saved items
+                      </Link>
+                      <Link
+                        href="/sale"
+                        onClick={() => setCartOpen(false)}
+                        className="block font-semibold text-slate-950 transition hover:text-orange-600"
+                      >
+                        Start saving with Daily Sales
+                      </Link>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="space-y-6">
+                    {cartItems.map((item) => {
+                      const itemSubtotal = (item.product.price || 0) * item.quantity;
+                      return (
+                        <div key={item.id} className="flex gap-4 border-b border-slate-100 pb-5 last:border-b-0">
+                          {/* Image */}
+                          <div className="relative h-20 w-20 shrink-0 bg-slate-50 border border-slate-100 rounded-md overflow-hidden flex items-center justify-center p-2">
+                            <Image
+                              src={item.product.image}
+                              alt={item.product.name}
+                              fill
+                              sizes="80px"
+                              className="object-contain mix-blend-multiply"
+                            />
+                          </div>
+
+                          {/* Detail */}
+                          <div className="flex-1 min-w-0">
+                            <div className="flex justify-between items-start">
+                              <h4 className="text-[14px] font-bold text-slate-950 line-clamp-2 leading-snug">
+                                {item.product.name}
+                              </h4>
+                              <span className="text-[14px] font-extrabold text-slate-950 ml-2">
+                                ${itemSubtotal}
+                              </span>
+                            </div>
+
+                            {item.color && (
+                              <p className="text-[12px] text-slate-500 mt-1 font-medium">
+                                Finish: <span className="text-slate-800">{item.color}</span>
+                              </p>
+                            )}
+
+                            {item.protection && (
+                              <div className="mt-1.5 inline-flex items-center gap-1 bg-emerald-50 text-emerald-700 border border-emerald-100 px-1.5 py-0.5 rounded text-[10.5px] font-bold uppercase tracking-wide">
+                                5-Year Protection Plan Included
+                              </div>
+                            )}
+
+                            {/* Stepper + Remove */}
+                            <div className="flex items-center justify-between mt-3">
+                              <div className="flex items-center border border-slate-200 rounded bg-white px-1">
+                                <button
+                                  type="button"
+                                  onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                                  className="p-1 text-slate-500 hover:text-slate-900 transition"
+                                  aria-label="Decrease quantity"
+                                >
+                                  <Minus className="h-3 w-3" />
+                                </button>
+                                <span className="w-6 text-center text-[13px] font-bold text-slate-950">
+                                  {item.quantity}
+                                </span>
+                                <button
+                                  type="button"
+                                  onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                                  className="p-1 text-slate-500 hover:text-slate-900 transition"
+                                  aria-label="Increase quantity"
+                                >
+                                  <Plus className="h-3 w-3" />
+                                </button>
+                              </div>
+
+                              <button
+                                type="button"
+                                onClick={() => removeItem(item.id)}
+                                className="text-[12.5px] font-bold text-slate-500 hover:text-red-600 transition flex items-center gap-1"
+                              >
+                                <Trash2 className="h-3.5 w-3.5" />
+                                Remove
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
               </div>
+
+              {cartItems.length > 0 && (
+                <div className="shrink-0 border-t border-slate-200 bg-slate-50 px-7 py-6 space-y-4">
+                  <div className="flex justify-between text-base font-black text-slate-950 uppercase tracking-wide">
+                    <span>Subtotal</span>
+                    <span>
+                      ${cartItems.reduce((acc, item) => acc + (item.product.price || 0) * item.quantity, 0)}
+                    </span>
+                  </div>
+                  <p className="text-[12.5px] text-slate-500 leading-normal">
+                    Taxes, shipping and promotion codes calculated at checkout.
+                  </p>
+                  <div className="grid grid-cols-1 gap-2 pt-2">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setCartOpen(false);
+                        router.push("/cart");
+                      }}
+                      className="w-full bg-slate-950 hover:bg-black text-white font-extrabold text-[14px] tracking-wider py-4 uppercase transition flex items-center justify-center gap-1.5"
+                    >
+                      Proceed to Checkout
+                      <ArrowRight className="h-4 w-4" />
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setCartOpen(false)}
+                      className="w-full bg-white hover:bg-slate-100 text-slate-950 border border-slate-200 font-bold text-[13px] py-3.5 transition"
+                    >
+                      Continue Shopping
+                    </button>
+                  </div>
+                </div>
+              )}
             </motion.div>
           </motion.div>
         ) : null}

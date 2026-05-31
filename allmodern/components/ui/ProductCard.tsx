@@ -24,9 +24,24 @@ interface ProductCardProps {
 }
 
 export default function ProductCard({ product }: ProductCardProps) {
+  // Map static products to real database URLs
+  const categoryPath = product.category
+    ? product.category.toLowerCase().replace(/[^a-z0-9]+/g, "-")
+    : "furniture";
+  
+  let productId = "product_undefined";
+  if (product.name.toLowerCase().includes("loveseat")) productId = "new_n1";
+  else if (product.name.toLowerCase().includes("sofa")) productId = "new_n3";
+  else if (product.name.toLowerCase().includes("armchair")) productId = "new_n9";
+  else if (product.name.toLowerCase().includes("bennett")) productId = "furniture_mg2";
+
+  const slugBase = product.name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)+/g, "");
+  const pUrl = `/${categoryPath}/pdp/${slugBase}-${productId}.html`;
+
   return (
     <Link
-      href="#"
+      href={pUrl}
+      target="_blank"
       className="group overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm transition duration-200 hover:-translate-y-0.5 hover:shadow-lg"
     >
       <div className="relative overflow-hidden bg-slate-100">
@@ -53,7 +68,13 @@ export default function ProductCard({ product }: ProductCardProps) {
             {product.badge}
           </span>
         ) : null}
-        <span className="absolute right-3 top-3 inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/80 bg-white/90 text-slate-950 shadow-sm transition hover:bg-white sm:right-4 sm:top-4 sm:h-10 sm:w-10">
+        <span 
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+          }}
+          className="absolute right-3 top-3 inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/80 bg-white/90 text-slate-950 shadow-sm transition hover:bg-white sm:right-4 sm:top-4 sm:h-10 sm:w-10 z-10"
+        >
           <Heart className="h-4 w-4" />
         </span>
       </div>

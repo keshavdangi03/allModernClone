@@ -1,5 +1,28 @@
 import Image from "next/image";
 import FilterableProductLayout from "@/components/ui/FilterableProductLayout";
+import { Metadata } from "next";
+import { prisma } from "@/lib/prisma";
+
+export async function generateMetadata(): Promise<Metadata> {
+  try {
+    const category = await prisma.category.findUnique({
+      where: { id: "kitchen-tabletop" }
+    });
+    if (category) {
+      return {
+        title: `${category.metaTitle || category.title} | AllModern`,
+        description: category.metaDescription || undefined,
+        keywords: category.metaKeywords || undefined,
+      };
+    }
+  } catch (error) {
+    console.error("Error generating metadata for kitchen-tabletop category:", error);
+  }
+  return {
+    title: "Modern Kitchen + Tabletop | AllModern",
+    description: "Shop AllModern for everything to fit your modern lifestyle.",
+  };
+}
 
 
 
@@ -59,7 +82,14 @@ const relatedSearches = [
   "Coasters", "Serving Utensils", "Drinking Glasses"
 ];
 
-export default function KitchenTabletopPage() {
+export default async function KitchenTabletopPage() {
+  const category = await prisma.category.findUnique({
+    where: { id: "kitchen-tabletop" }
+  }).catch(() => null);
+
+  const headingText = category?.title || "Kitchen + Tabletop";
+  const bodyText = category?.description || "Outfit your kitchen and dining space with modern dinnerware, flatware, drinkware, and kitchen fixtures built for the modern home.";
+
   return (
     <>
 
@@ -227,6 +257,18 @@ export default function KitchenTabletopPage() {
 
             <FilterableProductLayout title="Kitchen + Tabletop" itemCount={3061} products={[]} categoryName="Kitchen + Tabletop"></FilterableProductLayout>
           </div>
+
+          {/* SEO Text Section */}
+          <section className="mt-8 bg-white p-6 md:p-8 border border-slate-200">
+            <h3 className="text-[20px] font-bold text-slate-900 mb-3">{headingText}</h3>
+            <div className="text-[13px] text-slate-600 leading-relaxed font-sans space-y-4">
+              {category?.description ? (
+                <div dangerouslySetInnerHTML={{ __html: bodyText }} />
+              ) : (
+                <p>{bodyText}</p>
+              )}
+            </div>
+          </section>
 
           {/* Related Searches */}
           <section className="mt-8 bg-white p-6 md:p-8">

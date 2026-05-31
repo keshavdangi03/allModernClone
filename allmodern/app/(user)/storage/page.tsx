@@ -1,5 +1,28 @@
 import Image from "next/image";
 import FilterableProductLayout from "@/components/ui/FilterableProductLayout";
+import { Metadata } from "next";
+import { prisma } from "@/lib/prisma";
+
+export async function generateMetadata(): Promise<Metadata> {
+  try {
+    const category = await prisma.category.findUnique({
+      where: { id: "storage" }
+    });
+    if (category) {
+      return {
+        title: `${category.metaTitle || category.title} | AllModern`,
+        description: category.metaDescription || undefined,
+        keywords: category.metaKeywords || undefined,
+      };
+    }
+  } catch (error) {
+    console.error("Error generating metadata for storage category:", error);
+  }
+  return {
+    title: "Modern Storage | AllModern",
+    description: "Shop AllModern for everything to fit your modern lifestyle.",
+  };
+}
 
 
 
@@ -70,7 +93,14 @@ const relatedSearches = [
   "Shoe Storage",
 ];
 
-export default function StoragePage() {
+export default async function StoragePage() {
+  const category = await prisma.category.findUnique({
+    where: { id: "storage" }
+  }).catch(() => null);
+
+  const headingText = category?.title || "Storage";
+  const bodyText = category?.description || "Get organized with modern storage solutions for every room. Shop bookcases, dressers, bins, and wall shelves designed to keep your home tidy and beautiful.";
+
   return (
     <>
 
@@ -204,6 +234,18 @@ export default function StoragePage() {
           <div className="mt-12 bg-white p-4">
             <FilterableProductLayout title="Storage" itemCount={1750} products={[]} categoryName="Storage"></FilterableProductLayout>
           </div>
+
+          {/* SEO Text Section */}
+          <section className="mt-8 bg-white p-6 md:p-8 border border-slate-200">
+            <h3 className="text-[20px] font-bold text-slate-900 mb-3">{headingText}</h3>
+            <div className="text-[13px] text-slate-600 leading-relaxed font-sans space-y-4">
+              {category?.description ? (
+                <div dangerouslySetInnerHTML={{ __html: bodyText }} />
+              ) : (
+                <p>{bodyText}</p>
+              )}
+            </div>
+          </section>
 
           {/* Related Searches */}
           <section className="mt-8 bg-white p-6 md:p-8">

@@ -197,3 +197,20 @@ export async function deleteProduct(id: string) {
     return { success: false, error: error.message };
   }
 }
+
+export async function getProductBySlug(slug: string) {
+  try {
+    let product = await prisma.product.findUnique({
+      where: { slug }
+    });
+    if (!product) {
+      product = await prisma.product.findUnique({
+        where: { id: slug }
+      });
+    }
+    return product;
+  } catch (error) {
+    console.error("Error in getProductBySlug server action:", error);
+    return null;
+  }
+}

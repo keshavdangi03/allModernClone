@@ -1,5 +1,28 @@
 import Image from "next/image";
 import FilterableProductLayout from "@/components/ui/FilterableProductLayout";
+import { Metadata } from "next";
+import { prisma } from "@/lib/prisma";
+
+export async function generateMetadata(): Promise<Metadata> {
+  try {
+    const category = await prisma.category.findUnique({
+      where: { id: "baby-kids" }
+    });
+    if (category) {
+      return {
+        title: `${category.metaTitle || category.title} | AllModern`,
+        description: category.metaDescription || undefined,
+        keywords: category.metaKeywords || undefined,
+      };
+    }
+  } catch (error) {
+    console.error("Error generating metadata for baby-kids category:", error);
+  }
+  return {
+    title: "Modern Baby + Kids | AllModern",
+    description: "Shop AllModern for everything to fit your modern lifestyle.",
+  };
+}
 
 
 
@@ -46,7 +69,14 @@ const relatedSearches = [
   "Baby Changing Table Dressers",
 ];
 
-export default function BabyKidsPage() {
+export default async function BabyKidsPage() {
+  const category = await prisma.category.findUnique({
+    where: { id: "baby-kids" }
+  }).catch(() => null);
+
+  const headingText = category?.title || "Baby + Kids";
+  const bodyText = category?.description || "Design a fun, creative room with modern baby & kids furniture pieces. From contemporary cribs to bunk beds, choose from hundreds of different colors and styles that help create the ultimate modern baby & kids bedroom. Bookcases, rocking chairs and even dressers can all help organize the space while showing your own personal style.";
+
   return (
     <>
 
@@ -81,39 +111,42 @@ export default function BabyKidsPage() {
           <FilterableProductLayout title="Baby + Kids" itemCount={547} products={[]} categoryName="Baby + Kids"></FilterableProductLayout>
 
           <section className="mt-10 bg-[#f3f3f3] text-slate-800">
-            <h3 className="text-[34px] font-bold tracking-[-0.02em]">Baby + Kids</h3>
-            <p className="mt-3 max-w-[1250px] text-[13px] leading-6">
-              Design a fun, creative room with modern baby & kids furniture pieces. From contemporary cribs to bunk
-              beds, choose from hundreds of different colors and styles that help create the ultimate modern baby &
-              kids bedroom. Bookcases, rocking chairs and even dressers can all help organize the space while showing
-              your own personal style.
-            </p>
-            <div className="mt-7 space-y-8">
-              <div>
-                <h4 className="text-[16px] font-semibold">Modern Nursery Furniture</h4>
-                <p className="mt-2 text-[13px] leading-6 text-slate-700">
-                  Preparing for a new baby is an exciting process, and decorating your modern nursery is one of the
-                  best parts. From cribs to changing tables, there are a ton of options to choose from when deciding
-                  your baby&apos;s furniture.
+            <h3 className="text-[34px] font-bold tracking-[-0.02em]">{headingText}</h3>
+            {category?.description ? (
+              <div className="mt-3 max-w-[1250px] text-[13px] leading-6 text-slate-700 space-y-4 font-sans" dangerouslySetInnerHTML={{ __html: bodyText }} />
+            ) : (
+              <>
+                <p className="mt-3 max-w-[1250px] text-[13px] leading-6">
+                  {bodyText}
                 </p>
-              </div>
-              <div>
-                <h4 className="text-[16px] font-semibold">Modern Kids Bedroom Furniture</h4>
-                <p className="mt-2 text-[13px] leading-6 text-slate-700">
-                  Design a fun and colorful space with modern kids bedroom furniture. Whether your child is graduating
-                  from toddler furniture or you&apos;re just looking to upgrade the space, discover bunk beds, dressers
-                  and bookcases that suit your style.
-                </p>
-              </div>
-              <div>
-                <h4 className="text-[16px] font-semibold">Modern Playroom and Storage</h4>
-                <p className="mt-2 text-[13px] leading-6 text-slate-700">
-                  One way to add colorful and creative accents to the design of your nursery or kids bedroom is with
-                  modern playroom and storage furniture. From toy boxes and organizers to playhouses and teepees, these
-                  pieces add personality to your modern nursery or kids bedroom.
-                </p>
-              </div>
-            </div>
+                <div className="mt-7 space-y-8">
+                  <div>
+                    <h4 className="text-[16px] font-semibold">Modern Nursery Furniture</h4>
+                    <p className="mt-2 text-[13px] leading-6 text-slate-700">
+                      Preparing for a new baby is an exciting process, and decorating your modern nursery is one of the
+                      best parts. From cribs to changing tables, there are a ton of options to choose from when deciding
+                      your baby&apos;s furniture.
+                    </p>
+                  </div>
+                  <div>
+                    <h4 className="text-[16px] font-semibold">Modern Kids Bedroom Furniture</h4>
+                    <p className="mt-2 text-[13px] leading-6 text-slate-700">
+                      Design a fun and colorful space with modern kids bedroom furniture. Whether your child is graduating
+                      from toddler furniture or you&apos;re just looking to upgrade the space, discover bunk beds, dressers
+                      and bookcases that suit your style.
+                    </p>
+                  </div>
+                  <div>
+                    <h4 className="text-[16px] font-semibold">Modern Playroom and Storage</h4>
+                    <p className="mt-2 text-[13px] leading-6 text-slate-700">
+                      One way to add colorful and creative accents to the design of your nursery or kids bedroom is with
+                      modern playroom and storage furniture. From toy boxes and organizers to playhouses and teepees, these
+                      pieces add personality to your modern nursery or kids bedroom.
+                    </p>
+                  </div>
+                </div>
+              </>
+            )}
           </section>
 
           <section className="mt-8">

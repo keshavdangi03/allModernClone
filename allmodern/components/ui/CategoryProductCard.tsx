@@ -1,7 +1,9 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { Heart } from "lucide-react";
+import { getProductUrl } from "@/lib/utils";
 
 export type Product = {
   id: string;
@@ -59,9 +61,15 @@ export default function CategoryProductCard({ p }: { p: Product }) {
       : [];
 
 
+  const pUrl = getProductUrl({ id: p.id, name: p.name, slug: (p as any).slug, categories: p.categories });
+
   return (
-    <div className="group relative flex flex-col h-full">
-      <div className="relative aspect-square w-full overflow-hidden bg-[#f4f4f4] flex items-center justify-center">
+    <Link 
+      href={pUrl}
+      target="_blank"
+      className="group relative flex flex-col h-full bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg hover:-translate-y-0.5 transition duration-200 border border-slate-200/80 p-2.5"
+    >
+      <div className="relative aspect-square w-full overflow-hidden bg-[#f4f4f4] flex items-center justify-center rounded-lg">
         {isExternalImage ? (
           /* eslint-disable-next-line @next/next/no-img-element */
           <img 
@@ -73,7 +81,13 @@ export default function CategoryProductCard({ p }: { p: Product }) {
         ) : (
           <Image src={p.image || "/images/hero.png"} alt={p.name} fill className="object-cover mix-blend-multiply transition-transform duration-500 group-hover:scale-105" />
         )}
-        <button className="absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-full bg-white/80 text-slate-600 shadow-sm backdrop-blur-sm hover:text-slate-950 hover:bg-white transition-colors z-10">
+        <button 
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+          }}
+          className="absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-full bg-white/80 text-slate-600 shadow-sm backdrop-blur-sm hover:text-slate-950 hover:bg-white transition-colors z-10"
+        >
           <Heart className="h-4 w-4" />
         </button>
         {p.badge && (
@@ -83,40 +97,54 @@ export default function CategoryProductCard({ p }: { p: Product }) {
         )}
       </div>
 
-      <div className="mt-3 flex flex-1 flex-col">
-        {(colors.length > 0 || p.colorCount || p.moreColors) && (
-          <div className="mb-1.5 flex items-center gap-1">
-            {colors.map((color, idx) => (
-              <div key={idx} className="h-[15px] w-[15px] rounded-full border border-slate-300" style={{ backgroundColor: color }} />
-            ))}
-            {(p.moreColors || p.colorCount) ? <span className="text-[11px] text-slate-500">+ {p.moreColors || p.colorCount} Colors</span> : null}
-          </div>
-        )}
-        <h3 className="mt-0.5 text-[13px] leading-tight text-slate-900 group-hover:underline whitespace-pre-line font-medium">
-          {p.name}
-        </h3>
-        {(p.subtitle || p.shortDescription) && <div className="text-[12px] text-slate-500 mt-0.5 line-clamp-1">{p.subtitle || p.shortDescription}</div>}
-        
-        {(p.rating && p.rating > 0) ? (
-          <div className="mt-1 flex items-center gap-1">
-            <StarRating rating={p.rating} />
-            <span className="text-[11px] text-slate-500">({p.reviews || 0})</span>
-          </div>
-        ) : null}
-
-        <div className="mt-1 flex flex-wrap items-baseline gap-2">
-          <span className="text-[15px] font-bold text-[#a63f15]">${price}</span>
-          {(originalPrice && originalPrice > 0 && originalPrice !== price) ? (
-            <span className="text-[12px] text-slate-500 line-through">${originalPrice}</span>
+      <div className="mt-3 flex flex-1 flex-col justify-between">
+        <div>
+          {(colors.length > 0 || p.colorCount || p.moreColors) && (
+            <div className="mb-1.5 flex items-center gap-1">
+              {colors.map((color, idx) => (
+                <div key={idx} className="h-[15px] w-[15px] rounded-full border border-slate-300" style={{ backgroundColor: color }} />
+              ))}
+              {(p.moreColors || p.colorCount) ? <span className="text-[11px] text-slate-500">+ {p.moreColors || p.colorCount} Colors</span> : null}
+            </div>
+          )}
+          <h3 className="mt-0.5 text-[13px] leading-tight text-slate-900 group-hover:underline whitespace-pre-line font-medium line-clamp-2">
+            {p.name}
+          </h3>
+          {(p.subtitle || p.shortDescription) && <div className="text-[12px] text-slate-500 mt-0.5 line-clamp-1">{p.subtitle || p.shortDescription}</div>}
+          
+          {(p.rating && p.rating > 0) ? (
+            <div className="mt-1 flex items-center gap-1">
+              <StarRating rating={p.rating} />
+              <span className="text-[11px] text-slate-500">({p.reviews || 0})</span>
+            </div>
           ) : null}
         </div>
-        {p.extraText && (
-          <div className="mt-1 text-[11px] text-slate-600 whitespace-pre-line leading-tight">
-            {p.extraText}
+
+        <div>
+          <div className="mt-2 flex flex-wrap items-baseline gap-2">
+            <span className="text-[15px] font-bold text-[#a63f15]">${price}</span>
+            {(originalPrice && originalPrice > 0 && originalPrice !== price) ? (
+              <span className="text-[12px] text-slate-500 line-through">${originalPrice}</span>
+            ) : null}
           </div>
-        )}
-        {p.quickview && <button className="mt-2 w-fit text-[11px] underline text-slate-500 hover:text-slate-800">Quickview</button>}
+          {p.extraText && (
+            <div className="mt-1 text-[11px] text-slate-600 whitespace-pre-line leading-tight">
+              {p.extraText}
+            </div>
+          )}
+          {p.quickview && (
+            <button 
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+              }}
+              className="mt-2 w-fit text-[11px] underline text-slate-500 hover:text-slate-800 z-10"
+            >
+              Quickview
+            </button>
+          )}
+        </div>
       </div>
-    </div>
+    </Link>
   );
 }

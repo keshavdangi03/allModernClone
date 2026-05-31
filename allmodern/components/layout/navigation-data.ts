@@ -60,6 +60,7 @@ export const categoryMenus: Record<string, { image: string; badge: string; descr
   New: {
     image: "/images/cat_outdoor.png",
     badge: "New Arrivals",
+    description: "Explore our latest arrivals in modern furniture, vibrant home decor, dynamic lighting, and stylish rugs to keep your space fresh and contemporary.",
     sections: [
       {
         title: "New Arrivals",
@@ -263,6 +264,7 @@ Aside from bedroom lighting, you'll also want to make sure that you have appropr
   "Wall Decor + Mirrors": {
     image: "/images/cat_bedroom.png",
     badge: "Wall Decor + Mirrors",
+    description: "Enhance your walls with modern mirrors, shelves, wall art, and accent decor to make your room feel unique and custom-tailored to your lifestyle.",
     sections: [
       {
         title: "Wall Art",
@@ -354,6 +356,7 @@ Aside from bedroom lighting, you'll also want to make sure that you have appropr
   Bath: {
     image: "/images/cat_outdoor.png",
     badge: "Bath",
+    description: "The bath section typically refers to a product category focused on bath and body care items, such as lotions, soaps, bath bombs, and fragrances, or bathroom fixtures and decor, including tubs, vanities, and hardware.",
     sections: [
       {
         title: "Bath Linens + Accessories",
@@ -389,6 +392,7 @@ Aside from bedroom lighting, you'll also want to make sure that you have appropr
   "Kitchen + Tabletop": {
     image: "/images/cat_dining.png",
     badge: "Kitchen + Tabletop",
+    description: "Outfit your kitchen and dining space with modern dinnerware, flatware, drinkware, and kitchen fixtures built for the modern home.",
     sections: [
       {
         title: "Dining",
@@ -415,6 +419,7 @@ Aside from bedroom lighting, you'll also want to make sure that you have appropr
   Storage: {
     image: "/images/cat_bedroom.png",
     badge: "Storage",
+    description: "Get organized with modern storage solutions for every room. Shop bookcases, dressers, bins, and wall shelves designed to keep your home tidy and beautiful.",
     sections: [
       {
         title: "Organization",
@@ -441,6 +446,7 @@ Aside from bedroom lighting, you'll also want to make sure that you have appropr
   "Baby + Kids": {
     image: "/images/cat_living_room.png",
     badge: "Baby + Kids",
+    description: "Design a fun, creative room with modern baby & kids furniture pieces. From contemporary cribs to bunk beds, choose from hundreds of different colors and styles that help create the ultimate modern baby & kids bedroom. Bookcases, rocking chairs and even dressers can all help organize the space while showing your own personal style.",
     sections: [
       {
         title: "Baby Furniture",

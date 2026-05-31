@@ -2,6 +2,29 @@ import Image from "next/image";
 import { ChevronDown, Heart } from "lucide-react";
 import FilterableProductLayout from "@/components/ui/FilterableProductLayout";
 import SortFilterBar from "@/components/ui/SortFilterBar";
+import { Metadata } from "next";
+import { prisma } from "@/lib/prisma";
+
+export async function generateMetadata(): Promise<Metadata> {
+  try {
+    const category = await prisma.category.findUnique({
+      where: { id: "new" }
+    });
+    if (category) {
+      return {
+        title: `${category.metaTitle || category.title} | AllModern`,
+        description: category.metaDescription || undefined,
+        keywords: category.metaKeywords || undefined,
+      };
+    }
+  } catch (error) {
+    console.error("Error generating metadata for new category:", error);
+  }
+  return {
+    title: "New Modern Furniture & Decor | AllModern",
+    description: "Shop AllModern for everything to fit your modern lifestyle.",
+  };
+}
 
 type Product = {
   id: string;
@@ -246,7 +269,14 @@ function StarRating({ rating }: { rating: number }) {
   );
 }
 
-export default function NewPage() {
+export default async function NewPage() {
+  const category = await prisma.category.findUnique({
+    where: { id: "new" }
+  }).catch(() => null);
+
+  const headingText = category?.title || "New Arrivals";
+  const bodyText = category?.description || "Explore our latest arrivals in modern furniture, vibrant home decor, dynamic lighting, and stylish rugs to keep your space fresh and contemporary.";
+
   return (
     <>
       <main className="bg-white">
@@ -261,6 +291,18 @@ export default function NewPage() {
         </section>
 
         <FilterableProductLayout title="New Arrivals" itemCount={53} products={[]} categoryName="New"></FilterableProductLayout>
+
+        {/* SEO Text Block */}
+        <section className="mx-auto max-w-[1400px] px-4 pb-12 pt-8 sm:px-6">
+          <h3 className="text-xl font-bold text-slate-950 mb-3">{headingText}</h3>
+          <div className="text-[13px] leading-relaxed text-slate-700 font-sans space-y-4">
+            {category?.description ? (
+              <div dangerouslySetInnerHTML={{ __html: bodyText }} />
+            ) : (
+              <p>{bodyText}</p>
+            )}
+          </div>
+        </section>
       </main>
     </>
   );

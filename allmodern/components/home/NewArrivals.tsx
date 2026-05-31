@@ -25,9 +25,20 @@ export default function NewArrivals() {
 
         <div className="relative group">
           <div className="flex overflow-x-auto snap-x snap-mandatory hide-scrollbar gap-4 sm:gap-5 pb-8 -mx-4 px-4 sm:-mx-6 sm:px-6">
-            {products.map((product) => (
-              <div key={product.id} className="snap-start shrink-0 w-[240px] sm:w-[260px] lg:w-[270px]">
-                <Link href="#" className="group/item block">
+            {products.map((product) => {
+              const slugBase = product.name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)+/g, "");
+              let productId = "product_undefined";
+              let category = "furniture";
+              if (product.id === 1) { productId = "new_n1"; category = "new"; }
+              else if (product.id === 2) { productId = "new_n3"; category = "new"; }
+              else if (product.id === 3) { productId = "new_n9"; category = "new"; }
+              else if (product.id === 4) { productId = "new_n12"; category = "new"; }
+              else if (product.id === 5) { productId = "new_n11"; category = "new"; }
+              const pUrl = `/${category}/pdp/${slugBase}-${productId}.html`;
+
+              return (
+                <div key={product.id} className="snap-start shrink-0 w-[240px] sm:w-[260px] lg:w-[270px]">
+                  <Link href={pUrl} target="_blank" className="group/item block">
                   <div className="relative aspect-square bg-[#f4f4f4] mb-3 overflow-hidden flex items-center justify-center p-4">
                     <Image
                       src={product.image}
@@ -55,7 +66,8 @@ export default function NewArrivals() {
                   </div>
                 </Link>
               </div>
-            ))}
+            );
+          })}
           </div>
           
           <button className="hidden lg:flex absolute right-0 top-[40%] -translate-y-1/2 translate-x-1/2 bg-white border border-slate-300 w-11 h-11 items-center justify-center shadow-lg hover:bg-slate-50 opacity-0 group-hover:opacity-100 transition-opacity z-10">

@@ -17,6 +17,7 @@ export async function seedDatabaseIfEmpty() {
       return {
         id: navItem.href.replace("/", "") || navItem.label.toLowerCase().replace(/\s+/g, "-"),
         title: navItem.label,
+        description: menuData?.description || "",
         image: menuData?.image || "/images/hero.png",
         badge: menuData?.badge || "",
         color: navItem.label === "Sale" ? "#e43216" : "",
