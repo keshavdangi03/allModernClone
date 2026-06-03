@@ -10,7 +10,7 @@ export default function SaleBanner() {
         </h2>
         <div className="shrink-0 mt-4 md:mt-0">
           <Link
-            href="#"
+            href="/sale"
             className="inline-flex items-center justify-center bg-white px-8 py-4 text-[14px] font-bold text-slate-950 transition hover:bg-slate-100"
           >
             SHOP NOW

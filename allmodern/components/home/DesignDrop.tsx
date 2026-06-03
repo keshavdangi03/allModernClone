@@ -29,7 +29,7 @@ export default function DesignDrop() {
         <div className="bg-white border-y border-slate-200">
           <div className="mx-auto max-w-[1400px] px-4 sm:px-6">
             <Link
-              href="#"
+              href="/best-sellers"
               className="flex w-full items-center py-4 sm:py-5 text-[15px] font-bold text-slate-950 transition hover:text-slate-700"
             >
               SHOP THE TOP 10

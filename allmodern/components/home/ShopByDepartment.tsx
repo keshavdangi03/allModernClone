@@ -2,14 +2,14 @@ import Image from "next/image";
 import Link from "next/link";
 
 const departments = [
-  { name: "Living Room", image: "/images/cat_living_room.png" },
-  { name: "Outdoor", image: "/images/cat_outdoor.png" },
-  { name: "Bedroom", image: "/images/cat_bedroom.png" },
-  { name: "Dining Room", image: "/images/cat_dining.png" },
-  { name: "Rugs", image: "/images/hero.png" },
-  { name: "Wall Art", image: "/images/cat_living_room.png" },
-  { name: "Lighting", image: "/images/cat_dining.png" },
-  { name: "Patio Furniture", image: "/images/cat_outdoor.png" },
+  { name: "Living Room", image: "/images/cat_living_room.png", href: "/furniture/living-room" },
+  { name: "Outdoor", image: "/images/cat_outdoor.png", href: "/outdoor" },
+  { name: "Bedroom", image: "/images/cat_bedroom.png", href: "/furniture/bedroom" },
+  { name: "Dining Room", image: "/images/cat_dining.png", href: "/kitchen-tabletop/dining" },
+  { name: "Rugs", image: "/images/hero.png", href: "/rugs" },
+  { name: "Wall Art", image: "/images/cat_living_room.png", href: "/wall-decor/wall-art" },
+  { name: "Lighting", image: "/images/cat_dining.png", href: "/lighting" },
+  { name: "Patio Furniture", image: "/images/cat_outdoor.png", href: "/outdoor/outdoor-furniture" },
 ];
 
 export default function ShopByDepartment() {
@@ -26,7 +26,7 @@ export default function ShopByDepartment() {
           {departments.map((dept) => (
             <Link
               key={dept.name}
-              href="#"
+              href={dept.href}
               className="group block"
             >
               <div className="relative aspect-square overflow-hidden bg-[#f4f4f4] mb-3">

@@ -6,16 +6,19 @@ const collections = [
     title: "Durable Outdoor\nSofas",
     shopLink: "Shop Emery Collection",
     image: "/images/cat_outdoor.png",
+    href: "/outdoor-collections",
   },
   {
     title: "Oak Storage\n+ More",
     shopLink: "Shop Karsten Collection",
     image: "/images/cat_bedroom.png", // using bedroom or living room as placeholder for cabinet
+    href: "/bedroom-collections",
   },
   {
     title: "Modular\nSofas",
     shopLink: "Shop Morrell Collection",
     image: "/images/cat_living_room.png",
+    href: "/sofa-sectional-collections",
   },
 ];
 
@@ -31,7 +34,7 @@ export default function ExploreCollections() {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
           {collections.map((collection, idx) => (
-            <Link key={idx} href="#" className="group block">
+            <Link key={idx} href={collection.href} className="group block">
               <div className="relative aspect-[4/5] overflow-hidden bg-[#f4f4f4] mb-3">
                 <Image
                   src={collection.image}

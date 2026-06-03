@@ -2,10 +2,10 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
 const promos = [
-  { title: "Living Room Seating", copy: "Up to 60% off modern sofas & sectionals" },
-  { title: "Bedroom Refresh", copy: "Save on beds, nightstands, and bedding" },
-  { title: "Decor Essentials", copy: "Shop pillows, lighting, and art" },
-  { title: "Outdoor Entertaining", copy: "Brighten patios with lounge & dining sets" },
+  { title: "Living Room Seating", copy: "Up to 60% off modern sofas & sectionals", href: "/sofa-sectional-collections" },
+  { title: "Bedroom Refresh", copy: "Save on beds, nightstands, and bedding", href: "/bedroom-collections" },
+  { title: "Decor Essentials", copy: "Shop pillows, lighting, and art", href: "/decor-pillows" },
+  { title: "Outdoor Entertaining", copy: "Brighten patios with lounge & dining sets", href: "/outdoor-collections" },
 ];
 
 export default function PromoGrid() {
@@ -14,7 +14,7 @@ export default function PromoGrid() {
       {promos.map((promo) => (
         <Link
           key={promo.title}
-          href="#"
+          href={promo.href}
           className="group overflow-hidden rounded-[28px] border border-slate-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-xl"
         >
           <div>

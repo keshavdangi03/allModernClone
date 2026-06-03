@@ -90,6 +90,10 @@ export default function DepartmentNavigation() {
     setActiveMega((current) => (current === label ? null : label));
   };
 
+  const categorySlug = activeMega
+    ? activeMega.toLowerCase().replace(/\s+/g, "-").replace(/[^a-z0-9-]/g, "")
+    : "";
+
   return (
     <div
       className="relative bg-white"
@@ -143,21 +147,43 @@ export default function DepartmentNavigation() {
             <div className="mx-auto max-w-[1400px] px-4 pb-4 pt-3 sm:px-6">
               <div className="grid grid-cols-[1fr_230px] gap-8">
                 <div className="grid gap-x-8" style={{ gridTemplateColumns: `repeat(${Math.max(activeMenu.columns.length, 1)}, minmax(0, 1fr))` }}>
-                  {activeMenu.columns.map((column: any) => (
-                    <div key={column.title}>
-                      <h3 className="mb-1 text-[15px] font-semibold uppercase tracking-[-0.01em] text-slate-900">
-                        {column.title}
-                        <span className="ml-1 text-slate-500">›</span>
-                      </h3>
-                      <div className="space-y-1">
-                        {column.links.map((link: string, idx: number) => (
-                          <Link key={`${column.title}-${link}-${idx}`} href="#" className="block text-[12px] leading-5 text-slate-700 transition hover:text-slate-950 hover:underline">
-                            {link}
-                          </Link>
-                        ))}
+                  {activeMenu.columns.map((column: any) => {
+                    const slugifyNavLink = (label: string) =>
+                      label
+                        .toLowerCase()
+                        .replace(/&/g, "and")
+                        .replace(/[^a-z0-9\s-]/g, "")
+                        .trim()
+                        .replace(/\s+/g, "-")
+                        .replace(/-+/g, "-");
+                        
+                    const colSlug = slugifyNavLink(column.title);
+                    
+                    return (
+                      <div key={column.title}>
+                        <Link 
+                          href={`/${categorySlug}/${colSlug}`}
+                          onClick={() => setActiveMega(null)}
+                          className="mb-1 block text-[15px] font-semibold uppercase tracking-[-0.01em] text-slate-900 hover:underline"
+                        >
+                          {column.title}
+                          <span className="ml-1 text-slate-500">›</span>
+                        </Link>
+                        <div className="space-y-1">
+                          {column.links.map((link: string, idx: number) => (
+                            <Link 
+                              key={`${column.title}-${link}-${idx}`} 
+                              href={`/${categorySlug}/${colSlug}/${slugifyNavLink(link)}`}
+                              onClick={() => setActiveMega(null)}
+                              className="block text-[12px] leading-5 text-slate-700 transition hover:text-slate-950 hover:underline"
+                            >
+                              {link}
+                            </Link>
+                          ))}
+                        </div>
                       </div>
-                    </div>
-                  ))}
+                    );
+                  })}
                 </div>
 
                 <div className="space-y-3">

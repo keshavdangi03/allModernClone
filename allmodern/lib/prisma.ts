@@ -16,10 +16,10 @@ function getPrisma(): PrismaClient {
 
   const connectionString =
     process.env.DATABASE_URL ||
-    "postgresql://neondb_owner:npg_mi7elKWvxhq9@ep-bitter-leaf-ao1doyw9-pooler.c-2.ap-southeast-1.aws.neon.tech/neondb?sslmode=require";
+    "postgresql://neondb_owner:npg_mi7elKWvxhq9@ep-bitter-leaf-ao1doyw9.c-2.ap-southeast-1.aws.neon.tech/neondb?sslmode=verify-full";
 
   if (!global._prismaPool) {
-    global._prismaPool = new Pool({ connectionString, max: 5 });
+    global._prismaPool = new Pool({ connectionString, max: 2 });
   }
 
   const adapter = new PrismaPg(global._prismaPool);

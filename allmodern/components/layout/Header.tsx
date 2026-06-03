@@ -513,18 +513,43 @@ export default function Header() {
                             className="overflow-hidden bg-slate-50"
                           >
                             <div className="space-y-4 p-5 border-b border-slate-200 text-[14px] text-slate-700">
-                              {dynamicCategoryMenus[item.label]?.sections?.map((section: any) => (
-                                <div key={section.title}>
-                                  <p className="mb-2 font-bold text-slate-900">{section.title}</p>
-                                  <div className="space-y-2.5">
-                                    {section.links.map((link: string) => (
-                                      <Link key={link} href="#" className="block hover:underline">
-                                        {link}
-                                      </Link>
-                                    ))}
+                              {dynamicCategoryMenus[item.label]?.sections?.map((section: any) => {
+                                const slugifyNavLink = (label: string) =>
+                                  label
+                                    .toLowerCase()
+                                    .replace(/&/g, "and")
+                                    .replace(/[^a-z0-9\s-]/g, "")
+                                    .trim()
+                                    .replace(/\s+/g, "-")
+                                    .replace(/-+/g, "-");
+
+                                const categorySlug = item.href.replace("/", "");
+                                const colSlug = slugifyNavLink(section.title);
+
+                                return (
+                                  <div key={section.title}>
+                                    <Link 
+                                      href={`/${categorySlug}/${colSlug}`}
+                                      onClick={() => setMobileOpen(false)}
+                                      className="mb-2 block font-bold text-slate-900 hover:underline"
+                                    >
+                                      {section.title}
+                                    </Link>
+                                    <div className="space-y-2.5 pl-2">
+                                      {section.links.map((link: string) => (
+                                        <Link 
+                                          key={link} 
+                                          href={`/${categorySlug}/${colSlug}/${slugifyNavLink(link)}`}
+                                          onClick={() => setMobileOpen(false)}
+                                          className="block hover:underline"
+                                        >
+                                          {link}
+                                        </Link>
+                                      ))}
+                                    </div>
                                   </div>
-                                </div>
-                              ))}
+                                );
+                              })}
                             </div>
                           </motion.div>
                         ) : null}
@@ -535,19 +560,20 @@ export default function Header() {
 
                 <div className="flex flex-col">
                   {[
-                    "Best Sellers",
-                    "Inspiration",
-                    "Seasonal Catalog",
-                    "Shop by Style",
-                    "Free Design Services",
-                    "Trade"
-                  ].map((label) => (
+                    { label: "Best Sellers", href: "/best-sellers" },
+                    { label: "Inspiration", href: "/inspiration" },
+                    { label: "Seasonal Catalog", href: "/seasonal-catalog" },
+                    { label: "Shop by Style", href: "/shop-by-style" },
+                    { label: "Free Design Services", href: "/design-services" },
+                    { label: "Trade", href: "#" }
+                  ].map((item) => (
                     <Link
-                      key={label}
-                      href="#"
+                      key={item.label}
+                      href={item.href}
+                      onClick={() => setMobileOpen(false)}
                       className="border-b border-slate-200 px-5 py-4 text-[15px] text-slate-800 transition hover:bg-slate-50"
                     >
-                      {label}
+                      {item.label}
                     </Link>
                   ))}
                 </div>

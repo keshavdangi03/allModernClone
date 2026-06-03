@@ -6,9 +6,14 @@ import { revalidatePath } from "next/cache";
 // --- SEO Settings ---
 
 export async function getSeoSettings() {
-  return await prisma.seoSettings.findUnique({
-    where: { id: "default" }
-  });
+  try {
+    return await prisma.seoSettings.findUnique({
+      where: { id: "default" }
+    });
+  } catch (error) {
+    console.error("Failed to fetch SEO settings:", error);
+    return null;
+  }
 }
 
 export async function updateSeoSettings(data: any) {
@@ -33,9 +38,14 @@ export async function updateSeoSettings(data: any) {
 // --- Header Settings ---
 
 export async function getHeaderSettings() {
-  return await prisma.headerSettings.findUnique({
-    where: { id: "default" }
-  });
+  try {
+    return await prisma.headerSettings.findUnique({
+      where: { id: "default" }
+    });
+  } catch (error) {
+    console.error("Failed to fetch header settings:", error);
+    return null;
+  }
 }
 
 export async function updateHeaderSettings(data: any) {
@@ -62,9 +72,14 @@ export async function updateHeaderSettings(data: any) {
 // --- Countdown ---
 
 export async function getCountdown() {
-  return await prisma.countdown.findUnique({
-    where: { id: "default" }
-  });
+  try {
+    return await prisma.countdown.findUnique({
+      where: { id: "default" }
+    });
+  } catch (error) {
+    console.error("Failed to fetch countdown:", error);
+    return null;
+  }
 }
 
 export async function updateCountdown(data: any) {

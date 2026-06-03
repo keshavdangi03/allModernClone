@@ -45,7 +45,7 @@ export default function RealLife() {
           </div>
           <div className="flex-1 flex justify-end">
             <Link
-              href="#"
+              href="/design-services"
               className="inline-flex items-center text-[13px] font-bold text-slate-950 hover:text-slate-700 transition"
             >
               EXPLORE NOW

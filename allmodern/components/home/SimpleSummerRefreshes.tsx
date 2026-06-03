@@ -12,7 +12,7 @@ export default function SimpleSummerRefreshes() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
-          <Link href="#" className="group block">
+          <Link href="/outdoor/outdoor-dining/outdoor-tabletop" className="group block">
             <div className="relative aspect-[4/3] overflow-hidden bg-[#f4f4f4] mb-3">
               <Image
                 src="/images/cat_outdoor.png" // Placeholder
@@ -27,7 +27,7 @@ export default function SimpleSummerRefreshes() {
             </h3>
           </Link>
           
-          <Link href="#" className="group block">
+          <Link href="/outdoor/outdoor-dining/outdoor-lighting" className="group block">
             <div className="relative aspect-[4/3] overflow-hidden bg-[#f4f4f4] mb-3">
               <Image
                 src="/images/cat_living_room.png" // Placeholder

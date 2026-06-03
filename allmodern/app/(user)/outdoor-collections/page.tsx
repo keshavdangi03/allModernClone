@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ChevronUp, ArrowRight, ChevronRight } from "lucide-react";
+import { getProductUrl } from "@/lib/utils";
 
 
 const collectionsData = [
@@ -186,24 +187,27 @@ export default function OutdoorCollectionsPage() {
 
                     <div className="relative group/slider">
                       <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide snap-x">
-                        {collection.products.map((p) => (
-                          <div key={p.id} className="group relative flex flex-col min-w-[210px] w-[210px] md:min-w-[250px] md:w-[250px] shrink-0 snap-start">
-                            <div className="relative aspect-square w-full bg-[#f4f4f4] mb-3 overflow-hidden cursor-pointer">
-                              <Image src={p.image} alt={p.name.replace('\n', ' ')} fill className="object-cover mix-blend-multiply transition duration-500 group-hover:scale-[1.03]" />
-                              {p.badge && (
-                                <div className="absolute bottom-0 left-0 bg-[#A63517] px-2 py-0.5 text-[11px] font-bold text-white z-10">
-                                  {p.badge}
-                                </div>
-                              )}
-                            </div>
-                            <h4 className="text-[13px] leading-[1.3] text-[#1f1d24] group-hover:underline whitespace-pre-line cursor-pointer mb-1.5 font-medium">{p.name}</h4>
-                            <div className="mt-auto flex flex-wrap items-baseline gap-1.5">
-                              <span className="text-[13px] text-[#A63517] font-bold">${p.price}</span>
-                              {p.originalPrice && <span className="text-[12px] text-[#717171] line-through">${p.originalPrice}</span>}
-                            </div>
-                            {(p as any).extraText && <span className="text-[12px] text-[#717171] mt-0.5">{(p as any).extraText}</span>}
-                          </div>
-                        ))}
+                        {collection.products.map((p) => {
+                          const pUrl = getProductUrl({ id: p.id, name: p.name, categories: ["Outdoor"] });
+                          return (
+                            <Link key={p.id} href={pUrl} target="_blank" className="group relative flex flex-col min-w-[210px] w-[210px] md:min-w-[250px] md:w-[250px] shrink-0 snap-start">
+                              <div className="relative aspect-square w-full bg-[#f4f4f4] mb-3 overflow-hidden cursor-pointer">
+                                <Image src={p.image} alt={p.name.replace('\n', ' ')} fill className="object-cover mix-blend-multiply transition duration-500 group-hover:scale-[1.03]" />
+                                {p.badge && (
+                                  <div className="absolute bottom-0 left-0 bg-[#A63517] px-2 py-0.5 text-[11px] font-bold text-white z-10">
+                                    {p.badge}
+                                  </div>
+                                )}
+                              </div>
+                              <h4 className="text-[13px] leading-[1.3] text-[#1f1d24] group-hover:underline whitespace-pre-line cursor-pointer mb-1.5 font-medium">{p.name}</h4>
+                              <div className="mt-auto flex flex-wrap items-baseline gap-1.5">
+                                <span className="text-[13px] text-[#A63517] font-bold">${p.price}</span>
+                                {p.originalPrice && <span className="text-[12px] text-[#717171] line-through">${p.originalPrice}</span>}
+                              </div>
+                              {(p as any).extraText && <span className="text-[12px] text-[#717171] mt-0.5">{(p as any).extraText}</span>}
+                            </Link>
+                          );
+                        })}
                       </div>
                       
                       {/* Optional: Add a right scroll chevron (visible on hover) */}

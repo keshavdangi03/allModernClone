@@ -28,24 +28,18 @@ interface MenuItem {
 
 const menuItems: MenuItem[] = [
   { title: "Dashboard", path: "/dashboard", icon: <LayoutDashboard size={20} /> },
-  { title: "Orders", path: "/orders", icon: <ShoppingCart size={20} /> },
-  { title: "Customers", path: "/customers", icon: <Users size={20} /> },
   {
-    title: "Products",
-    icon: <Package size={20} />,
+    title: "E-Commerce",
+    icon: <ShoppingCart size={20} />,
     submenu: [
+      { title: "Orders", path: "/orders" },
       { title: "All Products", path: "/products" },
       { title: "Add Product", path: "/products/add" },
-    ],
-  },
-  {
-    title: "Categories",
-    icon: <Tags size={20} />,
-    submenu: [
-      { title: "All Categories", path: "/categories" },
+      { title: "Categories Manager", path: "/categories" },
       { title: "Add Category", path: "/categories/add" },
     ],
   },
+  { title: "Customers", path: "/customers", icon: <Users size={20} /> },
   { title: "Coupons", path: "/coupons", icon: <Ticket size={20} /> },
   { title: "Reviews", path: "/reviews", icon: <Star size={20} /> },
   {

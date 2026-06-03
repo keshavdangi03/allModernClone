@@ -1,4 +1,5 @@
 import ProductCard from "@/components/ui/ProductCard";
+import Link from "next/link";
 
 const products = [
   {
@@ -64,9 +65,12 @@ export default function TrendingProducts() {
             <span className="block">Right Here.</span>
           </h2>
         </div>
-        <button className="inline-flex h-10 items-center justify-center rounded-full border border-slate-200 bg-white px-4 text-sm font-semibold text-slate-950 shadow-sm transition hover:border-slate-300">
+        <Link 
+          href="/new" 
+          className="inline-flex h-10 items-center justify-center rounded-full border border-slate-200 bg-white px-4 text-sm font-semibold text-slate-950 shadow-sm transition hover:border-slate-300"
+        >
           View all new arrivals
-        </button>
+        </Link>
       </div>
 
       <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-3 xl:grid-cols-5">

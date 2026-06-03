@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { getHeroBanners } from "@/lib/actions/content";
 
 export default async function Hero() {
@@ -10,7 +11,7 @@ export default async function Hero() {
   const title = banner?.title || "Designed for Staycations";
   const subtitle = banner?.subtitle || "";
   const ctaText = banner?.ctaText || "Shop Now";
-  const ctaLink = banner?.ctaLink || "#";
+  const ctaLink = banner?.ctaLink || "/outdoor";
 
   return (
     <section className="relative overflow-hidden bg-[#ebeade]">
@@ -31,11 +32,9 @@ export default async function Hero() {
         {subtitle && (
           <p className="text-[clamp(1rem,2vw,1.5rem)] text-white/90 drop-shadow text-center px-4 max-w-2xl">{subtitle}</p>
         )}
-        {banner && (
-          <a href={ctaLink} className="mt-2 inline-block bg-white text-slate-900 px-8 py-3 font-bold text-sm tracking-wide hover:bg-slate-100 transition">
-            {ctaText}
-          </a>
-        )}
+        <Link href={ctaLink} className="mt-2 inline-block bg-white text-slate-900 px-8 py-3 font-bold text-sm tracking-wide hover:bg-slate-100 transition">
+          {ctaText}
+        </Link>
       </div>
     </section>
   );

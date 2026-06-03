@@ -20,7 +20,7 @@ export default function OneStopOutdoorShop() {
           </h2>
           <div className="mt-6">
             <Link
-              href="#"
+              href="/outdoor"
               className="inline-flex items-center justify-center bg-white px-6 py-3.5 text-[14px] font-bold text-slate-950 transition hover:bg-slate-100"
             >
               SHOP MODERN OUTDOOR
