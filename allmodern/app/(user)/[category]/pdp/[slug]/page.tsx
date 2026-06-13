@@ -37,7 +37,7 @@ export default async function ProductDetailPage({ params }: PageProps) {
   // Fetch some other products in the same category for recommendations
   const allProducts = await getProducts();
   const relatedProducts = allProducts
-    .filter((p) => p.id !== product.id)
+    .filter((p: any) => p.id !== product.id)
     .slice(0, 5);
 
   return (
