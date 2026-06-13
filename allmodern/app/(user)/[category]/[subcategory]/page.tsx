@@ -148,7 +148,7 @@ export default async function SubCategoryPage({ params }: PageProps) {
   }).catch(() => []);
 
   // Normalize products to match CategoryProductCard requirements
-  const normalizedProducts = products.map((p) => ({
+  const normalizedProducts = products.map((p: any) => ({
     ...p,
     price: p.price || 0,
     originalPrice: p.originalPrice || null,
