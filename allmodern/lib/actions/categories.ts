@@ -8,9 +8,9 @@ export async function getCategories() {
     orderBy: { createdAt: "asc" }
   });
 
-  return categories.map((cat: { sections: string; [key: string]: unknown }) => ({
+  return categories.map((cat) => ({
     ...cat,
-    sections: JSON.parse(cat.sections)
+    sections: JSON.parse(cat.sections) as any[]
   }));
 }
 
