@@ -27,7 +27,7 @@ export async function GET() {
         }
       }
     }
-    const result = categories.map(cat => ({
+    const result = categories.map((cat: any) => ({
       ...cat,
       sections: typeof cat.sections === "string" ? JSON.parse(cat.sections) : cat.sections,
     }));
