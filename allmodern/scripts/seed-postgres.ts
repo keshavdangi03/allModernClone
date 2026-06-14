@@ -114,9 +114,9 @@ async function seed() {
     }
 
     // 6. Products Seeding
-    const productCount = await prisma.product.count();
-    if (productCount === 0) {
-      console.log("Seeding products from catalog.json...");
+    console.log("Cleaning up existing products in database...");
+    await prisma.product.deleteMany({});
+    console.log("Seeding products from catalog.json...");
       const catalogPath = path.join(__dirname, "..", "public", "data", "catalog.json");
       if (fs.existsSync(catalogPath)) {
         const fileContent = fs.readFileSync(catalogPath, "utf-8");
@@ -163,9 +163,6 @@ async function seed() {
       } else {
         console.warn(`Catalog file not found at ${catalogPath}, skipping product seeding.`);
       }
-    } else {
-      console.log(`Products already exist (${productCount}), skipping product seeding.`);
-    }
 
     // Seeding Admin User
     const adminEmail = "admin@admin.np";

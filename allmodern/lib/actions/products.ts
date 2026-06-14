@@ -200,15 +200,29 @@ export async function deleteProduct(id: string) {
 
 export async function getProductBySlug(slug: string) {
   try {
+    // 1. Try exact slug match
     let product = await prisma.product.findUnique({
       where: { slug }
     });
-    if (!product) {
+    if (product) return product;
+
+    // 2. Try exact ID match
+    product = await prisma.product.findUnique({
+      where: { id: slug }
+    });
+    if (product) return product;
+
+    // 3. Extract ID from the end of the slug (e.g. "miller-56-upholstered-loveseat-best-sellers_1" -> "best-sellers_1")
+    const match = slug.match(/([a-z0-9-]+_[a-z0-9]+)$/i);
+    if (match) {
+      const idCandidate = match[1];
       product = await prisma.product.findUnique({
-        where: { id: slug }
+        where: { id: idCandidate }
       });
+      if (product) return product;
     }
-    return product;
+
+    return null;
   } catch (error) {
     console.error("Error in getProductBySlug server action:", error);
     return null;

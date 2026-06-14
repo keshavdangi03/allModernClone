@@ -29,11 +29,40 @@ export default function ProductCard({ product }: ProductCardProps) {
     ? product.category.toLowerCase().replace(/[^a-z0-9]+/g, "-")
     : "furniture";
   
+  const nameLower = product.name.toLowerCase();
   let productId = "product_undefined";
-  if (product.name.toLowerCase().includes("loveseat")) productId = "new_n1";
-  else if (product.name.toLowerCase().includes("sofa")) productId = "new_n3";
-  else if (product.name.toLowerCase().includes("armchair")) productId = "new_n9";
-  else if (product.name.toLowerCase().includes("bennett")) productId = "furniture_mg2";
+
+  if (nameLower.includes("56\"") && nameLower.includes("loveseat")) {
+    productId = "best-sellers_1";
+  } else if (nameLower.includes("chaise sectional")) {
+    productId = "best-sellers_2";
+  } else if (nameLower.includes("84\"") && nameLower.includes("sofa") && nameLower.includes("miller")) {
+    productId = "best-sellers_3";
+  } else if (nameLower.includes("armchair") && nameLower.includes("miller")) {
+    productId = "best-sellers_4";
+  } else if (nameLower.includes("reeves")) {
+    productId = "best-sellers_5";
+  } else if (nameLower.includes("mallory")) {
+    productId = "best-sellers_6";
+  } else if (nameLower.includes("farrah") && nameLower.includes("armchair")) {
+    productId = "best-sellers_7";
+  } else if (nameLower.includes("polywood") && nameLower.includes("folding")) {
+    productId = "best-sellers_8";
+  } else if (nameLower.includes("farrah") && nameLower.includes("side")) {
+    productId = "best-sellers_9";
+  } else if (nameLower.includes("bennett")) {
+    if (nameLower.includes("vegan") || nameLower.includes("leather")) {
+      productId = "furniture_mg9";
+    } else {
+      productId = "furniture_mg5";
+    }
+  } else if (nameLower.includes("loveseat")) {
+    productId = "new_n1";
+  } else if (nameLower.includes("sofa")) {
+    productId = "new_n3";
+  } else if (nameLower.includes("armchair")) {
+    productId = "new_n9";
+  }
 
   const slugBase = product.name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)+/g, "");
   const pUrl = `/${categoryPath}/pdp/${slugBase}-${productId}.html`;
