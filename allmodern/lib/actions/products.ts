@@ -25,6 +25,7 @@ export interface ProductData {
   shortDescription?: string | null;
   images?: any;
   variants?: any;
+  colors?: any;
   customAttributes?: any;
   additionalInfo?: any;
   body?: string | null;
@@ -70,7 +71,7 @@ export async function getProducts() {
             description: p.description || p.name,
             shortDescription: p.shortDescription || p.name,
             images: p.images || [],
-            variants: p.variants || [],
+            variants: p.colors || p.variants || [],
             customAttributes: p.customAttributes || [],
             additionalInfo: p.additionalInfo || [],
             body: p.body || ""

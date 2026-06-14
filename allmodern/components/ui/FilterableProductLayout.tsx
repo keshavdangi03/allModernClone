@@ -26,9 +26,25 @@ export default function FilterableProductLayout({ title, itemCount, products = [
 
   // Filter/Sort/Pagination States
   const [sortBy, setSortBy] = useState("Recommended");
-  const [isSaleOnly, setIsSaleOnly] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 12;
+
+  const [activeFilters, setActiveFilters] = useState({
+    categories: [] as string[],
+    priceRanges: [] as string[],
+    minPrice: 0,
+    maxPrice: 1000000,
+    rating: null as number | null,
+    colors: [] as string[],
+    brands: [] as string[],
+    inStockOnly: false,
+    isSaleOnly: false,
+  });
+
+  const handleApplyFilters = (updatedFilters: Partial<typeof activeFilters>) => {
+    setActiveFilters((prev) => ({ ...prev, ...updatedFilters }));
+    setCurrentPage(1); // reset pagination on filter change
+  };
 
   // 1. Fetch Dynamic Products from PostgreSQL
   useEffect(() => {
@@ -44,7 +60,8 @@ export default function FilterableProductLayout({ title, itemCount, products = [
           ...p,
           price: typeof p.price === 'string' ? parseFloat(p.price) : p.price,
           originalPrice: p.discountedPrice ? parseFloat(p.discountedPrice) : p.originalPrice,
-          badge: p.discountedPrice ? "Sale" : p.badge
+          badge: p.discountedPrice ? "Sale" : p.badge,
+          colors: p.colors || (Array.isArray(p.variants) ? p.variants : [])
         }));
         setDynamicProducts(normalized);
       })
@@ -60,12 +77,97 @@ export default function FilterableProductLayout({ title, itemCount, products = [
   const processedProducts = useMemo(() => {
     let result = [...combinedProducts];
 
-    // Filter
-    if (isSaleOnly) {
+    // Sale filter
+    if (activeFilters.isSaleOnly) {
       result = result.filter(p => 
         p.badge?.toLowerCase().includes("sale") || 
         (p.originalPrice && Number(p.price) < Number(p.originalPrice))
       );
+    }
+
+    // Category filter
+    if (activeFilters.categories.length > 0) {
+      result = result.filter(p => 
+        p.categories?.some((cat: string) => 
+          activeFilters.categories.some(selectedCat => 
+            cat.toLowerCase().includes(selectedCat.toLowerCase())
+          )
+        )
+      );
+    }
+
+    // Price range filters
+    if (activeFilters.priceRanges.length > 0) {
+      result = result.filter(p => {
+        const priceVal = Number(p.price || 0);
+        return activeFilters.priceRanges.some((range) => {
+          if (range === "Under $50") return priceVal < 50;
+          if (range === "$50 to $100") return priceVal >= 50 && priceVal <= 100;
+          if (range === "$100 to $200") return priceVal >= 100 && priceVal <= 200;
+          if (range === "$200 to $300") return priceVal >= 200 && priceVal <= 300;
+          if (range === "$300 to $400") return priceVal >= 300 && priceVal <= 400;
+          if (range === "$400 to $500") return priceVal >= 400 && priceVal <= 500;
+          if (range === "$500 & Above") return priceVal >= 500;
+          return true;
+        });
+      });
+    }
+
+    // Price bounds input filter
+    if (activeFilters.minPrice > 0 || activeFilters.maxPrice < 1000000) {
+      result = result.filter(p => {
+        const priceVal = Number(p.price || 0);
+        return priceVal >= activeFilters.minPrice && priceVal <= activeFilters.maxPrice;
+      });
+    }
+
+    // Rating filter
+    if (activeFilters.rating) {
+      result = result.filter(p => p.rating && p.rating >= activeFilters.rating!);
+    }
+
+    // Brand filter
+    if (activeFilters.brands.length > 0) {
+      result = result.filter(p => 
+        activeFilters.brands.some(selectedBrand => {
+          const textToSearch = `${p.name} ${(p as any).description || ""}`.toLowerCase();
+          return textToSearch.includes(selectedBrand.toLowerCase());
+        })
+      );
+    }
+
+    // Color filter (via name/desc match and hex maps)
+    if (activeFilters.colors.length > 0) {
+      const hexColorMap: Record<string, string[]> = {
+        "Black": ["#000000", "#000", "#1f1d24", "#333333", "#333", "#121212", "#171717", "#212121", "#474441"],
+        "Gray": ["#6c6c6c", "#ccc", "#ccc9bf", "#beb8ac", "#ced5d6", "#4a4a4a"],
+        "White": ["#ffffff", "#fff", "#fcfcfc", "#f0efe8", "#ece9e1", "#f1efed", "#f3efe7", "#e8e0d5"],
+        "Brown": ["#5c3a21", "#8b5a2b", "#8b4513", "#c19a6b", "#aaa39b", "#e8dbc9", "#d9c8b8", "#a0522d"],
+        "Red": ["#d81b21", "#8b0000", "#c00", "#d5526f"],
+        "Green": ["#18a221", "#5a684b", "#646d4f", "#6c7c5f", "#6f7250"],
+        "Blue": ["#255ba4", "#0b105d", "#1e3a8a", "#6b8197", "#96bad1", "#5d7f89", "#1d3557", "#b6cad8"],
+        "Yellow": ["#f9de58", "#ffcc00"],
+        "Beige": ["#d4c3a3", "#dbd5ca", "#ece8e2", "#c4c0b6", "#d9d8d2"],
+        "Gold": ["#d4af37", "#aa8017"],
+        "Silver": ["#e5e5e5", "#a3a3a3"]
+      };
+
+      result = result.filter(p => {
+        const productColors: string[] = p.colors || [];
+        const matchesHex = productColors.some(hex => 
+          activeFilters.colors.some(selectedColor => {
+            const hexes = hexColorMap[selectedColor] || [];
+            return hexes.includes(hex.toLowerCase());
+          })
+        );
+        if (matchesHex) return true;
+
+        const textToSearch = `${p.name} ${p.subtitle || ""} ${(p as any).description || ""}`.toLowerCase();
+        const matchesText = activeFilters.colors.some(selectedColor => 
+          textToSearch.includes(selectedColor.toLowerCase())
+        );
+        return matchesText;
+      });
     }
 
     // Sort
@@ -84,7 +186,7 @@ export default function FilterableProductLayout({ title, itemCount, products = [
     }
 
     return result;
-  }, [combinedProducts, isSaleOnly, sortBy]);
+  }, [combinedProducts, activeFilters, sortBy]);
 
   // 4. Pagination
   const totalPages = Math.ceil(processedProducts.length / itemsPerPage);
@@ -184,8 +286,8 @@ export default function FilterableProductLayout({ title, itemCount, products = [
         {showDesktopFilters && (
           <div className="hidden sm:block shrink-0 overflow-hidden w-[280px]">
             <DesktopFilterSidebar 
-              isSaleOnly={isSaleOnly}
-              onToggleSale={() => setIsSaleOnly(!isSaleOnly)}
+              activeFilters={activeFilters}
+              onApplyFilters={handleApplyFilters}
             />
           </div>
         )}

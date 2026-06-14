@@ -11,6 +11,8 @@ interface SortFilterBarProps {
   onToggleDesktopFilters?: () => void;
   selectedSort?: string;
   onSortChange?: (sort: string) => void;
+  activeFilters?: any;
+  onApplyFilters?: any;
 }
 
 const sortOptions = [
@@ -24,7 +26,9 @@ export default function SortFilterBar({
   showDesktopFilters = false,
   onToggleDesktopFilters = () => {},
   selectedSort = sortOptions[0],
-  onSortChange = () => {}
+  onSortChange = () => {},
+  activeFilters,
+  onApplyFilters
 }: SortFilterBarProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isSortDropdownOpen, setIsSortDropdownOpen] = useState(false);
@@ -113,6 +117,8 @@ export default function SortFilterBar({
         isOpen={isMobileMenuOpen} 
         onClose={() => setIsMobileMenuOpen(false)} 
         productCount={productCount} 
+        activeFilters={activeFilters}
+        onApplyFilters={onApplyFilters}
       />
     </>
   );

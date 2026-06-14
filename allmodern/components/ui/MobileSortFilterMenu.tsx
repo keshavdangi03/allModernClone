@@ -8,9 +8,17 @@ interface MobileSortFilterMenuProps {
   isOpen: boolean;
   onClose: () => void;
   productCount?: number;
+  activeFilters: any;
+  onApplyFilters: any;
 }
 
-export default function MobileSortFilterMenu({ isOpen, onClose, productCount = 546 }: MobileSortFilterMenuProps) {
+export default function MobileSortFilterMenu({ 
+  isOpen, 
+  onClose, 
+  productCount = 546,
+  activeFilters,
+  onApplyFilters
+}: MobileSortFilterMenuProps) {
   return (
     <AnimatePresence>
       {isOpen && (
@@ -32,7 +40,7 @@ export default function MobileSortFilterMenu({ isOpen, onClose, productCount = 5
 
           {/* Scrollable Content */}
           <div className="flex-1 overflow-y-auto px-5 pb-24 pt-2">
-            <FilterOptionsList isMobile={true} />
+            <FilterOptionsList isMobile={true} activeFilters={activeFilters} onApplyFilters={onApplyFilters} />
           </div>
 
           {/* Fixed Footer */}

@@ -148,7 +148,7 @@ async function seed() {
             description: p.description || p.name,
             shortDescription: p.shortDescription || p.name,
             images: p.images || [],
-            variants: p.variants || [],
+            variants: p.colors || p.variants || [],
             customAttributes: p.customAttributes || [],
             additionalInfo: p.additionalInfo || [],
             body: p.body || ""
