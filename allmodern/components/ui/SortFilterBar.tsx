@@ -36,6 +36,33 @@ export default function SortFilterBar({
   const dropdownRef = useRef<HTMLDivElement>(null);
   const filterDropdownRef = useRef<HTMLDivElement>(null);
 
+  // Staged temp state for the entire dropdown
+  const [tempFilters, setTempFilters] = useState<any>(null);
+
+  // Initialize/sync tempFilters when activeFilters changes or dropdown opens
+  useEffect(() => {
+    if (activeFilters) {
+      setTempFilters({
+        categories: activeFilters.categories || [],
+        priceRanges: activeFilters.priceRanges || [],
+        minPrice: activeFilters.minPrice ?? 0,
+        maxPrice: activeFilters.maxPrice ?? 1000000,
+        rating: activeFilters.rating ?? null,
+        colors: activeFilters.colors || [],
+        brands: activeFilters.brands || [],
+        inStockOnly: activeFilters.inStockOnly ?? false,
+        isSaleOnly: activeFilters.isSaleOnly ?? false,
+      });
+    }
+  }, [activeFilters, showDesktopFilters]);
+
+  const handleChangeTempFilters = (updated: any) => {
+    setTempFilters((prev: any) => ({
+      ...prev,
+      ...updated,
+    }));
+  };
+
   // Close dropdown when clicking outside
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -92,18 +119,58 @@ export default function SortFilterBar({
           </button>
 
           <AnimatePresence>
-            {showDesktopFilters && (
+            {showDesktopFilters && tempFilters && (
               <motion.div
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
                 transition={{ duration: 0.15 }}
-                className="absolute left-0 top-full z-40 mt-1 w-[350px] border border-slate-300 bg-white p-5 shadow-xl max-h-[550px] overflow-y-auto custom-scrollbar"
+                className="absolute left-0 top-full z-40 mt-1 w-[350px] border border-slate-300 bg-white shadow-xl flex flex-col max-h-[550px]"
               >
-                <FilterOptionsList 
-                  activeFilters={activeFilters}
-                  onApplyFilters={onApplyFilters}
-                />
+                {/* Scrollable Filters list */}
+                <div className="flex-1 overflow-y-auto p-5 pb-2 custom-scrollbar overscroll-contain">
+                  <FilterOptionsList 
+                    activeFilters={activeFilters}
+                    onApplyFilters={onApplyFilters}
+                    tempFiltersState={tempFilters}
+                    onChangeTempFilters={handleChangeTempFilters}
+                    showAccordionButtons={false}
+                  />
+                </div>
+
+                {/* Fixed Sticky Footer */}
+                <div className="shrink-0 border-t border-slate-200 bg-slate-50 px-5 py-4 flex justify-between items-center gap-3">
+                  <button
+                    onClick={() => {
+                      const cleared = {
+                        categories: [],
+                        priceRanges: [],
+                        minPrice: 0,
+                        maxPrice: 1000000,
+                        rating: null,
+                        colors: [],
+                        brands: [],
+                        inStockOnly: false,
+                        isSaleOnly: false,
+                      };
+                      setTempFilters(cleared);
+                      onApplyFilters(cleared);
+                      onToggleDesktopFilters();
+                    }}
+                    className="text-[13px] font-bold text-slate-500 hover:text-slate-900 underline underline-offset-4 cursor-pointer"
+                  >
+                    Clear All
+                  </button>
+                  <button
+                    onClick={() => {
+                      onApplyFilters(tempFilters);
+                      onToggleDesktopFilters();
+                    }}
+                    className="h-9 px-6 bg-[#1f1d24] text-[13px] font-semibold text-white hover:bg-black transition-colors rounded-[3px] shadow-sm flex items-center justify-center active:scale-[0.98] cursor-pointer"
+                  >
+                    Apply Filters
+                  </button>
+                </div>
               </motion.div>
             )}
           </AnimatePresence>

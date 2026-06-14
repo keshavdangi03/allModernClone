@@ -201,7 +201,10 @@ export function StarRating({ stars }: { stars: number }) {
 export function FilterOptionsList({ 
   isMobile = false, 
   activeFilters, 
-  onApplyFilters 
+  onApplyFilters,
+  tempFiltersState,
+  onChangeTempFilters,
+  showAccordionButtons = true,
 }: { 
   isMobile?: boolean;
   activeFilters: {
@@ -216,28 +219,109 @@ export function FilterOptionsList({
     isSaleOnly: boolean;
   };
   onApplyFilters: (updated: any) => void;
+  tempFiltersState?: any;
+  onChangeTempFilters?: (updated: any) => void;
+  showAccordionButtons?: boolean;
 }) {
   // Staged Temporary Selection States
-  const [tempCategories, setTempCategories] = useState<string[]>(activeFilters.categories);
-  const [tempPriceRanges, setTempPriceRanges] = useState<string[]>(activeFilters.priceRanges);
-  const [tempMinPrice, setTempMinPrice] = useState<number>(activeFilters.minPrice);
-  const [tempMaxPrice, setTempMaxPrice] = useState<number>(activeFilters.maxPrice);
-  const [tempRating, setTempRating] = useState<number | null>(activeFilters.rating);
-  const [tempColors, setTempColors] = useState<string[]>(activeFilters.colors);
-  const [tempBrands, setTempBrands] = useState<string[]>(activeFilters.brands);
-  const [tempInStock, setTempInStock] = useState<boolean>(activeFilters.inStockOnly);
+  const [localCategories, setLocalCategories] = useState<string[]>(activeFilters.categories);
+  const [localPriceRanges, setLocalPriceRanges] = useState<string[]>(activeFilters.priceRanges);
+  const [localMinPrice, setLocalMinPrice] = useState<number>(activeFilters.minPrice);
+  const [localMaxPrice, setLocalMaxPrice] = useState<number>(activeFilters.maxPrice);
+  const [localRating, setLocalRating] = useState<number | null>(activeFilters.rating);
+  const [localColors, setLocalColors] = useState<string[]>(activeFilters.colors);
+  const [localBrands, setLocalBrands] = useState<string[]>(activeFilters.brands);
+  const [localInStock, setLocalInStock] = useState<boolean>(activeFilters.inStockOnly);
 
   // Sync state if parent filter properties change
   useEffect(() => {
-    setTempCategories(activeFilters.categories);
-    setTempPriceRanges(activeFilters.priceRanges);
-    setTempMinPrice(activeFilters.minPrice);
-    setTempMaxPrice(activeFilters.maxPrice);
-    setTempRating(activeFilters.rating);
-    setTempColors(activeFilters.colors);
-    setTempBrands(activeFilters.brands);
-    setTempInStock(activeFilters.inStockOnly);
+    setLocalCategories(activeFilters.categories);
+    setLocalPriceRanges(activeFilters.priceRanges);
+    setLocalMinPrice(activeFilters.minPrice);
+    setLocalMaxPrice(activeFilters.maxPrice);
+    setLocalRating(activeFilters.rating);
+    setLocalColors(activeFilters.colors);
+    setLocalBrands(activeFilters.brands);
+    setLocalInStock(activeFilters.inStockOnly);
   }, [activeFilters]);
+
+  // Use controlled state if provided, otherwise fall back to local state
+  const tempCategories = tempFiltersState ? tempFiltersState.categories : localCategories;
+  const tempPriceRanges = tempFiltersState ? tempFiltersState.priceRanges : localPriceRanges;
+  const tempMinPrice = tempFiltersState ? tempFiltersState.minPrice : localMinPrice;
+  const tempMaxPrice = tempFiltersState ? tempFiltersState.maxPrice : localMaxPrice;
+  const tempRating = tempFiltersState ? tempFiltersState.rating : localRating;
+  const tempColors = tempFiltersState ? tempFiltersState.colors : localColors;
+  const tempBrands = tempFiltersState ? tempFiltersState.brands : localBrands;
+  const tempInStock = tempFiltersState ? tempFiltersState.inStockOnly : localInStock;
+
+  const setTempCategories = (val: string[] | ((prev: string[]) => string[])) => {
+    const nextVal = typeof val === 'function' ? val(tempCategories) : val;
+    if (onChangeTempFilters && tempFiltersState) {
+      onChangeTempFilters({ categories: nextVal });
+    } else {
+      setLocalCategories(nextVal);
+    }
+  };
+
+  const setTempPriceRanges = (val: string[] | ((prev: string[]) => string[])) => {
+    const nextVal = typeof val === 'function' ? val(tempPriceRanges) : val;
+    if (onChangeTempFilters && tempFiltersState) {
+      onChangeTempFilters({ priceRanges: nextVal });
+    } else {
+      setLocalPriceRanges(nextVal);
+    }
+  };
+
+  const setTempMinPrice = (val: number) => {
+    if (onChangeTempFilters && tempFiltersState) {
+      onChangeTempFilters({ minPrice: val });
+    } else {
+      setLocalMinPrice(val);
+    }
+  };
+
+  const setTempMaxPrice = (val: number) => {
+    if (onChangeTempFilters && tempFiltersState) {
+      onChangeTempFilters({ maxPrice: val });
+    } else {
+      setLocalMaxPrice(val);
+    }
+  };
+
+  const setTempRating = (val: number | null) => {
+    if (onChangeTempFilters && tempFiltersState) {
+      onChangeTempFilters({ rating: val });
+    } else {
+      setLocalRating(val);
+    }
+  };
+
+  const setTempColors = (val: string[] | ((prev: string[]) => string[])) => {
+    const nextVal = typeof val === 'function' ? val(tempColors) : val;
+    if (onChangeTempFilters && tempFiltersState) {
+      onChangeTempFilters({ colors: nextVal });
+    } else {
+      setLocalColors(nextVal);
+    }
+  };
+
+  const setTempBrands = (val: string[] | ((prev: string[]) => string[])) => {
+    const nextVal = typeof val === 'function' ? val(tempBrands) : val;
+    if (onChangeTempFilters && tempFiltersState) {
+      onChangeTempFilters({ brands: nextVal });
+    } else {
+      setLocalBrands(nextVal);
+    }
+  };
+
+  const setTempInStock = (val: boolean) => {
+    if (onChangeTempFilters && tempFiltersState) {
+      onChangeTempFilters({ inStockOnly: val });
+    } else {
+      setLocalInStock(val);
+    }
+  };
 
   // Brand search criteria
   const [brandSearch, setBrandSearch] = useState("");
@@ -297,11 +381,11 @@ export function FilterOptionsList({
         title="Category" 
         defaultOpen={true}
         selectedCount={tempCategories.length}
-        onApply={() => onApplyFilters({ categories: tempCategories })}
-        onClear={() => {
+        onApply={showAccordionButtons ? () => onApplyFilters({ categories: tempCategories }) : undefined}
+        onClear={showAccordionButtons ? () => {
           setTempCategories([]);
           onApplyFilters({ categories: [] });
-        }}
+        } : undefined}
       >
         <div className="flex flex-col gap-1">
           {categories.map((cat, i) => (
@@ -326,17 +410,17 @@ export function FilterOptionsList({
       <AccordionSection 
         title="Price"
         selectedCount={tempPriceRanges.length + (tempMinPrice > 0 || tempMaxPrice < 1000000 ? 1 : 0)}
-        onApply={() => onApplyFilters({ 
+        onApply={showAccordionButtons ? () => onApplyFilters({ 
           priceRanges: tempPriceRanges, 
           minPrice: tempMinPrice, 
           maxPrice: tempMaxPrice 
-        })}
-        onClear={() => {
+        }) : undefined}
+        onClear={showAccordionButtons ? () => {
           setTempPriceRanges([]);
           setTempMinPrice(0);
           setTempMaxPrice(1000000);
           onApplyFilters({ priceRanges: [], minPrice: 0, maxPrice: 1000000 });
-        }}
+        } : undefined}
       >
         <div className="mb-5 flex items-center gap-2">
           <div className="flex-1">
@@ -375,11 +459,11 @@ export function FilterOptionsList({
       <AccordionSection 
         title="Customer Rating"
         selectedCount={tempRating ? 1 : 0}
-        onApply={() => onApplyFilters({ rating: tempRating })}
-        onClear={() => {
+        onApply={showAccordionButtons ? () => onApplyFilters({ rating: tempRating }) : undefined}
+        onClear={showAccordionButtons ? () => {
           setTempRating(null);
           onApplyFilters({ rating: null });
-        }}
+        } : undefined}
       >
         <div className="flex flex-col gap-2 pt-1">
           <CustomCheckbox 
@@ -401,11 +485,11 @@ export function FilterOptionsList({
       <AccordionSection 
         title="Color"
         selectedCount={tempColors.length}
-        onApply={() => onApplyFilters({ colors: tempColors })}
-        onClear={() => {
+        onApply={showAccordionButtons ? () => onApplyFilters({ colors: tempColors }) : undefined}
+        onClear={showAccordionButtons ? () => {
           setTempColors([]);
           onApplyFilters({ colors: [] });
-        }}
+        } : undefined}
       >
         <div className="grid grid-cols-3 gap-2">
           {colors.map((c) => {
@@ -441,11 +525,11 @@ export function FilterOptionsList({
       <AccordionSection 
         title="Brand"
         selectedCount={tempBrands.length}
-        onApply={() => onApplyFilters({ brands: tempBrands })}
-        onClear={() => {
+        onApply={showAccordionButtons ? () => onApplyFilters({ brands: tempBrands }) : undefined}
+        onClear={showAccordionButtons ? () => {
           setTempBrands([]);
           onApplyFilters({ brands: [] });
-        }}
+        } : undefined}
       >
         <div className="mb-3.5 relative">
           <Search className="absolute left-2.5 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-slate-400" />
@@ -457,7 +541,7 @@ export function FilterOptionsList({
             className="w-full border border-slate-300 rounded pl-8 pr-3 py-1.5 text-xs outline-none focus:border-[#1a237e]"
           />
         </div>
-        <div className="flex flex-col gap-1 max-h-[160px] overflow-y-auto">
+        <div className="flex flex-col gap-1 max-h-[160px] overflow-y-auto custom-scrollbar">
           {filteredBrands.map((b, i) => (
             <CustomCheckbox 
               key={i} 
@@ -480,11 +564,11 @@ export function FilterOptionsList({
       <AccordionSection 
         title="Availability"
         selectedCount={tempInStock ? 1 : 0}
-        onApply={() => onApplyFilters({ inStockOnly: tempInStock })}
-        onClear={() => {
+        onApply={showAccordionButtons ? () => onApplyFilters({ inStockOnly: tempInStock }) : undefined}
+        onClear={showAccordionButtons ? () => {
           setTempInStock(false);
           onApplyFilters({ inStockOnly: false });
-        }}
+        } : undefined}
       >
         <CustomCheckbox 
           id="avail-instock" 
