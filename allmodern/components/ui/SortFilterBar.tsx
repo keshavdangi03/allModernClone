@@ -4,6 +4,7 @@ import { useState, useRef, useEffect } from "react";
 import { ChevronDown, SlidersHorizontal, Check } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import MobileSortFilterMenu from "./MobileSortFilterMenu";
+import { FilterOptionsList } from "./FilterOptions";
 
 interface SortFilterBarProps {
   productCount?: number;
@@ -33,6 +34,7 @@ export default function SortFilterBar({
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isSortDropdownOpen, setIsSortDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const filterDropdownRef = useRef<HTMLDivElement>(null);
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -40,10 +42,17 @@ export default function SortFilterBar({
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
         setIsSortDropdownOpen(false);
       }
+      if (
+        showDesktopFilters &&
+        filterDropdownRef.current &&
+        !filterDropdownRef.current.contains(event.target as Node)
+      ) {
+        onToggleDesktopFilters();
+      }
     }
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
+  }, [showDesktopFilters, onToggleDesktopFilters]);
 
   return (
     <>
@@ -60,13 +69,32 @@ export default function SortFilterBar({
 
       {/* Desktop Toolbar (Hidden on screens < sm) */}
       <div className="hidden sm:flex flex-col justify-between gap-4 border-b border-slate-200 pb-4 sm:flex-row sm:items-center">
-        <button 
-          onClick={onToggleDesktopFilters}
-          className="flex w-[280px] items-center justify-center border border-slate-300 bg-white py-2.5 text-[13px] font-medium text-slate-900 hover:border-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-600"
-        >
-          <SlidersHorizontal className="mr-2 h-4 w-4" strokeWidth={1.5} />
-          {showDesktopFilters ? "Hide Filters" : "Show Filters"}
-        </button>
+        <div className="relative" ref={filterDropdownRef}>
+          <button 
+            onClick={onToggleDesktopFilters}
+            className="flex w-[280px] items-center justify-center border border-slate-300 bg-white py-2.5 text-[13px] font-medium text-slate-900 hover:border-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-600"
+          >
+            <SlidersHorizontal className="mr-2 h-4 w-4" strokeWidth={1.5} />
+            {showDesktopFilters ? "Hide Filters" : "Show Filters"}
+          </button>
+
+          <AnimatePresence>
+            {showDesktopFilters && (
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.15 }}
+                className="absolute left-0 top-full z-50 mt-1 w-[350px] border border-slate-300 bg-white p-5 shadow-xl max-h-[550px] overflow-y-auto"
+              >
+                <FilterOptionsList 
+                  activeFilters={activeFilters}
+                  onApplyFilters={onApplyFilters}
+                />
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
 
         <div className="flex items-center text-[13px]">
           <div className="relative w-[280px]" ref={dropdownRef}>

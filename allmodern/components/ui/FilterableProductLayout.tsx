@@ -15,7 +15,7 @@ interface FilterableProductLayoutProps {
 }
 
 export default function FilterableProductLayout({ title, itemCount, products = [], categoryName = "", children }: FilterableProductLayoutProps) {
-  const [showDesktopFilters, setShowDesktopFilters] = useState(true);
+  const [showDesktopFilters, setShowDesktopFilters] = useState(false);
   const [isSticky, setIsSticky] = useState(false);
   const stickyTriggerRef = useRef<HTMLDivElement>(null);
   const sectionEndRef = useRef<HTMLDivElement>(null);
@@ -276,6 +276,8 @@ export default function FilterableProductLayout({ title, itemCount, products = [
             onToggleDesktopFilters={() => setShowDesktopFilters(!showDesktopFilters)}
             selectedSort={sortBy}
             onSortChange={handleSortChange}
+            activeFilters={activeFilters}
+            onApplyFilters={handleApplyFilters}
           />
         </div>
       </div>
@@ -283,15 +285,6 @@ export default function FilterableProductLayout({ title, itemCount, products = [
       {isSticky && <div className="sm:hidden h-[72px]" aria-hidden="true" />}
 
       <div className="mt-6 flex flex-col sm:flex-row items-start">
-        {showDesktopFilters && (
-          <div className="hidden sm:block shrink-0 overflow-hidden w-[280px]">
-            <DesktopFilterSidebar 
-              activeFilters={activeFilters}
-              onApplyFilters={handleApplyFilters}
-            />
-          </div>
-        )}
-
         <div className="flex-1 w-full pt-4">
           {products.length > 0 || dynamicProducts.length > 0 ? (
             <>
