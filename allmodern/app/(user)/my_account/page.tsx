@@ -212,6 +212,14 @@ export default function MyAccountPage() {
                   <h2 className="text-[22px] font-bold tracking-tight mb-2">Welcome</h2>
                   <p className="text-sm text-gray-600 mb-1 font-medium">{userDetails?.email}</p>
                   <p className="text-xs text-gray-400">Wayfair customer since {getCustomerSinceYear()}</p>
+                  {userDetails?.role === "admin" && (
+                    <Link 
+                      href="/dashboard" 
+                      className="mt-4 inline-flex items-center justify-center h-9 w-full bg-[#1a237e] hover:bg-[#0d1b60] text-xs font-bold text-white tracking-wide transition rounded-[3px]"
+                    >
+                      Go to Admin Dashboard
+                    </Link>
+                  )}
                 </div>
                 <div className="mt-8 border-t border-[#f5f5f5] pt-4 flex items-center justify-between">
                   <span className="text-sm font-semibold text-gray-700">Account Balance:</span>
@@ -296,6 +304,17 @@ export default function MyAccountPage() {
                   Account & Preferences
                 </h4>
                 <div className="bg-white border border-[#e5e5e5] rounded-[3px] overflow-hidden">
+                  {userDetails?.role === "admin" && (
+                    <Link 
+                      href="/dashboard"
+                      className="w-full flex items-center justify-between p-4 text-left border-b border-[#e5e5e5] bg-indigo-50/45 hover:bg-indigo-50/70 transition"
+                    >
+                      <span className="text-xs font-bold text-indigo-900 flex items-center gap-2">
+                        <Lock size={14} className="text-indigo-650" /> Admin Dashboard
+                      </span>
+                      <ChevronRight size={16} className="text-indigo-400" />
+                    </Link>
+                  )}
                   <button 
                     onClick={() => setActiveTab("account")}
                     className="w-full flex items-center justify-between p-4 text-left border-b border-[#e5e5e5] hover:bg-gray-50 transition"
@@ -419,6 +438,15 @@ export default function MyAccountPage() {
                     {item.label}
                   </button>
                 ))}
+                {userDetails?.role === "admin" && (
+                  <Link
+                    href="/dashboard"
+                    className="w-full text-left px-3 py-2 text-xs font-bold rounded-[3px] flex items-center gap-2.5 transition text-indigo-750 bg-indigo-50/50 hover:bg-indigo-50"
+                  >
+                    <Lock size={14} />
+                    Admin Dashboard
+                  </Link>
+                )}
               </div>
             </div>
 
