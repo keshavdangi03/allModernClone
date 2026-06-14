@@ -54,6 +54,19 @@ export default function SortFilterBar({
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [showDesktopFilters, onToggleDesktopFilters]);
 
+  // Close dropdown on scroll
+  useEffect(() => {
+    function handleScroll() {
+      if (showDesktopFilters) {
+        onToggleDesktopFilters();
+      }
+    }
+    if (showDesktopFilters) {
+      window.addEventListener("scroll", handleScroll, { passive: true });
+    }
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [showDesktopFilters, onToggleDesktopFilters]);
+
   return (
     <>
       {/* Mobile Sort & Filter Button (Only visible on screens < sm) */}
@@ -85,7 +98,7 @@ export default function SortFilterBar({
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
                 transition={{ duration: 0.15 }}
-                className="absolute left-0 top-full z-50 mt-1 w-[350px] border border-slate-300 bg-white p-5 shadow-xl max-h-[550px] overflow-y-auto"
+                className="absolute left-0 top-full z-40 mt-1 w-[350px] border border-slate-300 bg-white p-5 shadow-xl max-h-[550px] overflow-y-auto custom-scrollbar"
               >
                 <FilterOptionsList 
                   activeFilters={activeFilters}

@@ -89,7 +89,7 @@ export function AccordionSection({
             className="overflow-hidden"
           >
             <div className="pb-5">
-              <div className="max-h-[300px] overflow-y-auto pr-1">
+              <div className="max-h-[300px] overflow-y-auto pr-1 custom-scrollbar">
                 {children}
               </div>
               
