@@ -16,7 +16,7 @@ function getPrisma(): PrismaClient {
 
   const connectionString =
     process.env.DATABASE_URL ||
-    "postgresql://neondb_owner:npg_mi7elKWvxhq9@ep-bitter-leaf-ao1doyw9.c-2.ap-southeast-1.aws.neon.tech/neondb?sslmode=verify-full";
+    "postgresql://neondb_owner:npg_Cq5f2oXJUYiQ@ep-snowy-dust-ao57p5ia-pooler.c-2.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require";
 
   if (!global._prismaPool) {
     global._prismaPool = new Pool({ connectionString, max: 2 });
