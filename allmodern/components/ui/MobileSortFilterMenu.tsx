@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X } from "lucide-react";
 import { FilterOptionsList } from "./FilterOptions";
@@ -19,6 +20,33 @@ export default function MobileSortFilterMenu({
   activeFilters,
   onApplyFilters
 }: MobileSortFilterMenuProps) {
+  // Staging state for mobile filters
+  const [tempFilters, setTempFilters] = useState<any>(null);
+
+  // Initialize/sync tempFilters when activeFilters changes or menu opens
+  useEffect(() => {
+    if (activeFilters && isOpen) {
+      setTempFilters({
+        categories: activeFilters.categories || [],
+        priceRanges: activeFilters.priceRanges || [],
+        minPrice: activeFilters.minPrice ?? 0,
+        maxPrice: activeFilters.maxPrice ?? 1000000,
+        rating: activeFilters.rating ?? null,
+        colors: activeFilters.colors || [],
+        brands: activeFilters.brands || [],
+        inStockOnly: activeFilters.inStockOnly ?? false,
+        isSaleOnly: activeFilters.isSaleOnly ?? false,
+      });
+    }
+  }, [activeFilters, isOpen]);
+
+  const handleChangeTempFilters = (updated: any) => {
+    setTempFilters((prev: any) => ({
+      ...prev,
+      ...updated,
+    }));
+  };
+
   return (
     <AnimatePresence>
       {isOpen && (
@@ -40,7 +68,16 @@ export default function MobileSortFilterMenu({
 
           {/* Scrollable Content */}
           <div className="flex-1 overflow-y-auto px-5 pb-24 pt-2">
-            <FilterOptionsList isMobile={true} activeFilters={activeFilters} onApplyFilters={onApplyFilters} />
+            {tempFilters && (
+              <FilterOptionsList 
+                isMobile={true} 
+                activeFilters={activeFilters} 
+                onApplyFilters={onApplyFilters} 
+                tempFiltersState={tempFilters}
+                onChangeTempFilters={handleChangeTempFilters}
+                showAccordionButtons={false}
+              />
+            )}
           </div>
 
           {/* Fixed Footer */}
@@ -48,13 +85,33 @@ export default function MobileSortFilterMenu({
             <div className="flex gap-4">
               <button 
                 className="w-1/3 border border-slate-300 bg-white py-3.5 text-[15px] font-medium text-slate-500 transition hover:bg-slate-50 hover:text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-600"
-                onClick={() => {}}
+                onClick={() => {
+                  const cleared = {
+                    categories: [],
+                    priceRanges: [],
+                    minPrice: 0,
+                    maxPrice: 1000000,
+                    rating: null,
+                    colors: [],
+                    brands: [],
+                    inStockOnly: false,
+                    isSaleOnly: false,
+                  };
+                  setTempFilters(cleared);
+                  onApplyFilters(cleared);
+                  onClose();
+                }}
               >
                 Clear All
               </button>
               <button 
                 className="w-2/3 bg-[#222222] py-3.5 text-[15px] font-medium text-white transition hover:bg-black focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2"
-                onClick={onClose}
+                onClick={() => {
+                  if (tempFilters) {
+                    onApplyFilters(tempFilters);
+                  }
+                  onClose();
+                }}
               >
                 Show {productCount} Products
               </button>

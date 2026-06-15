@@ -1,9 +1,11 @@
 require('dotenv').config({ path: '.env' });
-const { PrismaPg } = require('@prisma/adapter-pg');
 const { Pool } = require('pg');
 const { PrismaClient } = require('@prisma/client');
+const { PrismaPg } = require('@prisma/adapter-pg');
 
-const pool = new Pool({ connectionString: process.env.DATABASE_URL });
+// Use non-pooled connection for script execution if it's a pooled connection to avoid PgBouncer transaction limits
+const connectionString = process.env.DATABASE_URL.replace('-pooler', '');
+const pool = new Pool({ connectionString });
 const adapter = new PrismaPg(pool);
 const prisma = new PrismaClient({ adapter });
 
@@ -32,48 +34,54 @@ const mappingRules = [
 
 async function run() {
   console.log("Analyzing and updating product categories in PostgreSQL...");
-  const products = await prisma.product.findMany({});
-  
-  let updatedCount = 0;
-  for (const product of products) {
-    const nameLower = product.name.toLowerCase();
-    const descLower = (product.description || "").toLowerCase();
-    const textToMatch = `${nameLower} ${descLower}`;
+  try {
+    const products = await prisma.product.findMany({});
+    console.log(`Found ${products.length} products to analyze.`);
     
-    let originalCategories = [...product.categories];
-    let newCategories = new Set(product.categories);
+    let updatedCount = 0;
     
-    for (const rule of mappingRules) {
-      const matches = rule.keywords.some(k => textToMatch.includes(k));
-      if (matches) {
-        rule.categories.forEach(c => newCategories.add(c));
+    for (const product of products) {
+      const nameLower = product.name.toLowerCase();
+      const descLower = (product.description || "").toLowerCase();
+      const textToMatch = `${nameLower} ${descLower}`;
+      
+      let originalCategories = [...product.categories];
+      let newCategories = new Set(product.categories);
+      
+      for (const rule of mappingRules) {
+        const matches = rule.keywords.some(k => textToMatch.includes(k));
+        if (matches) {
+          rule.categories.forEach(c => newCategories.add(c));
+        }
+      }
+      
+      const finalCategories = Array.from(newCategories);
+      if (finalCategories.length > originalCategories.length) {
+        await prisma.product.update({
+          where: { id: product.id },
+          data: { categories: finalCategories }
+        });
+        updatedCount++;
       }
     }
     
-    const finalCategories = Array.from(newCategories);
-    if (finalCategories.length > originalCategories.length) {
-      await prisma.product.update({
-        where: { id: product.id },
-        data: { categories: finalCategories }
+    console.log(`Successfully updated categories for ${updatedCount} products in the database!`);
+    
+    // Print new count
+    const allProducts = await prisma.product.findMany({});
+    const categoriesMap = {};
+    allProducts.forEach(p => {
+      p.categories.forEach(c => {
+        categoriesMap[c] = (categoriesMap[c] || 0) + 1;
       });
-      updatedCount++;
-    }
-  }
-  
-  console.log(`Successfully updated categories for ${updatedCount} products in the database!`);
-  
-  // Print new count
-  const allProducts = await prisma.product.findMany({});
-  const categoriesMap = {};
-  allProducts.forEach(p => {
-    p.categories.forEach(c => {
-      categoriesMap[c] = (categoriesMap[c] || 0) + 1;
     });
-  });
-  console.log('New Distinct Categories in DB:', categoriesMap);
-  
-  prisma.$disconnect();
-  pool.end();
+    console.log('New Distinct Categories in DB:', categoriesMap);
+  } catch (error) {
+    console.error("Error in enhance_db_categories script:", error);
+  } finally {
+    await prisma.$disconnect();
+    await pool.end();
+  }
 }
 
 run();

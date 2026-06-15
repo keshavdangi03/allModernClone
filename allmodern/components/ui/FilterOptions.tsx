@@ -54,6 +54,7 @@ export function AccordionSection({
   selectedCount = 0,
   onApply,
   onClear,
+  noScroll = true,
 }: {
   title: string;
   children: React.ReactNode;
@@ -61,6 +62,7 @@ export function AccordionSection({
   selectedCount?: number;
   onApply?: () => void;
   onClear?: () => void;
+  noScroll?: boolean;
 }) {
   const [isOpen, setIsOpen] = useState(defaultOpen);
   return (
@@ -89,7 +91,7 @@ export function AccordionSection({
             className="overflow-hidden"
           >
             <div className="pb-5">
-              <div className="max-h-[300px] overflow-y-auto pr-1 custom-scrollbar">
+              <div className={noScroll ? "" : "max-h-[300px] overflow-y-auto pr-1 custom-scrollbar"}>
                 {children}
               </div>
               
@@ -331,7 +333,28 @@ export function FilterOptionsList({
     if (checked) {
       setTempPriceRanges([...tempPriceRanges, range]);
     } else {
-      setTempPriceRanges(tempPriceRanges.filter(r => r !== range));
+      setTempPriceRanges(tempPriceRanges.filter((r: string) => r !== range));
+    }
+  };
+
+  const isSaleChecked = tempFiltersState ? tempFiltersState.isSaleOnly : activeFilters.isSaleOnly;
+  const isInStockChecked = tempFiltersState ? tempFiltersState.inStockOnly : tempInStock;
+
+  const handleSaleToggle = () => {
+    if (onChangeTempFilters && tempFiltersState) {
+      onChangeTempFilters({ isSaleOnly: !tempFiltersState.isSaleOnly });
+    } else {
+      onApplyFilters({ isSaleOnly: !activeFilters.isSaleOnly });
+    }
+  };
+
+  const handleInStockToggle = () => {
+    if (onChangeTempFilters && tempFiltersState) {
+      onChangeTempFilters({ inStockOnly: !tempFiltersState.inStockOnly });
+    } else {
+      const next = !tempInStock;
+      setTempInStock(next);
+      onApplyFilters({ inStockOnly: next });
     }
   };
 
@@ -361,18 +384,14 @@ export function FilterOptionsList({
           id="filter-sale" 
           label="Sale" 
           isSale 
-          checked={activeFilters.isSaleOnly} 
-          onChange={() => onApplyFilters({ isSaleOnly: !activeFilters.isSaleOnly })} 
+          checked={isSaleChecked} 
+          onChange={handleSaleToggle} 
         />
         <CustomToggle 
           id="filter-fast" 
           label={<>Fast Delivery to: <span className="underline">02116</span></>} 
-          checked={tempInStock}
-          onChange={() => {
-            const next = !tempInStock;
-            setTempInStock(next);
-            onApplyFilters({ inStockOnly: next });
-          }}
+          checked={isInStockChecked}
+          onChange={handleInStockToggle}
         />
       </div>
 
@@ -398,7 +417,7 @@ export function FilterOptionsList({
                 if (checked) {
                   setTempCategories([...tempCategories, cat]);
                 } else {
-                  setTempCategories(tempCategories.filter(c => c !== cat));
+                  setTempCategories(tempCategories.filter((c: string) => c !== cat));
                 }
               }}
             />
@@ -500,7 +519,7 @@ export function FilterOptionsList({
                 type="button"
                 onClick={() => {
                   if (isSelected) {
-                    setTempColors(tempColors.filter(col => col !== c.name));
+                    setTempColors(tempColors.filter((col: string) => col !== c.name));
                   } else {
                     setTempColors([...tempColors, c.name]);
                   }
@@ -552,7 +571,7 @@ export function FilterOptionsList({
                 if (checked) {
                   setTempBrands([...tempBrands, b]);
                 } else {
-                  setTempBrands(tempBrands.filter(brand => brand !== b));
+                  setTempBrands(tempBrands.filter((brand: string) => brand !== b));
                 }
               }}
             />

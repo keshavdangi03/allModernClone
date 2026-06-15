@@ -128,7 +128,7 @@ export default function SortFilterBar({
                 className="absolute left-0 top-full z-40 mt-1 w-[350px] border border-slate-300 bg-white shadow-xl flex flex-col max-h-[550px]"
               >
                 {/* Scrollable Filters list */}
-                <div className="flex-1 overflow-y-auto p-5 pb-2 custom-scrollbar overscroll-contain">
+                <div className="flex-1 overflow-y-auto px-5 pt-5 pb-4 pr-3 custom-scrollbar overscroll-contain">
                   <FilterOptionsList 
                     activeFilters={activeFilters}
                     onApplyFilters={onApplyFilters}
